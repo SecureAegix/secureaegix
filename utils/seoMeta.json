@@ -1,61 +1,157 @@
 {
   "/": {
-    "title": "RootShield | Secure Digital Solutions, Learning & Technology Platform",
-    "description": "RootShield provides secure digital solutions, technology resources, and learning opportunities to help individuals and businesses grow in the modern digital ecosystem.",
-    "keywords": "rootshield, rootshield academy, cyber security best coaching, cyber training, security training, cyber security, security, ethical hacking, ejpt, oscp, cpent digital solutions platform, technology learning, cybersecurity awareness, developer resources, online tech platform, web development learning, digital innovation india, coding resources, secure technology tools, modern tech solutions, software learning platform"
+    "title": "SecureAaegix | Elite Cybersecurity Training & Certifications",
+    "description": "Master cybersecurity with industry-recognized certifications including OSCP, OSWE, CRTO, and eJPT. Join 5000+ professionals with hands-on labs and expert instructors.",
+    "keywords": "cybersecurity training, OSCP certification, OSWE course, CRTO training, eJPT exam, ethical hacking course, penetration testing training, red team operations, vulnerability assessment, incident response, cybersecurity certifications india, best cybersecurity training platform, SecureAaegix, online security courses, cyber security coaching"
   },
 
   "/login": {
-    "title": "Login | Access Your RootShield Account",
-    "description": "Sign in to your RootShield account to access personalized dashboards, resources, courses, and secure digital services.",
-    "keywords": "rootshield login, user sign in, secure account access, platform login portal, technology dashboard login, user authentication page, secure login india"
+    "title": "Login | Access Your SecureAaegix Cybersecurity Account",
+    "description": "Sign in to your SecureAaegix account to access premium cybersecurity courses, track certification progress, and manage your learning dashboard.",
+    "keywords": "SecureAaegix login, cybersecurity account access, student login portal, certification dashboard sign in, ethical hacking course login, OSCP training access"
   },
 
   "/signup": {
-    "title": "Create Account | Join RootShield Platform",
-    "description": "Register on RootShield to explore courses, digital tools, and innovative technology resources designed for learners and professionals.",
-    "keywords": "rootshield signup, create user account, join tech platform, developer registration, online learning signup, technology platform registration, secure account creation"
+    "title": "Sign Up | Start Your Cybersecurity Journey with SecureAaegix",
+    "description": "Create your SecureAaegix account and begin your path to becoming a certified cybersecurity professional. Access world-class training and hands-on labs.",
+    "keywords": "SecureAaegix signup, cybersecurity registration, create account for OSCP training, join ethical hacking course, certification program enrollment, student registration"
   },
 
   "/courses": {
-    "title": "Courses | Learn Skills with RootShield",
-    "description": "Explore curated technology and development courses designed to build real-world skills and advance your digital career.",
-    "keywords": "technology courses online, coding learning platform, developer training, web development courses, programming skills learning, tech education india, digital skill building, rootshield courses"
+    "title": "Cybersecurity Courses | OSCP, OSWE, CRTO & More | SecureAaegix",
+    "description": "Explore our comprehensive cybersecurity certification courses. From beginner to expert - OSCP, OSWE, OSED, CRTO, CRTP, eJPT. Start your training today.",
+    "keywords": "cybersecurity courses, OSCP certification training, OSWE web security, CRTO red team course, eJPT beginner pentesting, OSED exploit development, CRTP active directory, online security certifications, best cybersecurity courses india"
+  },
+
+  "/courses/oscp": {
+    "title": "OSCP Certification Training | Offensive Security | SecureAaegix",
+    "description": "Prepare for OSCP certification with our comprehensive training. 8-week program with 24/7 lab access, expert instructors, and 95% pass rate.",
+    "keywords": "OSCP training, Offensive Security Certified Professional, penetration testing certification, ethical hacking course, OSCP exam preparation, kali linux training"
+  },
+
+  "/courses/oswe": {
+    "title": "OSWE Certification | Web Security Expert Training | SecureAaegix",
+    "description": "Master web application security with OSWE certification. Advanced white-box testing, source code analysis, and exploitation techniques.",
+    "keywords": "OSWE certification, web application security, offensive security web expert, white-box testing course, source code analysis training"
+  },
+
+  "/courses/crto": {
+    "title": "CRTO Certification | Red Team Operator Training | SecureAaegix",
+    "description": "Become a certified red team operator. Master Cobalt Strike, adversary simulation, and advanced red teaming techniques.",
+    "keywords": "CRTO certification, red team operator training, Cobalt Strike course, adversary simulation, red teaming techniques, advanced penetration testing"
+  },
+
+  "/courses/ejpt": {
+    "title": "eJPT Certification | Junior Penetration Tester | SecureAaegix",
+    "description": "Start your cybersecurity career with eJPT certification. Beginner-friendly course with hands-on labs and practical exam.",
+    "keywords": "eJPT certification, junior penetration tester, beginner cybersecurity course, ethical hacking fundamentals, entry level security training"
+  },
+
+  "/services": {
+    "title": "Cybersecurity Services | Penetration Testing & Red Teaming | SecureAaegix",
+    "description": "Professional cybersecurity services including penetration testing, vulnerability assessment, incident response, and red team operations for enterprise clients.",
+    "keywords": "penetration testing services, vulnerability assessment, incident response team, red team operations, security auditing, enterprise cybersecurity, VAPT services india"
+  },
+
+  "/services/penetration-testing": {
+    "title": "Penetration Testing Services | Network & Web App Security | SecureAaegix",
+    "description": "Professional penetration testing services to identify vulnerabilities before attackers do. Network, web application, and mobile security testing.",
+    "keywords": "penetration testing, network security assessment, web application pentesting, mobile app security testing, ethical hacking services, VAPT services"
+  },
+
+  "/services/vulnerability-assessment": {
+    "title": "Vulnerability Assessment | Security Scanning & Risk Analysis | SecureAaegix",
+    "description": "Comprehensive vulnerability assessment services to identify, classify, and prioritize security weaknesses in your infrastructure.",
+    "keywords": "vulnerability assessment, security scanning, risk analysis, compliance testing, infrastructure security, vulnerability management"
+  },
+
+  "/services/incident-response": {
+    "title": "Incident Response Services | 24/7 Security Breach Response | SecureAaegix",
+    "description": "24/7 incident response services for security breaches. Rapid containment, forensic investigation, and recovery support for cyber attacks.",
+    "keywords": "incident response, security breach response, cyber attack recovery, forensic investigation, data breach containment, 24/7 security support"
+  },
+
+  "/services/red-team": {
+    "title": "Red Team Operations | Advanced Adversary Simulation | SecureAaegix",
+    "description": "Elite red team operations simulating real-world adversaries. Test your defenses with APT-level tactics, techniques, and procedures.",
+    "keywords": "red team operations, adversary simulation, APT emulation, security assessment, defense testing, purple team exercises"
   },
 
   "/about": {
-    "title": "About Us| Our Mission & Vision",
-    "description": "Learn about RootShield’s mission to empower digital growth through secure technology solutions, education, and innovation-driven development.",
-    "keywords": "about rootshield, company mission vision, technology platform info, digital innovation team, tech startup india, cybersecurity driven solutions, platform background"
+    "title": "About SecureAaegix | Cybersecurity Training Experts Since 2020",
+    "description": "Learn about SecureAaegix - founded in 2020, we've trained over 5,000 cybersecurity professionals across 50+ countries with industry-recognized certifications.",
+    "keywords": "about SecureAaegix, cybersecurity training company, information security experts, ethical hacking instructors, OSCP trainers, red team specialists, cyber security institute india"
   },
 
   "/contact": {
-    "title": "Contact RootShield | Get Support & Connect With Us",
-    "description": "Reach out to RootShield for support, collaboration, or inquiries related to our digital services and learning resources.",
-    "keywords": "contact rootshield, support request, business inquiry, platform contact page, technical assistance, connect with tech team, customer support india"
+    "title": "Contact SecureAaegix | Get Support for Cybersecurity Training",
+    "description": "Reach out to SecureAaegix for course inquiries, corporate training, security services, or technical support. Our team is ready to assist you.",
+    "keywords": "contact SecureAaegix, cybersecurity training support, course inquiry, corporate training request, security services consultation, technical help, support team"
   },
 
   "/blogs": {
-    "title": "Technology Blogs | Insights, Guides & Updates",
-    "description": "Read insightful blogs on technology trends, development guides, cybersecurity awareness, and digital transformation topics.",
-    "keywords": "technology blog articles, coding guides, cybersecurity blogs, programming tutorials, digital trends insights, developer knowledge hub, tech articles india"
+    "title": "Cybersecurity Blog | Latest Trends, Tips & Tutorials | SecureAaegix",
+    "description": "Stay updated with the latest cybersecurity trends, OSCP preparation tips, red teaming techniques, and career advice from industry experts.",
+    "keywords": "cybersecurity blog, OSCP preparation tips, red teaming articles, ethical hacking tutorials, security news, career advice cybersecurity, penetration testing guides"
   },
 
   "/careers": {
-    "title": "Careers at RootShield | Join Our Team",
-    "description": "Explore career opportunities at RootShield and contribute to building innovative digital solutions and technology platforms.",
-    "keywords": "rootshield careers, tech job opportunities, join startup team, developer hiring, software careers india, innovation jobs, tech company recruitment"
+    "title": "Careers at SecureAaegix | Join Our Cybersecurity Team",
+    "description": "Join the SecureAaegix team! We're hiring cybersecurity experts, instructors, and security professionals passionate about education and defense.",
+    "keywords": "cybersecurity careers, ethical hacking jobs, security trainer positions, red team jobs, information security employment, join SecureAaegix team, cybersecurity jobs india"
   },
 
   "/privacy": {
-    "title": "Privacy Policy | RootShield Data Protection",
-    "description": "Understand how RootShield collects, uses, and protects your data while ensuring transparency and user privacy.",
-    "keywords": "privacy policy rootshield, user data protection, platform privacy terms, digital data security, personal data handling, privacy compliance"
+    "title": "Privacy Policy | SecureAaegix Data Protection & Security",
+    "description": "Read SecureAaegix's privacy policy to understand how we collect, use, and protect your personal information while you learn cybersecurity with us.",
+    "keywords": "privacy policy SecureAaegix, data protection, user privacy, information security, GDPR compliance, personal data handling, secure platform"
   },
 
   "/terms": {
-    "title": "Terms & Conditions | RootShield Platform Usage",
-    "description": "Review the terms governing the use of RootShield services, platform access, and user responsibilities.",
-    "keywords": "terms and conditions rootshield, user agreement, platform usage policy, service terms india, website legal terms, digital platform rules"
+    "title": "Terms of Service | SecureAaegix Platform Usage Agreement",
+    "description": "Review SecureAaegix's terms of service for course access, certification policies, payment terms, and user responsibilities on our platform.",
+    "keywords": "terms of service SecureAaegix, user agreement, course terms, certification policies, payment terms, refund policy, platform usage rules"
+  },
+
+  "/user/dashboard": {
+    "title": "Dashboard | Your Cybersecurity Learning Progress | SecureAaegix",
+    "description": "Access your personalized dashboard to track course progress, view certifications, and manage your cybersecurity learning journey.",
+    "keywords": "user dashboard, course progress tracking, certification status, learning analytics, student dashboard, SecureAaegix account"
+  },
+
+  "/profile": {
+    "title": "Profile Settings | Manage Your SecureAaegix Account",
+    "description": "Update your profile information, change password, and manage account preferences for your SecureAaegix cybersecurity training account.",
+    "keywords": "profile settings, account management, update profile, change password, user preferences, SecureAaegix account"
+  },
+
+  "/my-courses": {
+    "title": "My Courses | Your Enrolled Cybersecurity Courses | SecureAaegix",
+    "description": "View all your enrolled cybersecurity courses, track completion progress, and access course materials from your SecureAaegix learning portal.",
+    "keywords": "my courses, enrolled courses, course progress, learning materials, certification preparation, student courses"
+  },
+
+  "/certificates": {
+    "title": "My Certifications | Verified Cybersecurity Credentials | SecureAaegix",
+    "description": "View and download your earned cybersecurity certifications. Share verified credentials with employers and professional networks.",
+    "keywords": "my certificates, earned certifications, cybersecurity credentials, verify certificate, download certificate, OSCP certificate, CRTO certification"
+  },
+
+  "/corporate": {
+    "title": "Corporate Training | Cybersecurity Programs for Organizations | SecureAaegix",
+    "description": "Enterprise cybersecurity training solutions for organizations. Custom programs, team dashboards, and dedicated support for corporate clients.",
+    "keywords": "corporate training, enterprise cybersecurity, team training programs, organizational security awareness, company upskilling, business security solutions"
+  },
+
+  "/verify-email": {
+    "title": "Email Verification | Secure Your SecureAaegix Account",
+    "description": "Verify your email address to activate your SecureAaegix account and access cybersecurity training courses and resources.",
+    "keywords": "email verification, account activation, OTP verification, secure account, verify email address, complete registration"
+  },
+
+  "/reset-password": {
+    "title": "Reset Password | Recover Your SecureAaegix Account Access",
+    "description": "Reset your password to regain access to your SecureAaegix cybersecurity training account and continue your learning journey.",
+    "keywords": "reset password, account recovery, forgot password, password reset link, regain account access, secure password change"
   }
 }

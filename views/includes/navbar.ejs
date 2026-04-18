@@ -38,13 +38,13 @@
                 <div>
                     <div class="flex items-baseline">
                         <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Secure</span>
-                        <span class="text-xl font-bold text-gray-800 dark:text-white">Aegix</span>
+                        <span class="text-xl font-bold text-gray-800 dark:text-white">Aaegix</span>
                     </div>
                     <div class="text-[10px] text-gray-500 dark:text-gray-400 tracking-wider">CYBERSECURITY</div>
                 </div>
             </div>
 
-            <!-- Desktop Navigation - Hidden on Mobile -->
+            <!-- Desktop Navigation -->
             <div class="hidden md:flex items-center space-x-1">
                 <a href="/" class="nav-link <%= currentPath === '/' ? 'active' : '' %>">
                     <i class="fas fa-home mr-1.5 text-sm"></i> Home
@@ -91,6 +91,9 @@
                             <a href="/services/incident-response" class="dropdown-item">
                                 <i class="fas fa-bell w-4 mr-2 text-red-600"></i> Incident Response
                             </a>
+                            <a href="/services/red-team" class="dropdown-item">
+                                <i class="fas fa-user-secret w-4 mr-2 text-purple-600"></i> Red Team Operations
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +109,7 @@
 
             <!-- Right Actions -->
             <div class="flex items-center space-x-2">
-                <!-- Search - Hidden on Mobile -->
+                <!-- Search - Desktop -->
                 <div class="hidden lg:block">
                     <div class="relative">
                         <input type="text" id="searchInput" placeholder="Search..." 
@@ -120,9 +123,9 @@
                     <i id="darkModeIcon" class="fas fa-moon"></i>
                 </button>
 
-                <!-- User Section - Desktop View (Visible) -->
+                <!-- User Section - Desktop View -->
                 <% if (currUser) { %>
-                    <div class="relative group hidden lg:block">
+                    <div class="relative group hidden md:block">
                         <button class="user-menu-btn">
                             <div class="user-avatar">
                                 <%= currUser.name.charAt(0).toUpperCase() %>
@@ -143,9 +146,9 @@
                                         <i class="fas fa-tachometer-alt w-4"></i> Admin Dashboard
                                     </a>
                                 <% } else { %>
-                                    <!-- <a href="/user/dashboard" class="user-dropdown-item">
+                                    <a href="/user/dashboard" class="user-dropdown-item">
                                         <i class="fas fa-chart-line w-4"></i> Dashboard
-                                    </a> -->
+                                    </a>
                                 <% } %>
                                 <a href="/my-courses" class="user-dropdown-item">
                                     <i class="fas fa-book w-4"></i> My Courses
@@ -185,18 +188,18 @@
             <!-- Mobile Menu Header -->
             <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
                 <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8  rounded-md flex items-center justify-center">
-                        <img src="/images/logo.png" alt="Logo" class="w-10 h-10 object-contain">
+                    <div class="w-8 h-8 rounded-md flex items-center justify-center">
+                        <img src="/images/logo.png" alt="Logo" class="w-8 h-8 object-contain">
                     </div>
-                    <span class="font-bold text-lg text-gray-900 dark:text-white">SecureAegix</span>
+                    <span class="font-bold text-lg text-gray-900 dark:text-white">SecureAaegix</span>
                 </div>
                 <button id="closeMobileMenu" class="w-8 h-8 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <div class="flex-1 overflow-y-auto py-4">
-                <!-- User Profile Section - Mobile Only (When Logged In) -->
+            <div class="flex-1 overflow-y-auto  py-4">
+                <!-- User Profile Section - Mobile Only -->
                 <% if (currUser) { %>
                     <div class="px-4 pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
                         <div class="flex items-center gap-3 mb-3">
@@ -222,9 +225,32 @@
                     <a href="/courses" class="mobile-nav-link">
                         <i class="fas fa-graduation-cap w-5 mr-3 text-cyan-600"></i> Courses
                     </a>
-                    <a href="/services" class="mobile-nav-link">
-                        <i class="fas fa-cogs w-5 mr-3 text-gray-600"></i> Services
-                    </a>
+                    
+                    <!-- Services Dropdown Mobile -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn mobile-nav-link w-full justify-between">
+                            <span class="flex items-center">
+                                <i class="fas fa-cogs w-5 mr-3 text-gray-600 dark:text-gray-400"></i> 
+                                Services
+                            </span>
+                            <i class="fas fa-chevron-down transition-transform duration-200"></i>
+                        </button>
+                        <div class="mobile-dropdown-menu hidden">
+                            <a href="/services/penetration-testing" class="mobile-dropdown-item pl-12">
+                                <i class="fas fa-bug w-4 mr-2 text-blue-600"></i> Penetration Testing
+                            </a>
+                            <a href="/services/vulnerability-assessment" class="mobile-dropdown-item pl-12">
+                                <i class="fas fa-search w-4 mr-2 text-cyan-600"></i> Vulnerability Assessment
+                            </a>
+                            <a href="/services/incident-response" class="mobile-dropdown-item pl-12">
+                                <i class="fas fa-bell w-4 mr-2 text-red-600"></i> Incident Response
+                            </a>
+                            <a href="/services/red-team" class="mobile-dropdown-item pl-12">
+                                <i class="fas fa-user-secret w-4 mr-2 text-purple-600"></i> Red Team Operations
+                            </a>
+                        </div>
+                    </div>
+                    
                     <a href="/about" class="mobile-nav-link">
                         <i class="fas fa-info-circle w-5 mr-3 text-green-600"></i> About
                     </a>
@@ -243,9 +269,9 @@
                                     <i class="fas fa-tachometer-alt w-5 mr-3 text-blue-600"></i> Admin Dashboard
                                 </a>
                             <% } else { %>
-                                <!-- <a href="/user/dashboard" class="mobile-nav-link">
+                                <a href="/user/dashboard" class="mobile-nav-link">
                                     <i class="fas fa-chart-line w-5 mr-3 text-cyan-600"></i> My Dashboard
-                                </a> -->
+                                </a>
                             <% } %>
                             <a href="/my-courses" class="mobile-nav-link">
                                 <i class="fas fa-book w-5 mr-3 text-green-600"></i> My Courses
@@ -333,7 +359,7 @@
     top: 100%;
     left: 0;
     margin-top: 0.5rem;
-    width: 220px;
+    width: 240px;
     background-color: white;
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -342,7 +368,7 @@
     transform: translateY(-10px);
     transition: all 0.2s;
     z-index: 50;
-    border: 1px solid #f3f4f6;
+    border: 1px solid #e5e7eb;
 }
 
 .dark .dropdown-menu {
@@ -405,7 +431,7 @@
     background-color: #374151;
 }
 
-/* User Menu - Desktop Only */
+/* User Menu */
 .user-menu-btn {
     display: flex;
     align-items: center;
@@ -447,7 +473,7 @@
     transform: translateY(-10px);
     transition: all 0.2s;
     z-index: 50;
-    border: 1px solid #f3f4f6;
+    border: 1px solid #e5e7eb;
 }
 
 .dark .user-dropdown {
@@ -483,6 +509,10 @@
     background-color: #374151;
 }
 
+/* ============================================ */
+/* MOBILE MENU - COMPLETELY FIXED */
+/* ============================================ */
+
 /* Mobile Navigation Links */
 .mobile-nav-link {
     display: flex;
@@ -490,6 +520,7 @@
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
     font-weight: 500;
+    font-size: 1rem;
     color: #4b5563;
     transition: all 0.2s;
 }
@@ -506,7 +537,7 @@
     background-color: #1f2937;
 }
 
-/* Mobile Menu */
+/* Mobile Menu Container - FIXED */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -514,9 +545,10 @@
     right: 0;
     bottom: 0;
     background-color: white;
-    z-index: 1000;
+    z-index: 9999;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
+    display: block !important;
 }
 
 .dark .mobile-menu {
@@ -527,14 +559,129 @@
     transform: translateX(0);
 }
 
-/* For mobile devices */
-@media (max-width: 768px) {
-    .mobile-menu {
-        display: block;
-    }
+
+/* Mobile Menu Content Container */
+.mobile-menu .flex-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* Scrollable Content - FIXED */
+.mobile-menu .overflow-y-auto {
+    flex: 1;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 40px !important;
+    max-height: none !important;
+    min-height: 0;
+}
+.mobile-menu .space-y-1,
+.mobile-menu .mt-6,
+.mobile-menu .pt-4,
+.mobile-menu .px-4 {
+    display: block !important;
+}
+
+
+
+.mobile-menu.open .mobile-nav-link {
+    display: flex !important;
+}
+
+/* Mobile Dropdown Styles */
+.mobile-dropdown {
+    width: 100%;
+    display: block;
+}
+
+.mobile-dropdown-btn {
+    width: 100%;
+    justify-content: space-between;
+    background: none;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+}
+
+.mobile-dropdown-btn i:last-child {
+    transition: transform 0.2s ease;
+}
+
+.mobile-dropdown-btn.open i:last-child {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-menu {
+    display: none;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-dropdown-menu.show {
+    display: block;
+}
+
+.mobile-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #4b5563;
+    transition: all 0.2s;
+}
+
+.dark .mobile-dropdown-item {
+    color: #d1d5db;
+}
+
+.mobile-dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .mobile-dropdown-item:hover {
+    background-color: #1f2937;
+}
+
+/* Header Section in Mobile Menu */
+.mobile-menu .border-b {
+    flex-shrink: 0;
+}
+
+/* Ensure proper z-index stacking */
+.mobile-menu {
+    z-index: 9999;
+}
+
+.mobile-menu.open + * {
+    pointer-events: none;
+}
+
+/* Body scroll lock class */
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 /* Animation for mobile menu items */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .mobile-menu.open .mobile-nav-link {
     animation: slideIn 0.3s ease forwards;
     opacity: 0;
@@ -546,55 +693,345 @@
 .mobile-menu.open .mobile-nav-link:nth-child(4) { animation-delay: 0.2s; }
 .mobile-menu.open .mobile-nav-link:nth-child(5) { animation-delay: 0.25s; }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+/* Responsive fixes */
+@media (max-width: 768px) {
+    .mobile-menu {
+        display: block !important;
     }
 }
+
+
 </style>
 
-<!-- Mobile Menu JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // ============================================
+    // MOBILE MENU TOGGLE - COMPLETELY FIXED
+    // ============================================
+    
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const closeMobileMenu = document.getElementById('closeMobileMenu');
     
     if (mobileMenuBtn && mobileMenu) {
-        // Open menu
-        mobileMenuBtn.addEventListener('click', function() {
+        
+        // Open menu function
+        function openMobileMenu() {
+            // Save current scroll position
+            const scrollY = window.scrollY;
+            
+            // Add open class to menu
             mobileMenu.classList.add('open');
+            
+            // Lock body scroll
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
-        });
-        
-        // Close menu
-        const closeMenu = function() {
-            mobileMenu.classList.remove('open');
-            document.body.style.overflow = '';
-        };
-        
-        if (closeMobileMenu) {
-            closeMobileMenu.addEventListener('click', closeMenu);
+            
+            // Store scroll position for restoration
+            document.body.dataset.scrollY = scrollY;
         }
         
-        // Close on outside click
+        // Close menu function
+        function closeMobileMenuFunc() {
+            // Get stored scroll position
+            const scrollY = document.body.dataset.scrollY;
+            
+            // Remove open class from menu
+            mobileMenu.classList.remove('open');
+            
+            // Unlock body scroll
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            
+            // Restore scroll position
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY));
+            }
+            
+            // Clear stored scroll position
+            delete document.body.dataset.scrollY;
+        }
+        
+        // Open menu on button click
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileMenu();
+        });
+        
+        // Close menu on close button click
+        if (closeMobileMenu) {
+            closeMobileMenu.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeMobileMenuFunc();
+            });
+        }
+        
+        // Close menu when clicking on overlay (background)
         mobileMenu.addEventListener('click', function(e) {
             if (e.target === mobileMenu) {
-                closeMenu();
+                closeMobileMenuFunc();
             }
         });
         
-        // Close on escape key
+        // Close menu on ESC key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
-                closeMenu();
+                closeMobileMenuFunc();
             }
         });
+        
+        // Prevent menu from closing when clicking inside menu content
+        const menuContent = mobileMenu.querySelector('.flex-col');
+        if (menuContent) {
+            menuContent.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    }
+    
+    // ============================================
+    // MOBILE SERVICES DROPDOWN
+    // ============================================
+    
+    const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+    
+    mobileDropdownBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const parent = this.closest('.mobile-dropdown');
+            const dropdownMenu = parent.querySelector('.mobile-dropdown-menu');
+            const icon = this.querySelector('i:last-child');
+            
+            // Close other dropdowns
+            mobileDropdownBtns.forEach(otherBtn => {
+                if (otherBtn !== btn) {
+                    const otherParent = otherBtn.closest('.mobile-dropdown');
+                    const otherMenu = otherParent.querySelector('.mobile-dropdown-menu');
+                    const otherIcon = otherBtn.querySelector('i:last-child');
+                    if (otherMenu) {
+                        otherMenu.classList.remove('show');
+                        otherIcon.classList.remove('rotate-180');
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+            
+            // Toggle current dropdown
+            if (dropdownMenu) {
+                dropdownMenu.classList.toggle('show');
+                if (dropdownMenu.classList.contains('show')) {
+                    icon.style.transform = 'rotate(180deg)';
+                    icon.classList.add('rotate-180');
+                } else {
+                    icon.style.transform = 'rotate(0deg)';
+                    icon.classList.remove('rotate-180');
+                }
+            }
+        });
+    });
+    
+    // ============================================
+    // DARK MODE TOGGLE
+    // ============================================
+    
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    
+    if (darkModeToggle) {
+        // Check saved preference
+        const savedMode = localStorage.getItem('darkMode');
+        if (savedMode === 'true') {
+            document.documentElement.classList.add('dark');
+            if (darkModeIcon) {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            }
+        } else if (savedMode === 'false') {
+            document.documentElement.classList.remove('dark');
+            if (darkModeIcon) {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+        } else {
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+                if (darkModeIcon) {
+                    darkModeIcon.classList.remove('fa-moon');
+                    darkModeIcon.classList.add('fa-sun');
+                }
+            }
+        }
+        
+        // Toggle dark mode on button click
+        darkModeToggle.addEventListener('click', function() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+            
+            if (darkModeIcon) {
+                if (isDark) {
+                    darkModeIcon.classList.remove('fa-moon');
+                    darkModeIcon.classList.add('fa-sun');
+                } else {
+                    darkModeIcon.classList.remove('fa-sun');
+                    darkModeIcon.classList.add('fa-moon');
+                }
+            }
+            
+            // Optional: Send to server
+            fetch('/toggle-darkmode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ darkMode: isDark })
+            }).catch(err => console.error('Dark mode sync error:', err));
+        });
+    }
+    
+    // ============================================
+    // NAVBAR SCROLL EFFECT
+    // ============================================
+    
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-xl');
+                navbar.classList.add('bg-opacity-95');
+                navbar.classList.add('backdrop-blur-sm');
+            } else {
+                navbar.classList.remove('shadow-xl');
+                navbar.classList.remove('bg-opacity-95');
+                navbar.classList.remove('backdrop-blur-sm');
+            }
+        });
+    }
+    
+    // ============================================
+    // ACTIVE LINK HIGHLIGHTING
+    // ============================================
+    
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+            // Exact match
+            if (href === currentPath) {
+                link.classList.add('active');
+            }
+            // Home page special case
+            else if (href === '/' && currentPath === '/') {
+                link.classList.add('active');
+            }
+            // Remove active class from others
+            else {
+                link.classList.remove('active');
+            }
+        }
+    });
+    
+    // ============================================
+    // SEARCH FUNCTIONALITY (Optional)
+    // ============================================
+    
+    const searchInput = document.getElementById('searchInput');
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    
+    function handleSearch(query) {
+        if (query && query.length > 2) {
+            // Redirect to search page or filter results
+            console.log('Searching for:', query);
+            // window.location.href = `/search?q=${encodeURIComponent(query)}`;
+        }
+    }
+    
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                handleSearch(e.target.value);
+            }, 500);
+        });
+    }
+    
+    if (mobileSearchInput) {
+        let mobileSearchTimeout;
+        mobileSearchInput.addEventListener('input', function(e) {
+            clearTimeout(mobileSearchTimeout);
+            mobileSearchTimeout = setTimeout(() => {
+                handleSearch(e.target.value);
+            }, 500);
+        });
+    }
+    
+    // ============================================
+    // FIX FOR TOUCH DEVICES
+    // ============================================
+    
+    // Ensure dropdowns work on touch devices
+    const dropdownTriggers = document.querySelectorAll('.group');
+    dropdownTriggers.forEach(trigger => {
+        trigger.addEventListener('touchstart', function(e) {
+            // For touch devices, allow hover state to work
+            this.classList.add('touch-hover');
+        });
+        
+        trigger.addEventListener('touchend', function(e) {
+            setTimeout(() => {
+                this.classList.remove('touch-hover');
+            }, 300);
+        });
+    });
+    
+    // ============================================
+    // PREVENT BODY SCROLL WHEN MOBILE MENU IS OPEN
+    // ============================================
+    
+    // Add this to ensure no scrolling when menu is open
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (mobileMenu && mobileMenu.classList.contains('open')) {
+                    document.body.classList.add('menu-open');
+                } else {
+                    document.body.classList.remove('menu-open');
+                }
+            }
+        });
+    });
+    
+    if (mobileMenu) {
+        observer.observe(mobileMenu, { attributes: true });
+    }
+});
+
+// ============================================
+// HANDLE WINDOW RESIZE
+// ============================================
+
+window.addEventListener('resize', function() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const isDesktop = window.innerWidth >= 768;
+    
+    // If resizing to desktop while menu is open, close it
+    if (isDesktop && mobileMenu && mobileMenu.classList.contains('open')) {
+        // Close menu
+        mobileMenu.classList.remove('open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        document.body.classList.remove('menu-open');
     }
 });
 </script>

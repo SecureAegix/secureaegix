@@ -1,0 +1,619 @@
+<% layout("/layouts/boilerplate") -%>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm mb-6">
+                    <span class="relative flex h-2 w-2 mr-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                    <span class="text-sm">24/7 Emergency Service</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    Incident <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Response</span>
+                </h1>
+                <p class="text-lg text-gray-200 mb-8">
+                    Fast, decisive action when security incidents occur. Our expert team is available 24/7 to contain, eradicate, and recover from cyber threats.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="tel:+1234567890" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                        <i class="fas fa-phone-alt mr-2"></i> Emergency Hotline
+                    </a>
+                    <a href="#process" class="px-8 py-3 border border-white/20 rounded-lg font-semibold hover:bg-white/10 transition-all">
+                        View Response Process
+                    </a>
+                </div>
+                <div class="mt-6 flex items-center gap-4 text-sm">
+                    <span><i class="fas fa-clock mr-1"></i> 24/7 Availability</span>
+                    <span><i class="fas fa-bolt mr-1"></i> 30-Minute Response</span>
+                    <span><i class="fas fa-shield-alt mr-1"></i> Certified Experts</span>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <div class="bg-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 bg-red-500/20 border-b border-red-500/30">
+                        <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="text-xs text-red-300 ml-2 font-mono">⚠ CRITICAL INCIDENT DETECTED</span>
+                    </div>
+                    <div class="p-5 font-mono text-sm">
+                        <div class="text-red-400">[ALERT] Unauthorized access detected - 2024-01-15 03:23:45 UTC</div>
+                        <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> incident-response --activate</div>
+                        <div class="text-green-400">✔ IR Team dispatched</div>
+                        <div class="text-yellow-400">⚠ Isolating affected systems...</div>
+                        <div class="text-green-400">✔ Containment successful</div>
+                        <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> forensic-analysis --collect-evidence</div>
+                        <div class="text-gray-500">Collecting memory dumps... [COMPLETE]</div>
+                        <div class="text-gray-500">Analyzing logs... [IN PROGRESS]</div>
+                        <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> eradication --run</div>
+                        <div class="text-green-400">✔ Threat neutralized</div>
+                        <div class="text-green-400">✔ Systems restored</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why IR Section -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Why Incident Response</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Be Prepared for the <span class="text-gradient">Inevitable</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                When a security breach occurs, every minute counts. Our incident response team is ready to act immediately.
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center">
+                <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-2xl text-red-600"></i>
+                </div>
+                <div class="text-3xl font-bold text-red-600 mb-1">30<span class="text-lg">min</span></div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Average Response Time</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-2xl text-blue-600"></i>
+                </div>
+                <div class="text-3xl font-bold text-blue-600 mb-1">50<span class="text-lg">%</span></div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Reduced Downtime with IR Plan</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center">
+                <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-dollar-sign text-2xl text-green-600"></i>
+                </div>
+                <div class="text-3xl font-bold text-green-600 mb-1">$4M<span class="text-lg"></span></div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Average Cost Savings with IR</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Incident Response Lifecycle -->
+<section id="process" class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Process</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Incident Response <span class="text-gradient">Lifecycle</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                A systematic approach to handling security incidents from detection to recovery
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Preparation -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-blue-600 font-bold text-xl">1</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Preparation</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Develop IR plans, assemble response team, and establish communication protocols before incidents occur.</p>
+                        <ul class="mt-3 space-y-1 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> IR Plan Development</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Team Training & Drills</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Tool Setup & Configuration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Detection & Analysis -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-cyan-600 font-bold text-xl">2</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Detection & Analysis</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Identify potential incidents through monitoring, alerts, and initial investigation.</p>
+                        <ul class="mt-3 space-y-1 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> 24/7 Monitoring</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Alert Triage</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Initial Investigation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Containment -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-purple-600 font-bold text-xl">3</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Containment</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Immediate actions to limit the impact and prevent further damage.</p>
+                        <ul class="mt-3 space-y-1 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Short-term Containment</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> System Isolation</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Evidence Preservation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Eradication -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-orange-600 font-bold text-xl">4</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Eradication</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Remove threats, malware, and attacker access from the environment.</p>
+                        <ul class="mt-3 space-y-1 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Malware Removal</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Backdoor Closure</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Vulnerability Patching</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recovery -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-green-600 font-bold text-xl">5</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Recovery</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Restore systems and return to normal operations safely.</p>
+                        <ul class="mt-3 space-y-1 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> System Restoration</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Data Recovery</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Monitoring for Recurrence</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lessons Learned -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-red-600 font-bold text-xl">6</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Lessons Learned</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Post-incident analysis to improve future response capabilities.</p>
+                        <ul class="mt-3 space-y-1 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Root Cause Analysis</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> IR Plan Updates</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Security Improvements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Types of Incidents -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">We Handle</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Types of <span class="text-gradient">Incidents</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Our team is experienced in handling a wide range of security incidents
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fas fa-skull-crossbones text-red-500 text-xl"></i>
+                    <h3 class="font-bold text-gray-900 dark:text-white">Ransomware Attacks</h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Contain and recover from ransomware infections, negotiate with attackers if needed, and restore encrypted data.</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fas fa-user-secret text-purple-500 text-xl"></i>
+                    <h3 class="font-bold text-gray-900 dark:text-white">Data Breaches</h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Investigate unauthorized access, identify compromised data, and manage breach notification requirements.</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fas fa-bug text-green-500 text-xl"></i>
+                    <h3 class="font-bold text-gray-900 dark:text-white">Malware Infections</h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Identify and remove various malware types including trojans, worms, rootkits, and backdoors.</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fas fa-network-wired text-cyan-500 text-xl"></i>
+                    <h3 class="font-bold text-gray-900 dark:text-white">DDoS Attacks</h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Mitigate distributed denial-of-service attacks and restore service availability.</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fas fa-envelope text-yellow-500 text-xl"></i>
+                    <h3 class="font-bold text-gray-900 dark:text-white">Phishing Campaigns</h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Respond to successful phishing attacks, reset compromised accounts, and implement additional protections.</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fas fa-shield-alt text-blue-500 text-xl"></i>
+                    <h3 class="font-bold text-gray-900 dark:text-white">Insider Threats</h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Investigate malicious or accidental insider activities and implement preventive measures.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- IR Services -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Services</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Comprehensive IR <span class="text-gradient">Services</span>
+            </h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-bolt text-red-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Emergency Response</h3>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">24/7/365 emergency hotline</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">30-minute initial response SLA</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Remote or on-site response options</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Dedicated incident commander</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-microscope text-purple-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Forensic Investigation</h3>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Memory and disk forensics</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Log analysis and correlation</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Malware reverse engineering</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Timeline reconstruction</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-chart-line text-blue-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Post-Incident Analysis</h3>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Root cause analysis</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">IR plan improvement recommendations</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Security control enhancements</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Executive presentation</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-clipboard-list text-green-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">IR Readiness Assessment</h3>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">IR plan review and development</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Tabletop exercises</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Team training and workshops</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <span class="text-gray-600 dark:text-gray-400">Tool recommendations</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Why Choose Us</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                    Your Trusted <span class="text-gradient">IR Partner</span>
+                </h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-certificate text-blue-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Certified Experts</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Our team holds GCIH, GCFA, CISSP, and other industry certifications</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-globe text-cyan-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Global Coverage</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">24/7 support across all time zones with remote and on-site capabilities</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-lock text-purple-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Confidential & Discrete</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Strict confidentiality agreements and secure communication channels</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-chart-line text-green-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Proven Track Record</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Hundreds of successful incident responses across various industries</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl p-8 text-white">
+                <div class="text-center">
+                    <i class="fas fa-phone-alt text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">24/7 Emergency Hotline</h3>
+                    <p class="text-white/90 mb-4">For active security incidents, call immediately</p>
+                    <a href="tel:+1234567890" class="text-3xl font-bold hover:text-gray-200 transition-colors">+1 (234) 567-8900</a>
+                    <div class="mt-6 pt-6 border-t border-white/20">
+                        <p class="text-sm">Or email us at</p>
+                        <a href="mailto:incident@secureaegix.com" class="font-mono hover:text-gray-200">incident@secureaegix.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Retainer Plans -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Retainer Plans</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Flexible <span class="text-gradient">Retainer Options</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Proactive IR support with priority response and discounted rates
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 text-center">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Essential</h3>
+                <div class="text-3xl font-bold text-blue-600 mb-2">$12,000<span class="text-sm">/year</span></div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For small to mid-size businesses</p>
+                <ul class="text-left space-y-2 text-sm mb-6">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> 4-hour response SLA</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> 50 incident response hours</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> IR plan review</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Quarterly tabletop exercises</li>
+                </ul>
+                <a href="/contact" class="block text-center px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Contact Sales</a>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-6 text-white text-center transform scale-105 shadow-xl relative">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-xs font-bold">Most Popular</div>
+                <h3 class="text-lg font-bold mb-2">Professional</h3>
+                <div class="text-3xl font-bold mb-2">$25,000<span class="text-sm">/year</span></div>
+                <p class="text-sm text-white/90 mb-4">For mid to large enterprises</p>
+                <ul class="text-left space-y-2 text-sm mb-6">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> 2-hour response SLA</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> 150 incident response hours</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Priority hotline access</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Monthly IR readiness reviews</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> 20% off additional hours</li>
+                </ul>
+                <a href="/contact" class="block text-center px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">Contact Sales</a>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 text-center">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Enterprise</h3>
+                <div class="text-3xl font-bold text-blue-600 mb-2">Custom</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For large organizations</p>
+                <ul class="text-left space-y-2 text-sm mb-6">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> 1-hour response SLA</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Unlimited incident hours</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Dedicated response team</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> On-site option available</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Custom reporting</li>
+                </ul>
+                <a href="/contact" class="block text-center px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">FAQ</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Frequently Asked <span class="text-gradient">Questions</span>
+            </h2>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">What should I do if I suspect a security incident?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Immediately contact our 24/7 emergency hotline. Do not attempt to investigate or fix the issue yourself, as this may destroy evidence. Our team will guide you through the initial containment steps.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">How quickly can your team respond?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Our response time depends on your retainer plan: Essential (4 hours), Professional (2 hours), or Enterprise (1 hour). For one-time engagements, we typically respond within 2-4 hours.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">Do you offer on-site incident response?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Yes, we offer both remote and on-site incident response. Our team can be deployed to your location within 24 hours for critical incidents.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">Will you help with legal and regulatory requirements?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Yes, we assist with breach notification requirements, evidence preservation for legal proceedings, and coordination with law enforcement when needed.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">What industries do you serve?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">We serve all industries including finance, healthcare, technology, retail, manufacturing, government, and education. Our team has experience with various compliance requirements including HIPAA, PCI DSS, and GDPR.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <i class="fas fa-shield-alt text-5xl text-white mb-4"></i>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Don't Wait Until It's Too Late</h2>
+        <p class="text-lg text-white/90 mb-8">Be prepared for security incidents with a professional incident response team ready to act</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                Schedule IR Consultation
+                <i class="fas fa-calendar ml-2"></i>
+            </a>
+            <a href="tel:+1234567890" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+                <i class="fas fa-phone-alt mr-2"></i>
+                Emergency Hotline
+            </a>
+        </div>
+        <p class="text-sm text-white/70 mt-4">24/7 emergency response available</p>
+    </div>
+</section>
+
+<!-- FAQ Accordion Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('i');
+            
+            answer.classList.toggle('hidden');
+            icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    });
+});
+</script>

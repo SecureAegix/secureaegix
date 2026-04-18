@@ -1,0 +1,810 @@
+<% layout("/layouts/boilerplate") %>
+
+
+
+<!-- Custom Styles for Premium Effects -->
+<style>
+  /* Premium Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+  
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
+  .slide-left { animation: slideInLeft 0.6s ease forwards; }
+  .slide-right { animation: slideInRight 0.6s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.35s; opacity: 0; }
+  .delay-4 { animation-delay: 0.5s; opacity: 0; }
+  
+  /* Glass Effect */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .glass-effect {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Hover Lift Effect */
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Terminal Animation */
+  .t-blink { animation: blink 1s step-end infinite; }
+  
+  /* Ticker Animation */
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .ticker-track {
+    animation: ticker 25s linear infinite;
+  }
+  
+  .ticker-wrap:hover .ticker-track {
+    animation-play-state: paused;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+  
+  /* Card Border Glow */
+  .card-glow {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.5s;
+  }
+  
+  .card-glow:hover::before {
+    left: 100%;
+  }
+  
+  /* Gradient Text */
+  .text-gradient {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  /* Floating Animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Badge Pulse */
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
+  
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+</style>
+
+<!-- HERO SECTION -->
+<section class="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900">
+  
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+    <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+</div>
+  
+    <!-- Animated Background Orbs -->
+  <div class="absolute top-20 right-10 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-20 animate-float"></div>
+  <div class="absolute bottom-20 left-10 w-80 h-80 bg-cyan-500 rounded-full filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+  
+  <!-- Grid Pattern -->
+  <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
+  
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      
+      <!-- Left Content -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 fade-up">
+          <span class="badge-dot"></span>
+          <span class="text-xs font-mono text-cyan-400">Next cohort · Jan 15, 2025</span>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 fade-up delay-1">
+          Train Like a <span class="text-gradient">Hacker.</span><br>
+          Defend Like an <span class="text-gradient">Expert.</span>
+        </h1>
+        
+        <p class="text-lg text-gray-300 max-w-lg mb-8 fade-up delay-2">
+          Elite cybersecurity certifications, hands-on labs, and real-world training for professionals who take security seriously.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 mb-12 fade-up delay-3">
+          <a href="/courses" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg font-semibold text-white hover:shadow-lg transition-all">
+            Explore Courses →
+          </a>
+          <a href="#how" class="px-8 py-3 border border-white/20 rounded-lg font-semibold text-white hover:bg-white/10 transition-all">
+            <i class="fas fa-play mr-2 text-sm"></i>
+            See how it works
+          </a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-4 gap-6 fade-up delay-4">
+          <div>
+            <div class="text-3xl font-bold text-white counter" data-target="5000">0</div>
+            <div class="text-sm text-gray-400">Students Trained</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white counter" data-target="95">0</div>
+            <div class="text-sm text-gray-400">Pass Rate</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white counter" data-target="12">0</div>
+            <div class="text-sm text-gray-400">Certifications</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white">4.9<span class="text-cyan-400">★</span></div>
+            <div class="text-sm text-gray-400">Avg Rating</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Content - Terminal Card -->
+      <div class="slide-right">
+        <div class="bg-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-800/50 border-b border-white/10">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="text-xs text-gray-400 ml-2 font-mono">secure-lab ~ oscp-prep</span>
+          </div>
+          <div class="p-5 font-mono text-sm">
+            <div class="text-gray-300"><span class="text-cyan-400">$</span> nmap -sV -sC 10.0.0.45</div>
+            <div class="text-gray-500 mt-1">Starting Nmap 7.94...</div>
+            <div class="text-gray-500">PORT    STATE SERVICE  VERSION</div>
+            <div class="text-yellow-400">22/tcp  open  ssh      OpenSSH 8.2</div>
+            <div class="text-yellow-400">80/tcp  open  http     Apache 2.4.41</div>
+            <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> gobuster dir -u http://10.0.0.45</div>
+            <div class="text-green-400">✔ /admin (Status: 200)</div>
+            <div class="text-green-400">✔ /backup (Status: 403)</div>
+            <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> <span class="t-blink">█</span></div>
+          </div>
+          
+          <!-- Enrollment Card -->
+          <div class="p-5 border-t border-white/10 bg-gradient-to-r from-blue-600/10 to-cyan-600/10">
+            <div class="inline-block px-2 py-1 bg-red-500 text-white text-xs rounded mb-3 font-mono">30% OFF · ENDS SOON</div>
+            <div class="font-bold text-white mb-1">OSCP Certification Track</div>
+            <div class="text-xs text-gray-400 mb-4">Jan 2025 batch · Limited to 30 seats</div>
+            
+            <div class="mb-3">
+              <div class="flex justify-between text-xs text-gray-400 mb-1">
+                <span>OSCP</span>
+                <span class="text-red-400">85% filled</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
+            </div>
+            
+            <div>
+              <div class="flex justify-between text-xs text-gray-400 mb-1">
+                <span>CRTO</span>
+                <span class="text-cyan-400">40% filled</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 40%"></div></div>
+            </div>
+            
+            <a href="/signup" class="block text-center mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg transition-all">
+              Reserve Your Seat →
+            </a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- TICKER SECTION -->
+<div class="bg-gradient-to-r from-blue-600 to-cyan-600 py-3 overflow-hidden">
+  <div class="ticker-track whitespace-nowrap inline-flex">
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">⚡ OSCP CERTIFICATION</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">🎯 OSWE WEB EXPERT</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">🔥 CRTO RED TEAM</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">💀 eJPT JUNIOR PENTESTER</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">🛡️ OSED EXPLOIT DEV</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">⚡ OSCP CERTIFICATION</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">🎯 OSWE WEB EXPERT</span>
+    <span class="text-black/50">—</span>
+    <span class="inline-flex items-center mx-8 text-black font-semibold text-sm">🔥 CRTO RED TEAM</span>
+  </div>
+</div>
+
+<!-- COURSES SECTION -->
+<section class="py-20 bg-gray-50 dark:bg-gray-900" id="courses">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase font-mono">Elite Certifications</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+        Industry-Recognized <span class="text-gradient">Credentials</span>
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Choose from 12 globally recognized programs taught by active practitioners
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- OSCP Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
+        <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
+          <span class="absolute top-4 right-4 px-2 py-1 bg-red-500/10 text-red-500 text-xs rounded font-mono">🔥 Most Popular</span>
+          <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-skull-crossbones text-red-600 text-xl"></i>
+          </div>
+          <div class="text-2xl font-bold text-gray-900 dark:text-white">OSCP</div>
+          <div class="text-xs text-gray-500 font-mono">Offensive Security Certified Professional</div>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <span class="text-xs text-gray-500 ml-2">5.0 (1,234)</span>
+          </div>
+          <div class="flex gap-4 mb-4 text-xs text-gray-500">
+            <span><i class="far fa-clock mr-1"></i> 8 weeks</span>
+            <span><i class="fas fa-flask mr-1"></i> 24/7 labs</span>
+            <span><i class="fas fa-signal mr-1"></i> Advanced</span>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div>
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,499</span>
+              <span class="text-sm text-gray-400 line-through ml-2">$2,100</span>
+            </div>
+            <a href="/courses/oscp" class="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- OSWE Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
+        <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+          <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-code text-purple-600 text-xl"></i>
+          </div>
+          <div class="text-2xl font-bold text-gray-900 dark:text-white">OSWE</div>
+          <div class="text-xs text-gray-500 font-mono">Offensive Security Web Expert</div>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+            <span class="text-xs text-gray-500 ml-2">4.8 (892)</span>
+          </div>
+          <div class="flex gap-4 mb-4 text-xs text-gray-500">
+            <span><i class="far fa-clock mr-1"></i> 6 weeks</span>
+            <span><i class="fas fa-flask mr-1"></i> Source audit</span>
+            <span><i class="fas fa-signal mr-1"></i> Expert</span>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div>
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,699</span>
+              <span class="text-sm text-gray-400 line-through ml-2">$2,400</span>
+            </div>
+            <a href="/courses/oswe" class="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- CRTO Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
+        <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
+          <span class="absolute top-4 right-4 px-2 py-1 bg-cyan-500/10 text-cyan-500 text-xs rounded font-mono">↑ Trending</span>
+          <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-crosshairs text-cyan-600 text-xl"></i>
+          </div>
+          <div class="text-2xl font-bold text-gray-900 dark:text-white">CRTO</div>
+          <div class="text-xs text-gray-500 font-mono">Certified Red Team Operator</div>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+            <span class="text-xs text-gray-500 ml-2">5.0 (567)</span>
+          </div>
+          <div class="flex gap-4 mb-4 text-xs text-gray-500">
+            <span><i class="far fa-clock mr-1"></i> 5 weeks</span>
+            <span><i class="fas fa-flask mr-1"></i> Cobalt Strike</span>
+            <span><i class="fas fa-signal mr-1"></i> Advanced</span>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div>
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">$999</span>
+              <span class="text-sm text-gray-400 line-through ml-2">$1,400</span>
+            </div>
+            <a href="/courses/crto" class="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-10">
+      <a href="/courses" class="inline-flex items-center px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all">
+        View All 12 Certifications →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900" id="services">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-left mb-12">
+      <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase font-mono">Enterprise Services</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+        Security Solutions <span class="text-gradient">For Your Organization</span>
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
+        Beyond training — we protect real organizations with enterprise-grade security services
+      </p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- Large Service Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover-lift">
+        <div class="text-xs text-gray-500 font-mono mb-8">01 / OFFENSIVE</div>
+        <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center mb-6">
+          <i class="fas fa-shield-virus text-red-600 text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Penetration Testing</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">Comprehensive adversarial assessments simulating real-world attacks against your network, applications, and people.</p>
+        <div class="text-sm text-gray-500 mb-4">Starting from <strong class="text-blue-600">$2,500</strong> / engagement</div>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Network</span>
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Web Apps</span>
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Mobile</span>
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">API Security</span>
+        </div>
+      </div>
+      
+      <!-- Right Column -->
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover-lift">
+          <div class="text-xs text-gray-500 font-mono mb-4">02 / ASSESSMENT</div>
+          <div class="w-10 h-10 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-search text-cyan-600"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Vulnerability Assessment</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Systematic identification, classification, and prioritization of vulnerabilities across your attack surface.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Automated</span>
+            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Manual</span>
+            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Continuous</span>
+          </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover-lift">
+          <div class="text-xs text-gray-500 font-mono mb-4">03 / RESPONSE</div>
+          <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-bell text-purple-600"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Incident Response</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">24/7 emergency response when breaches happen. Contain, eradicate, and recover with forensic precision.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">24/7 Support</span>
+            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Forensics</span>
+            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Recovery</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="py-20 bg-gray-50 dark:bg-gray-900" id="how">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase font-mono">Process</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+        From Zero to <span class="text-gradient">Certified</span>
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">A proven methodology that prepares you for real-world challenges</p>
+    </div>
+    
+    <div class="grid md:grid-cols-4 gap-1 bg-gray-200 dark:bg-gray-700 rounded-xl overflow-hidden">
+      <div class="bg-white dark:bg-gray-800 p-8">
+        <div class="text-xs text-gray-500 font-mono mb-6">STEP 01</div>
+        <div class="text-4xl mb-4">🎯</div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Choose Your Path</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Take our free career assessment to find the right certification track</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-8">
+        <div class="text-xs text-gray-500 font-mono mb-6">STEP 02</div>
+        <div class="text-4xl mb-4">📚</div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Learn the Theory</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Bite-sized video modules taught by practitioners</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-8">
+        <div class="text-xs text-gray-500 font-mono mb-6">STEP 03</div>
+        <div class="text-4xl mb-4">⚗️</div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Train in Labs</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Hands-on in real virtual lab environments</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-8">
+        <div class="text-xs text-gray-500 font-mono mb-6">STEP 04</div>
+        <div class="text-4xl mb-4">🏆</div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Get Certified</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Sit the exam and earn your certificate</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="py-20 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase font-mono">Reviews</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+        Trusted by <span class="text-gradient">Security Professionals</span>
+      </h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl text-cyan-400 opacity-40 mb-3">❝</div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4 italic">"The OSCP training was the most challenging and rewarding thing I've done. Passed on my first attempt!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold">JD</div>
+          <div>
+            <div class="font-semibold text-gray-900 dark:text-white">James Dawson</div>
+            <div class="text-xs text-gray-500">Security Engineer · Google</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl text-cyan-400 opacity-40 mb-3">❝</div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4 italic">"CRTO gave me practical red teaming skills I use daily. The Cobalt Strike training alone is worth the price."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center text-white font-bold">SR</div>
+          <div>
+            <div class="font-semibold text-gray-900 dark:text-white">Sarah Rahman</div>
+            <div class="text-xs text-gray-500">Red Team Lead · Microsoft</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl text-cyan-400 opacity-40 mb-3">❝</div>
+        <p class="text-gray-600 dark:text-gray-400 mb-4 italic">"Started from zero with eJPT. Six months later I'm a junior pentester at a top firm. Incredible!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-r from-green-600 to-emerald-500 flex items-center justify-center text-white font-bold">MK</div>
+          <div>
+            <div class="font-semibold text-gray-900 dark:text-white">Mohamed Khalil</div>
+            <div class="text-xs text-gray-500">Junior Pentester · CrowdStrike</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA SECTION -->
+<section class="py-20 bg-gradient-to-r from-blue-600 to-cyan-600">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-3xl mx-auto">
+      <span class="text-sm text-white/80 font-mono tracking-wide">Ready to start?</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">
+        Start Your Cybersecurity Career Today
+      </h2>
+      <p class="text-lg text-white/90 mb-8">
+        Join 5,000+ professionals. No experience needed — just the will to learn.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="/signup" class="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+          Enroll Now — 30% Off
+        </a>
+        <a href="/contact" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+          Talk to an Advisor
+        </a>
+      </div>
+      
+      <!-- Newsletter Subscription -->
+      <div class="mt-8">
+        <div class="max-w-md mx-auto">
+          <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3">
+            <input type="email" id="newsletterEmail" name="email" 
+                   placeholder="Enter your email for updates" 
+                   class="flex-1 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent">
+            <button type="submit" id="subscribeBtn" 
+                    class="px-6 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+              Subscribe
+            </button>
+          </form>
+          
+          <!-- Message Container -->
+          <div id="subscriptionMessage" class="mt-3 hidden"></div>
+          
+          <p class="text-xs text-white/70 mt-3 font-mono">
+            <i class="fas fa-lock mr-1"></i> No spam. Unsubscribe anytime.
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Subscription Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const newsletterForm = document.getElementById('newsletterForm');
+    const emailInput = document.getElementById('newsletterEmail');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const messageContainer = document.getElementById('subscriptionMessage');
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            
+            // Clear previous message
+            messageContainer.classList.add('hidden');
+            messageContainer.innerHTML = '';
+            
+            // Validate email
+            if (!email) {
+                showMessage('Please enter your email address', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Disable button and show loading state
+            subscribeBtn.disabled = true;
+            const originalText = subscribeBtn.innerHTML;
+            subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Subscribing...';
+            
+            try {
+                // Send subscription request
+                const response = await fetch('/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Success
+                    showMessage(data.message || 'Successfully subscribed to newsletter!', 'success');
+                    emailInput.value = '';
+                    
+                    // Auto hide success message after 5 seconds
+                    setTimeout(() => {
+                        const msgDiv = document.getElementById('subscriptionMessage');
+                        if (msgDiv && !msgDiv.classList.contains('hidden')) {
+                            fadeOut(msgDiv);
+                        }
+                    }, 5000);
+                } else {
+                    // Error from server
+                    showMessage(data.message || 'Subscription failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Subscription error:', error);
+                showMessage('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                // Re-enable button
+                subscribeBtn.disabled = false;
+                subscribeBtn.innerHTML = originalText;
+            }
+        });
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function showMessage(message, type) {
+        messageContainer.classList.remove('hidden');
+        messageContainer.innerHTML = `
+            <div class="subscription-alert subscription-${type} animate-slide-in">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+                ${message}
+            </div>
+        `;
+        
+        // Auto hide error after 5 seconds
+        if (type === 'error') {
+            setTimeout(() => {
+                const msgDiv = document.getElementById('subscriptionMessage');
+                if (msgDiv && !msgDiv.classList.contains('hidden')) {
+                    fadeOut(msgDiv);
+                }
+            }, 5000);
+        }
+    }
+    
+    function fadeOut(element) {
+        element.style.transition = 'opacity 0.5s ease';
+        element.style.opacity = '0';
+        setTimeout(() => {
+            element.classList.add('hidden');
+            element.style.opacity = '';
+        }, 500);
+    }
+});
+
+// Add styles for subscription alerts
+const subscriptionStyles = document.createElement('style');
+subscriptionStyles.textContent = `
+    .subscription-alert {
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    .subscription-success {
+        background-color: rgba(34, 197, 94, 0.2);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+        color: #ffffff;
+    }
+    
+    .subscription-error {
+        background-color: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #ffffff;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(subscriptionStyles);
+</script>
+
+<!-- Counter Animation Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const counters = document.querySelectorAll('.counter');
+  
+  const animateCounter = (counter) => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    let count = 0;
+    const increment = target / 60;
+    
+    const updateCount = () => {
+      count += increment;
+      if (count < target) {
+        counter.innerText = Math.ceil(count);
+        setTimeout(updateCount, 20);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    
+    updateCount();
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  counters.forEach(counter => observer.observe(counter));
+});
+</script>
+
+
+
+
+

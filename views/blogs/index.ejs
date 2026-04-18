@@ -1,0 +1,329 @@
+<% layout("/layouts/boilerplate") -%>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20 overflow-hidden">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+    <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+</div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 py-20 md:py-28 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Cybersecurity Blog</h1>
+        <p class="text-lg text-gray-200 max-w-2xl mx-auto">
+            Stay updated with the latest cybersecurity trends, tips, and insights from industry experts
+        </p>
+    </div>
+</section>
+
+<!-- Search and Filter Section -->
+<section class="py-8 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+            <!-- Search Bar -->
+            <form action="/blogs" method="GET" class="flex-1 max-w-md">
+                <div class="relative">
+                    <input type="text" name="q" value="<%= search || '' %>" 
+                           placeholder="Search blogs..." 
+                           class="w-full px-5 py-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                    <% if (search && search.length > 0) { %>
+                        <a href="/blogs" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    <% } %>
+                </div>
+            </form>
+            
+            <!-- Filter Dropdown -->
+            <div class="flex gap-3">
+                <div class="relative">
+                    <select id="categoryFilter" 
+                            class="px-5 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
+                        <option value="">All Categories</option>
+                        <option value="OSCP" <%= category === 'OSCP' ? 'selected' : '' %>>OSCP Preparation</option>
+                        <option value="Red Team" <%= category === 'Red Team' ? 'selected' : '' %>>Red Teaming</option>
+                        <option value="Web Security" <%= category === 'Web Security' ? 'selected' : '' %>>Web Security</option>
+                        <option value="Career" <%= category === 'Career' ? 'selected' : '' %>>Career Advice</option>
+                        <option value="News" <%= category === 'News' ? 'selected' : '' %>>Industry News</option>
+                        <option value="Tutorial" <%= category === 'Tutorial' ? 'selected' : '' %>>Tutorials</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-3.5 text-gray-400 pointer-events-none"></i>
+                </div>
+                
+                <button onclick="applyFilter()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blogs Grid Section -->
+<section class="py-12 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Results Count -->
+        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <p class="text-gray-600 dark:text-gray-400">
+                Showing <span class="font-semibold"><%= allBlogs ? allBlogs.length : 0 %></span> 
+                of <span class="font-semibold"><%= totalBlogs || 0 %></span> blog posts
+            </p>
+            <div class="flex gap-2">
+                <button onclick="sortBlogs('newest')" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Newest</button>
+                <span class="text-gray-300">|</span>
+                <button onclick="sortBlogs('oldest')" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Oldest</button>
+                <span class="text-gray-300">|</span>
+                <button onclick="sortBlogs('popular')" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Most Viewed</button>
+            </div>
+        </div>
+        
+        <!-- Blogs Grid -->
+        <% if (allBlogs && allBlogs.length > 0) { %>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% allBlogs.forEach(blog => { %>
+                    <article class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                        <!-- Blog Image -->
+                        <a href="/blogs/<%= blog.id || blog._id %>" class="block relative h-56 overflow-hidden">
+                            <% if (blog.image && blog.image.url) { %>
+                                <img src="<%= blog.image.url %>" alt="<%= blog.title %>" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <% } else { %>
+                                <div class="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-6xl text-white/30"></i>
+                                </div>
+                            <% } %>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            
+                            <!-- Category Badge -->
+                            <% if (blog.category) { %>
+                                <span class="absolute top-4 left-4 px-3 py-1 bg-blue-600 text-white text-xs rounded-full font-semibold z-10">
+                                    <%= blog.category %>
+                                </span>
+                            <% } %>
+                            
+                            <!-- Read Time Badge -->
+                            <span class="absolute bottom-4 left-4 px-2 py-1 bg-black/50 backdrop-blur-sm text-white text-xs rounded-full z-10">
+                                <i class="far fa-clock mr-1"></i> <%= Math.ceil((blog.content || '').length / 1000) || 5 %> min read
+                            </span>
+                        </a>
+                        
+                        <div class="p-6">
+                            <!-- Author & Date -->
+                            <div class="flex items-center justify-between mb-3 text-sm text-gray-500 dark:text-gray-400">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
+                                        <%= blog.author?.name?.charAt(0).toUpperCase() || 'A' %>
+                                    </div>
+                                    <span><%= blog.author?.name || 'Anonymous' %></span>
+                                </div>
+                                <span><i class="far fa-calendar-alt mr-1"></i> <%= blog.createdAt ? new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recent' %></span>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="/blogs/<%= blog.id || blog._id %>"><%= blog.title %></a>
+                            </h3>
+                            
+                            <!-- Description -->
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
+                                <%= blog.shortdescription || (blog.content ? blog.content.substring(0, 150) + '...' : 'No description available') %>
+                            </p>
+                            
+                            <!-- Stats -->
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <div class="flex gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-eye mr-1"></i> <%= blog.usersSeen?.length || 0 %></span>
+                                    <span><i class="fas fa-comment mr-1"></i> <%= blog.comments?.length || 0 %></span>
+                                </div>
+                                <a href="/blogs/<%= blog.id || blog._id %>" 
+                                   class="text-blue-600 dark:text-blue-400 font-semibold text-sm hover:translate-x-1 transition-transform inline-flex items-center">
+                                    Read More <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <!-- No Results -->
+            <div class="text-center py-16">
+                <i class="fas fa-search text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">No blogs found</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    <% if ((search && search.length > 0) || (category && category.length > 0)) { %>
+                        No blogs match your search criteria. Try different keywords or clear filters.
+                    <% } else { %>
+                        No blogs have been published yet. Check back soon!
+                    <% } %>
+                </p>
+                <% if ((search && search.length > 0) || (category && category.length > 0)) { %>
+                    <a href="/blogs" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                        <i class="fas fa-times mr-2"></i> Clear Filters
+                    </a>
+                <% } %>
+            </div>
+        <% } %>
+        
+        <!-- Pagination -->
+        <% if (totalPages && totalPages > 1) { %>
+            <div class="flex justify-center mt-12">
+                <nav class="flex items-center gap-2 flex-wrap justify-center">
+                    <% if (currentPage > 1) { %>
+                        <a href="?page=<%= currentPage - 1 %><%= category ? '&category=' + category : '' %><%= search ? '&q=' + search : '' %>" 
+                           class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    <% } %>
+                    
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <% if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) { %>
+                            <a href="?page=<%= i %><%= category ? '&category=' + category : '' %><%= search ? '&q=' + search : '' %>" 
+                               class="px-4 py-2 rounded-lg transition-colors <%= i === currentPage ? 'bg-blue-600 text-white' : 'border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700' %>">
+                                <%= i %>
+                            </a>
+                        <% } else if (i === currentPage - 3 || i === currentPage + 3) { %>
+                            <span class="px-2 text-gray-500">...</span>
+                        <% } %>
+                    <% } %>
+                    
+                    <% if (currentPage < totalPages) { %>
+                        <a href="?page=<%= currentPage + 1 %><%= category ? '&category=' + category : '' %><%= search ? '&q=' + search : '' %>" 
+                           class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    <% } %>
+                </nav>
+            </div>
+        <% } %>
+        
+        <!-- Popular Topics -->
+        <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Popular Topics</h3>
+            <div class="flex flex-wrap gap-3 justify-center">
+                <a href="/blogs?category=OSCP" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-all">OSCP Preparation</a>
+                <a href="/blogs?category=Red Team" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-all">Red Teaming</a>
+                <a href="/blogs?category=Web Security" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-all">Web Security</a>
+                <a href="/blogs?category=Career" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-all">Career Advice</a>
+                <a href="/blogs?category=News" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-all">Industry News</a>
+                <a href="/blogs?category=Tutorial" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-blue-600 hover:text-white transition-all">Tutorials</a>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- Newsletter CTA -->
+
+
+<!-- JavaScript -->
+<script>
+    // Apply filter function
+    function applyFilter() {
+        const category = document.getElementById('categoryFilter').value;
+        const currentUrl = new URL(window.location.href);
+        
+        if (category) {
+            currentUrl.searchParams.set('category', category);
+        } else {
+            currentUrl.searchParams.delete('category');
+        }
+        currentUrl.searchParams.delete('page');
+        
+        window.location.href = currentUrl.toString();
+    }
+    
+    // Sort function (client-side)
+    function sortBlogs(type) {
+        const container = document.querySelector('.grid.md\\:grid-cols-2.lg\\:grid-cols-3');
+        if (!container) return;
+        
+        const articles = Array.from(container.children);
+        
+        articles.sort((a, b) => {
+            if (type === 'newest') {
+                const dateA = new Date(a.querySelector('.fa-calendar-alt')?.parentElement?.textContent || 0);
+                const dateB = new Date(b.querySelector('.fa-calendar-alt')?.parentElement?.textContent || 0);
+                return dateB - dateA;
+            } else if (type === 'oldest') {
+                const dateA = new Date(a.querySelector('.fa-calendar-alt')?.parentElement?.textContent || 0);
+                const dateB = new Date(b.querySelector('.fa-calendar-alt')?.parentElement?.textContent || 0);
+                return dateA - dateB;
+            } else if (type === 'popular') {
+                const viewsA = parseInt(a.querySelector('.fa-eye')?.parentElement?.textContent || 0);
+                const viewsB = parseInt(b.querySelector('.fa-eye')?.parentElement?.textContent || 0);
+                return viewsB - viewsA;
+            }
+            return 0;
+        });
+        
+        articles.forEach(article => container.appendChild(article));
+    }
+    
+    // Auto-submit on category change
+    document.getElementById('categoryFilter')?.addEventListener('change', function() {
+        applyFilter();
+    });
+    
+    // Newsletter subscription
+    const newsletterForm = document.getElementById('blogNewsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('blogNewsletterEmail').value.trim();
+            const messageContainer = document.getElementById('blogNewsletterMessage');
+            const subscribeBtn = this.querySelector('button[type="submit"]');
+            
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                messageContainer.classList.remove('hidden');
+                messageContainer.innerHTML = '<div class="text-red-300 text-sm">Please enter a valid email</div>';
+                setTimeout(() => messageContainer.classList.add('hidden'), 3000);
+                return;
+            }
+            
+            subscribeBtn.disabled = true;
+            subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Subscribing...';
+            
+            try {
+                const response = await fetch('/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, source: 'blog' })
+                });
+                const data = await response.json();
+                
+                messageContainer.classList.remove('hidden');
+                if (data.success) {
+                    messageContainer.innerHTML = '<div class="text-green-300 text-sm"><i class="fas fa-check-circle mr-1"></i> ' + data.message + '</div>';
+                    document.getElementById('blogNewsletterEmail').value = '';
+                } else {
+                    messageContainer.innerHTML = '<div class="text-red-300 text-sm"><i class="fas fa-exclamation-circle mr-1"></i> ' + data.message + '</div>';
+                }
+                setTimeout(() => messageContainer.classList.add('hidden'), 5000);
+            } catch (error) {
+                messageContainer.classList.remove('hidden');
+                messageContainer.innerHTML = '<div class="text-red-300 text-sm">Network error. Please try again.</div>';
+                setTimeout(() => messageContainer.classList.add('hidden'), 3000);
+            } finally {
+                subscribeBtn.disabled = false;
+                subscribeBtn.innerHTML = 'Subscribe';
+            }
+        });
+    }
+    
+    // Line clamp CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    `;
+    document.head.appendChild(style);
+</script>

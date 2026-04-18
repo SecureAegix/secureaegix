@@ -1,0 +1,529 @@
+<% layout("/layouts/boilerplate") -%>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-gray-900 via-red-900 to-cyan-900 text-white py-20">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-red-500/20 backdrop-blur-sm border border-red-500/30 mb-6">
+                    <span class="relative flex h-2 w-2 mr-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                    <span class="text-sm">Advanced Adversary Simulation</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    Red Team <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-cyan-400">Operations</span>
+                </h1>
+                <p class="text-lg text-gray-300 mb-8">
+                    Think like an attacker. Our elite red team simulates real-world adversaries to test your defenses, people, and processes.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="/contact" class="px-8 py-3 bg-gradient-to-r from-red-600 to-cyan-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                        Start Engagement →
+                    </a>
+                    <a href="#methodology" class="px-8 py-3 border border-white/20 rounded-lg font-semibold hover:bg-white/10 transition-all">
+                        View Methodology
+                    </a>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-4 text-sm">
+                    <span><i class="fas fa-user-secret mr-1"></i> Elite Operators</span>
+                    <span><i class="fas fa-bullseye mr-1"></i> Objective-Based</span>
+                    <span><i class="fas fa-chart-line mr-1"></i> Measurable Results</span>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <div class="bg-gray-900/50 backdrop-blur-sm border border-red-500/30 rounded-xl overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 bg-red-500/20 border-b border-red-500/30">
+                        <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="text-xs text-red-300 ml-2 font-mono">red-team ~ cobalt-strike</span>
+                    </div>
+                    <div class="p-5 font-mono text-sm">
+                        <div class="text-gray-300"><span class="text-red-400">[RED TEAM]</span> <span class="text-cyan-400">$</span> teamserver start</div>
+                        <div class="text-green-400">✔ Cobalt Strike teamserver running</div>
+                        <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> listeners --create https</div>
+                        <div class="text-green-400">✔ HTTPS listener created on port 443</div>
+                        <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> spearphish --target ceo@target.com</div>
+                        <div class="text-yellow-400">⚠ Phishing email sent - initial access phase</div>
+                        <div class="text-green-400 mt-2">✔ Beacon check-in received</div>
+                        <div class="text-gray-300"><span class="text-cyan-400">$</span> lateral-movement --exploit eternalblue</div>
+                        <div class="text-yellow-400">⚠ Moving laterally to domain controller...</div>
+                        <div class="text-green-400">✔ Domain admin privileges obtained</div>
+                        <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> objectives --complete</div>
+                        <div class="text-red-400">🎯 All red team objectives achieved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What is Red Teaming -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-sm text-red-600 dark:text-red-400 font-semibold tracking-wide uppercase">What Is Red Teaming</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                    Beyond Traditional <span class="text-gradient">Penetration Testing</span>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Red teaming is a full-scope, goal-oriented security assessment that simulates real-world adversaries. Unlike penetration testing, red teaming tests your entire security posture including people, processes, and technology.
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Our red team operates with no prior knowledge of your defenses, just like a real attacker. We use the same tactics, techniques, and procedures (TTPs) as advanced persistent threats (APTs) to provide an authentic assessment.
+                </p>
+                <div class="mt-6 flex gap-4">
+                    <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> <span class="text-sm">Real-world simulation</span></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> <span class="text-sm">APT-level TTPs</span></div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-red-600">100%</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Real-world Simulation</div>
+                </div>
+                <div class="bg-cyan-50 dark:bg-cyan-900/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-cyan-600">24/7</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Continuous Operations</div>
+                </div>
+                <div class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-purple-600">0%</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Prior Knowledge</div>
+                </div>
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-yellow-600">100%</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Objective-Based</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Red Team vs Blue Team -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Purple Team Approach</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Red Team vs <span class="text-gradient">Blue Team</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                We combine adversarial attacks with defensive collaboration for maximum improvement
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-8 border-l-4 border-red-500">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-user-secret text-red-500 text-3xl"></i>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Red Team</h3>
+                </div>
+                <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-red-500 mt-1"></i> Simulates real-world attackers</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-red-500 mt-1"></i> No prior knowledge of defenses</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-red-500 mt-1"></i> Uses APT-level TTPs</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-red-500 mt-1"></i> Goal: Compromise objectives</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-red-500 mt-1"></i> Tests people, process, technology</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-8 border-l-4 border-blue-500">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-shield-alt text-blue-500 text-3xl"></i>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Blue Team</h3>
+                </div>
+                <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> Defends against real attacks</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> Monitors and responds to threats</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> Uses detection tools and processes</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> Goal: Detect and respond</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> Improves security posture</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-8 bg-gradient-to-r from-red-50 to-blue-50 dark:from-red-900/20 dark:to-blue-900/20 rounded-xl p-6 text-center">
+            <i class="fas fa-handshake text-3xl text-purple-600 mb-2"></i>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Purple Team = Red + Blue</h3>
+            <p class="text-gray-600 dark:text-gray-400">We combine offensive attacks with defensive collaboration to identify gaps and improve detection capabilities in real-time.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Red Team Methodology -->
+<section id="methodology" class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-red-600 dark:text-red-400 font-semibold tracking-wide uppercase">Our Approach</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Red Team <span class="text-gradient">Methodology</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Based on MITRE ATT&CK framework and real-world adversary behaviors
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="text-red-600 font-bold text-xl">1</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Reconnaissance</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">OSINT gathering, social media analysis, and external footprint discovery to identify attack surfaces.</p>
+                <div class="mt-3 text-xs text-gray-500 font-mono">OSINT · DNS Enumeration · Port Scanning</div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="text-orange-600 font-bold text-xl">2</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Initial Access</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Phishing, exploitation, or physical breach to gain initial foothold in the environment.</p>
+                <div class="mt-3 text-xs text-gray-500 font-mono">Spearphishing · Exploit · Social Engineering</div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="text-yellow-600 font-bold text-xl">3</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">C2 & Persistence</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Establish command & control channels and maintain persistent access to the environment.</p>
+                <div class="mt-3 text-xs text-gray-500 font-mono">Cobalt Strike · Beacon · Backdoors</div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="text-green-600 font-bold text-xl">4</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Lateral Movement</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Move laterally across the network to compromise high-value targets and escalate privileges.</p>
+                <div class="mt-3 text-xs text-gray-500 font-mono">Pass-the-Hash · RDP · PSExec</div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="text-blue-600 font-bold text-xl">5</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Privilege Escalation</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Escalate privileges to domain admin or root level access on critical systems.</p>
+                <div class="mt-3 text-xs text-gray-500 font-mono">Kerberoasting · Token Manipulation</div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="text-purple-600 font-bold text-xl">6</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Objective Completion</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Achieve predefined objectives like data exfiltration, domain compromise, or critical asset access.</p>
+                <div class="mt-3 text-xs text-gray-500 font-mono">Data Exfil · Domain Compromise</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Red Team Services -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Services</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Comprehensive Red <span class="text-gradient">Team Services</span>
+            </h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-chart-line text-red-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Full-Scope Red Team</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Complete adversarial simulation testing all aspects of your security posture including people, processes, and technology.</p>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> External & Internal testing</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Physical security assessment</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Social engineering campaigns</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Wireless & IoT testing</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-bullseye text-cyan-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Objective-Based Assessment</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Focused red team engagement targeting specific objectives like crown jewel compromise or sensitive data access.</p>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Custom objectives defined</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Crown jewel targeting</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Data exfiltration simulation</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Realistic threat scenarios</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-users text-purple-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Purple Team Engagement</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Collaborative exercise where red and blue teams work together to improve detection and response capabilities.</p>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Real-time knowledge transfer</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Detection gap analysis</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Response improvement</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Tool optimization</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-xl transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-chalkboard-teacher text-green-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Adversary Emulation</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Simulate specific threat actors (APT groups) using their known TTPs to test against real-world adversaries.</p>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> APT group simulation</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Industry-specific threats</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Custom TTP development</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Threat intelligence based</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TTPs & Tools -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">TTPs & Tools</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                MITRE ATT&CK <span class="text-gradient">Framework</span>
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Our techniques are mapped to the MITRE ATT&CK framework for industry-standard reporting
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                <h3 class="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-tachometer-alt text-red-600"></i> Common TTPs Used
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> T1078 - Valid Accounts</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> T1059 - Command & Scripting</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> T1021 - Remote Services</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> T1550 - Use Alternate Auth</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> T1041 - Exfiltration C2</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> T1566 - Phishing</div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                <h3 class="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-tools text-cyan-600"></i> Red Team Tool Stack
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> Cobalt Strike</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> Metasploit</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> BloodHound</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> Impacket</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> PowerShell Empire</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><i class="fas fa-check-circle text-green-500"></i> Mythic C2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Deliverables -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">What You Get</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Comprehensive <span class="text-gradient">Deliverables</span>
+            </h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 text-center">
+                <i class="fas fa-chart-pie text-4xl text-red-600 mb-3"></i>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Executive Summary</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Strategic overview for leadership with risk ratings and recommendations</p>
+            </div>
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 text-center">
+                <i class="fas fa-list-check text-4xl text-cyan-600 mb-3"></i>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Technical Report</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Full TTP breakdown, attack timeline, and technical findings</p>
+            </div>
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 text-center">
+                <i class="fas fa-clipboard-list text-4xl text-green-600 mb-3"></i>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Remediation Plan</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Actionable recommendations prioritized by risk level</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-sm text-red-600 dark:text-red-400 font-semibold tracking-wide uppercase">Why Choose Us</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                    Elite Red Team <span class="text-gradient">Operators</span>
+                </h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-certificate text-red-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Certified Professionals</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Our team holds OSCP, OSWE, CRTO, GXPN, and other elite certifications</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-trophy text-yellow-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Real-World Experience</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Former military, intelligence, and private sector red team operators</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-lock text-purple-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Safe & Controlled</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Strict rules of engagement and safety mechanisms to prevent damage</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-chart-line text-green-600 text-xl mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-900 dark:text-white">Proven Results</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Successful engagements across Fortune 500 companies and government agencies</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-gray-900 to-red-900 rounded-2xl p-8 text-white border border-red-500/30">
+                <div class="text-center">
+                    <i class="fas fa-shield-alt text-5xl text-red-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Ready to Test Your Defenses?</h3>
+                    <p class="text-gray-300 mb-6">See how your security team responds to a real-world adversary simulation</p>
+                    <a href="/contact" class="inline-block px-6 py-3 bg-gradient-to-r from-red-600 to-cyan-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                        Schedule Red Team Assessment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">FAQ</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+                Frequently Asked <span class="text-gradient">Questions</span>
+            </h2>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">How is red team different from penetration testing?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Penetration testing focuses on finding as many vulnerabilities as possible. Red teaming is objective-based, testing your entire security program including people, processes, and detection capabilities. Red teams operate stealthily and emulate real adversaries.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">How long does a red team engagement take?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Typical engagements range from 2-6 weeks depending on scope and objectives. We work with you to define the appropriate timeline based on your environment complexity and testing goals.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">Will you inform my blue team during the test?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">For standard red team exercises, we do not inform the blue team to test their detection capabilities. For purple team engagements, we collaborate openly. This decision is made based on your objectives.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">What safety measures are in place?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">We establish strict rules of engagement, use safe C2 frameworks, have emergency stop procedures, and maintain constant communication with your designated point of contact.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-gray-900 dark:text-white">What certifications do your operators hold?</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-gray-600 dark:text-gray-400">Our team holds OSCP, OSCE, OSWE, CRTO, GPEN, GXPN, CISSP, and other industry-leading certifications. Many have prior military or intelligence community experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-gray-900 via-red-900 to-cyan-900">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <i class="fas fa-user-secret text-5xl text-red-400 mb-4"></i>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Think Like an Attacker</h2>
+        <p class="text-lg text-gray-300 mb-8">See how your defenses hold up against a real-world adversary simulation</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-red-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                Schedule Red Team Assessment
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white/30 text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+                Download Case Study
+                <i class="fas fa-download ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Accordion Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('i');
+            
+            answer.classList.toggle('hidden');
+            icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    });
+});
+</script>

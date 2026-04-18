@@ -1,0 +1,385 @@
+<% layout("/layouts/boilerplate") -%>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-16 overflow-hidden">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto py-20 md:py-28 px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Terms of Service</h1>
+        <p class="text-lg text-gray-200 max-w-2xl mx-auto">
+            Please read these terms carefully before using our platform
+        </p>
+        <p class="text-sm text-gray-300 mt-4">Last Updated: January 1, 2025 | Effective Date: January 1, 2025</p>
+    </div>
+</section>
+
+<!-- Terms of Service Content -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Table of Contents -->
+        <div class="mb-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Table of Contents</h2>
+            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                <a href="#acceptance" class="text-blue-600 dark:text-blue-400 hover:underline">1. Acceptance of Terms</a>
+                <a href="#eligibility" class="text-blue-600 dark:text-blue-400 hover:underline">2. Eligibility</a>
+                <a href="#account-registration" class="text-blue-600 dark:text-blue-400 hover:underline">3. Account Registration</a>
+                <a href="#course-license" class="text-blue-600 dark:text-blue-400 hover:underline">4. Course License and Access</a>
+                <a href="#payments" class="text-blue-600 dark:text-blue-400 hover:underline">5. Payments and Refunds</a>
+                <a href="#certification" class="text-blue-600 dark:text-blue-400 hover:underline">6. Certification Policy</a>
+                <a href="#user-conduct" class="text-blue-600 dark:text-blue-400 hover:underline">7. User Conduct</a>
+                <a href="#intellectual-property" class="text-blue-600 dark:text-blue-400 hover:underline">8. Intellectual Property</a>
+                <a href="#user-content" class="text-blue-600 dark:text-blue-400 hover:underline">9. User-Generated Content</a>
+                <a href="#privacy" class="text-blue-600 dark:text-blue-400 hover:underline">10. Privacy</a>
+                <a href="#termination" class="text-blue-600 dark:text-blue-400 hover:underline">11. Termination</a>
+                <a href="#disclaimers" class="text-blue-600 dark:text-blue-400 hover:underline">12. Disclaimers</a>
+                <a href="#limitations" class="text-blue-600 dark:text-blue-400 hover:underline">13. Limitation of Liability</a>
+                <a href="#indemnification" class="text-blue-600 dark:text-blue-400 hover:underline">14. Indemnification</a>
+                <a href="#modifications" class="text-blue-600 dark:text-blue-400 hover:underline">15. Modifications to Services</a>
+                <a href="#governing-law" class="text-blue-600 dark:text-blue-400 hover:underline">16. Governing Law</a>
+                <a href="#dispute-resolution" class="text-blue-600 dark:text-blue-400 hover:underline">17. Dispute Resolution</a>
+                <a href="#contact" class="text-blue-600 dark:text-blue-400 hover:underline">18. Contact Information</a>
+            </div>
+        </div>
+        
+        <!-- Introduction -->
+        <div class="mb-10">
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Welcome to SecureAegix ("we," "our," "us"). These Terms of Service ("Terms") govern your access to and use of our website, courses, certifications, and services (collectively, the "Services"). By accessing or using our Services, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our Services.
+            </p>
+        </div>
+        
+        <!-- 1. Acceptance of Terms -->
+        <div id="acceptance" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">1. Acceptance of Terms</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>By creating an account, accessing our courses, or using our Services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you are using our Services on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.</p>
+                <p>We may update these Terms from time to time. Continued use of our Services after any changes constitutes acceptance of the modified Terms.</p>
+            </div>
+        </div>
+        
+        <!-- 2. Eligibility -->
+        <div id="eligibility" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">2. Eligibility</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>To use our Services, you must:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Be at least 18 years of age or have parental/guardian consent</li>
+                    <li>Have the legal capacity to enter into binding contracts</li>
+                    <li>Provide accurate and complete registration information</li>
+                    <li>Not be prohibited from using our Services under applicable laws</li>
+                </ul>
+                <div class="mt-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                    <p class="text-sm text-yellow-800 dark:text-yellow-300"><strong>Important:</strong> Certain certifications may have additional eligibility requirements. Please review specific course prerequisites before enrollment.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3. Account Registration -->
+        <div id="account-registration" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">3. Account Registration</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>To access certain features of our Services, you must create an account. You agree to:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Provide accurate, current, and complete information during registration</li>
+                    <li>Maintain the security of your password and account credentials</li>
+                    <li>Promptly update your information if it changes</li>
+                    <li>Accept responsibility for all activities that occur under your account</li>
+                    <li>Notify us immediately of any unauthorized use of your account</li>
+                </ul>
+                <p>We reserve the right to suspend or terminate accounts that violate these Terms or contain false information.</p>
+            </div>
+        </div>
+        
+        <!-- 4. Course License and Access -->
+        <div id="course-license" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">4. Course License and Access</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>Upon enrollment and payment, we grant you a limited, non-exclusive, non-transferable license to access and view the course content for personal, non-commercial use.</p>
+                <p><strong>You may not:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Share, distribute, or sublicense course content to others</li>
+                    <li>Record, reproduce, or create derivative works from course materials</li>
+                    <li>Use our content for commercial training or competitive purposes</li>
+                    <li>Attempt to bypass access restrictions or security measures</li>
+                    <li>Share login credentials with unauthorized users</li>
+                </ul>
+                <p>Course access duration varies by program. Please review individual course descriptions for specific access periods.</p>
+            </div>
+        </div>
+        
+        <!-- 5. Payments and Refunds -->
+        <div id="payments" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">5. Payments and Refunds</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p><strong>Payment Terms:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>All prices are listed in USD unless otherwise specified</li>
+                    <li>Payments are processed securely through third-party payment processors</li>
+                    <li>We do not store full payment information on our servers</li>
+                    <li>Taxes may apply based on your location</li>
+                </ul>
+                
+                <p class="mt-3"><strong>Refund Policy:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>30-day money-back guarantee for course purchases</li>
+                    <li>Refund requests must be submitted within 30 days of purchase</li>
+                    <li>To request a refund, contact <a href="mailto:support@secureaegix.com" class="text-blue-600 hover:underline">support@secureaegix.com</a></li>
+                    <li>Certification exam fees are non-refundable once scheduled</li>
+                    <li>Refunds for corporate/enterprise plans are subject to separate agreements</li>
+                </ul>
+                
+                <div class="mt-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <p class="text-sm"><strong>Note:</strong> Refunds are processed within 5-10 business days to the original payment method.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 6. Certification Policy -->
+        <div id="certification" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">6. Certification Policy</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p><strong>Certification Requirements:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Complete all required course modules and assignments</li>
+                    <li>Pass the final examination with the required minimum score</li>
+                    <li>Adhere to academic integrity policies during exams</li>
+                    <li>Complete any required lab exercises or practical assessments</li>
+                </ul>
+                
+                <p class="mt-3"><strong>Exam Policies:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Exams must be taken in a proctored environment where required</li>
+                    <li>Cheating or academic dishonesty will result in immediate disqualification</li>
+                    <li>You may be required to verify your identity before exams</li>
+                    <li>Exam results are final unless an appeal is submitted within 7 days</li>
+                    <li>Retake fees may apply for failed examinations</li>
+                </ul>
+                
+                <p class="mt-3"><strong>Certificate Issuance:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Digital certificates are issued upon successful completion</li>
+                    <li>Certificates include a unique verification ID for authenticity</li>
+                    <li>We reserve the right to revoke certificates for policy violations</li>
+                    <li>Certificate validity periods vary by program</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 7. User Conduct -->
+        <div id="user-conduct" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">7. User Conduct</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>You agree not to engage in any prohibited activities, including:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Attempting to hack, disrupt, or damage our Services</li>
+                    <li>Uploading malicious code, viruses, or harmful content</li>
+                    <li>Harassing, abusing, or threatening other users</li>
+                    <li>Impersonating another person or entity</li>
+                    <li>Violating any applicable laws or regulations</li>
+                    <li>Using our Services for unauthorized commercial purposes</li>
+                    <li>Posting inappropriate, offensive, or illegal content</li>
+                    <li>Attempting to reverse engineer our platform or content</li>
+                </ul>
+                <p>Violations may result in immediate account termination and legal action.</p>
+            </div>
+        </div>
+        
+        <!-- 8. Intellectual Property -->
+        <div id="intellectual-property" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">8. Intellectual Property</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>All content on our platform, including but not limited to:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Course materials, videos, and presentations</li>
+                    <li>Lab exercises and practice environments</li>
+                    <li>Logo, brand name, and trademarks</li>
+                    <li>Website design, layout, and code</li>
+                    <li>Assessment questions and examinations</li>
+                </ul>
+                <p>is the exclusive property of SecureAegix or our licensors and is protected by copyright, trademark, and other intellectual property laws.</p>
+                <p>Unauthorized use, reproduction, or distribution of our content is strictly prohibited.</p>
+            </div>
+        </div>
+        
+        <!-- 9. User-Generated Content -->
+        <div id="user-content" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">9. User-Generated Content</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>By posting comments, reviews, or other content on our platform, you grant us a non-exclusive, royalty-free license to use, display, and distribute that content.</p>
+                <p><strong>You represent that:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>You own or have permission to post the content</li>
+                    <li>The content does not violate any laws or third-party rights</li>
+                    <li>The content is not defamatory, obscene, or harmful</li>
+                </ul>
+                <p>We reserve the right to remove any user-generated content that violates these Terms.</p>
+            </div>
+        </div>
+        
+        <!-- 10. Privacy -->
+        <div id="privacy" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">10. Privacy</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Your privacy is important to us. Please review our <a href="/privacy" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a> to understand how we collect, use, and protect your personal information. By using our Services, you consent to our data practices as described in the Privacy Policy.
+            </p>
+        </div>
+        
+        <!-- 11. Termination -->
+        <div id="termination" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">11. Termination</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>We may terminate or suspend your account immediately, without prior notice, for:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Violation of these Terms</li>
+                    <li>Fraudulent or illegal activities</li>
+                    <li>Non-payment of fees</li>
+                    <li>Request by law enforcement or government agencies</li>
+                </ul>
+                <p>Upon termination, your right to use our Services will cease immediately. You may lose access to course content and certifications.</p>
+            </div>
+        </div>
+        
+        <!-- 12. Disclaimers -->
+        <div id="disclaimers" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">12. Disclaimers</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>Our Services are provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied.</p>
+                <p><strong>We do not warrant that:</strong></p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>The Services will be uninterrupted, secure, or error-free</li>
+                    <li>Course completion guarantees certification or employment</li>
+                    <li>Results obtained from our Services will meet your expectations</li>
+                    <li>Any errors or defects will be corrected</li>
+                </ul>
+                <p>Cybersecurity is a rapidly evolving field. While we strive to keep content current, we cannot guarantee that all information is up-to-date or applicable to your specific situation.</p>
+            </div>
+        </div>
+        
+        <!-- 13. Limitation of Liability -->
+        <div id="limitations" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">13. Limitation of Liability</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>To the maximum extent permitted by law, SecureAegix shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>Loss of profits, revenue, or data</li>
+                    <li>Business interruption or reputation damage</li>
+                    <li>Costs of substitute goods or services</li>
+                    <li>Unauthorized access to or alteration of your data</li>
+                </ul>
+                <p>Our total liability for any claim arising from these Terms shall not exceed the amount you paid us for the specific course or service giving rise to the claim.</p>
+            </div>
+        </div>
+        
+        <!-- 14. Indemnification -->
+        <div id="indemnification" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">14. Indemnification</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                You agree to indemnify, defend, and hold harmless SecureAegix and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, costs, or expenses (including reasonable attorney's fees) arising from your use of our Services, violation of these Terms, or infringement of any third-party rights.
+            </p>
+        </div>
+        
+        <!-- 15. Modifications to Services -->
+        <div id="modifications" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">15. Modifications to Services</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                We reserve the right to modify, suspend, or discontinue any part of our Services at any time, with or without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuation of our Services.
+            </p>
+        </div>
+        
+        <!-- 16. Governing Law -->
+        <div id="governing-law" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">16. Governing Law</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                These Terms shall be governed by and construed in accordance with the laws of the State of California, United States, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms shall not be considered a waiver of those rights.
+            </p>
+        </div>
+        
+        <!-- 17. Dispute Resolution -->
+        <div id="dispute-resolution" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">17. Dispute Resolution</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p><strong>Informal Resolution:</strong> Before filing a claim, you agree to contact us at <a href="mailto:legal@secureaegix.com" class="text-blue-600 hover:underline">legal@secureaegix.com</a> to attempt to resolve the dispute informally.</p>
+                <p><strong>Binding Arbitration:</strong> Any disputes arising from these Terms shall be resolved through binding arbitration administered by the American Arbitration Association (AAA) in Santa Clara County, California.</p>
+                <p><strong>Class Action Waiver:</strong> You agree to resolve disputes on an individual basis and waive the right to participate in class actions or representative proceedings.</p>
+            </div>
+        </div>
+        
+        <!-- 18. Contact Information -->
+        <div id="contact" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">18. Contact Information</h2>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-envelope text-blue-600 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Inquiries:</p>
+                            <a href="mailto:info@secureaegix.com" class="text-blue-600 dark:text-blue-400 hover:underline">info@secureaegix.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-map-marker-alt text-blue-600 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Address for Legal Notices:</p>
+                            <p class="text-gray-600 dark:text-gray-400">SecureAegix, Attn: Legal Department, 123 Cybersecurity Avenue, Silicon Valley, CA 94025, United States</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Acknowledgment -->
+        <div class="mt-12 p-6 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+            <div class="flex items-start gap-3">
+                <i class="fas fa-gavel text-blue-600 text-2xl"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-900 dark:text-gray-500 mb-2">Acknowledgment</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        By using SecureAegix, you acknowledge that you have read these Terms of Service, understand them, and agree to be bound by them. If you do not agree to these Terms, please do not use our Services.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Questions About Our Terms?</h2>
+        <p class="text-white/90 mb-6">Our legal team is available to address your concerns about our terms of service.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                Contact Legal Team
+                <i class="fas fa-gavel ml-2"></i>
+            </a>
+            <a href="/" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+                Return to Home
+                <i class="fas fa-home ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Smooth Scroll Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>

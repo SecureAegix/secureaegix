@@ -1,0 +1,282 @@
+<% layout("/layouts/boilerplate") -%>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-16 overflow-hidden">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto py-20 md:py-28 px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
+        <p class="text-lg text-gray-200 max-w-2xl mx-auto">
+            Your privacy matters to us. Learn how we collect, use, and protect your information.
+        </p>
+        <p class="text-sm text-gray-300 mt-4">Last Updated: January 1, 2025</p>
+    </div>
+</section>
+
+<!-- Privacy Policy Content -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Table of Contents -->
+        <div class="mb-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Table of Contents</h2>
+            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                <a href="#information-collect" class="text-blue-600 dark:text-blue-400 hover:underline">1. Information We Collect</a>
+                <a href="#how-we-use" class="text-blue-600 dark:text-blue-400 hover:underline">2. How We Use Your Information</a>
+                <a href="#cookies" class="text-blue-600 dark:text-blue-400 hover:underline">3. Cookies and Tracking Technologies</a>
+                <a href="#information-share" class="text-blue-600 dark:text-blue-400 hover:underline">4. How We Share Information</a>
+                <a href="#data-security" class="text-blue-600 dark:text-blue-400 hover:underline">5. Data Security</a>
+                <a href="#your-rights" class="text-blue-600 dark:text-blue-400 hover:underline">6. Your Rights and Choices</a>
+                <a href="#third-party" class="text-blue-600 dark:text-blue-400 hover:underline">7. Third-Party Links</a>
+                <a href="#children-privacy" class="text-blue-600 dark:text-blue-400 hover:underline">8. Children's Privacy</a>
+                <a href="#international" class="text-blue-600 dark:text-blue-400 hover:underline">9. International Data Transfers</a>
+                <a href="#policy-updates" class="text-blue-600 dark:text-blue-400 hover:underline">10. Updates to This Policy</a>
+                <a href="#contact-us" class="text-blue-600 dark:text-blue-400 hover:underline">11. Contact Us</a>
+            </div>
+        </div>
+        
+        <!-- Introduction -->
+        <div class="mb-10">
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                At SecureAegix ("we," "our," or "us"), we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, or interact with us.
+            </p>
+        </div>
+        
+        <!-- 1. Information We Collect -->
+        <div id="information-collect" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">1. Information We Collect</h2>
+            <div class="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>We collect several types of information from and about users of our website and services:</p>
+                
+                <div class="ml-4 space-y-3">
+                    <div>
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">1.1 Personal Information You Provide</h3>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li><strong>Account Information:</strong> Name, email address, phone number, and password when you register</li>
+                            <li><strong>Profile Information:</strong> Professional details, certifications, and learning preferences</li>
+                            <li><strong>Payment Information:</strong> Billing address, payment method details (processed securely by third-party payment processors)</li>
+                            <li><strong>Course Enrollment:</strong> Information about courses you enroll in, progress, and completion status</li>
+                            <li><strong>Communication:</strong> Messages, inquiries, feedback, and support requests you send us</li>
+                            <li><strong>Newsletter Subscriptions:</strong> Email address for marketing communications</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">1.2 Information Automatically Collected</h3>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li><strong>Device Information:</strong> IP address, browser type, operating system, device identifiers</li>
+                            <li><strong>Usage Data:</strong> Pages visited, time spent, links clicked, course progress, and navigation patterns</li>
+                            <li><strong>Location Data:</strong> Approximate geographic location based on IP address</li>
+                            <li><strong>Cookies:</strong> Small data files stored on your device (see Section 3 for details)</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">1.3 Information from Third Parties</h3>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li><strong>Social Media:</strong> If you log in using social media accounts, we may receive profile information</li>
+                            <li><strong>Payment Processors:</strong> Transaction confirmation and payment status</li>
+                            <li><strong>Analytics Providers:</strong> Aggregated usage data and insights</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2. How We Use Your Information -->
+        <div id="how-we-use" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">2. How We Use Your Information</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>We use the information we collect for the following purposes:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Provide and Manage Services:</strong> Process enrollments, deliver course content, track progress, and issue certificates</li>
+                    <li><strong>Account Management:</strong> Create and maintain your account, authenticate your identity, and provide customer support</li>
+                    <li><strong>Communication:</strong> Send important updates, course notifications, and respond to inquiries</li>
+                    <li><strong>Personalization:</strong> Recommend relevant courses, tailor content, and improve user experience</li>
+                    <li><strong>Marketing:</strong> Send promotional materials, newsletters, and special offers (you can opt out anytime)</li>
+                    <li><strong>Improvement:</strong> Analyze usage patterns, fix bugs, and enhance platform features</li>
+                    <li><strong>Security:</strong> Detect and prevent fraud, unauthorized access, and other security issues</li>
+                    <li><strong>Legal Compliance:</strong> Comply with applicable laws, regulations, and legal processes</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 3. Cookies and Tracking -->
+        <div id="cookies" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">3. Cookies and Tracking Technologies</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>We use cookies and similar tracking technologies to enhance your experience. Types of cookies we use include:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Essential Cookies:</strong> Required for basic website functionality (login, course access)</li>
+                    <li><strong>Preference Cookies:</strong> Remember your settings and preferences (dark mode, language)</li>
+                    <li><strong>Analytics Cookies:</strong> Help us understand how users interact with our website</li>
+                    <li><strong>Marketing Cookies:</strong> Track browsing habits to deliver relevant advertisements</li>
+                </ul>
+                <p class="mt-3">You can control cookies through your browser settings. However, disabling certain cookies may affect website functionality.</p>
+                <div class="mt-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <p class="text-sm"><strong>Cookie Preferences:</strong> You can manage your cookie preferences by clicking the "Cookie Settings" button in the footer or by adjusting your browser settings.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 4. How We Share Information -->
+        <div id="information-share" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">4. How We Share Information</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>We do not sell your personal information. We may share your information in the following circumstances:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Service Providers:</strong> Third-party vendors who assist with payment processing, hosting, analytics, email delivery, and customer support</li>
+                    <li><strong>Business Partners:</strong> Certification bodies and examination providers for certificate verification</li>
+                    <li><strong>Legal Requirements:</strong> When required by law, court order, or government regulation</li>
+                    <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
+                    <li><strong>With Your Consent:</strong> When you explicitly authorize us to share your information</li>
+                </ul>
+                <div class="mt-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <p class="text-sm text-blue-800 dark:text-blue-300"><strong>Note:</strong> We ensure all third-party service providers adhere to strict data protection standards.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5. Data Security -->
+        <div id="data-security" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">5. Data Security</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>We implement robust security measures to protect your information:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Encryption:</strong> SSL/TLS encryption for data transmission</li>
+                    <li><strong>Access Controls:</strong> Strict access controls and authentication protocols</li>
+                    <li><strong>Regular Audits:</strong> Periodic security assessments and vulnerability scans</li>
+                    <li><strong>Data Minimization:</strong> We only collect information necessary for our services</li>
+                    <li><strong>Secure Storage:</strong> Encrypted databases with restricted access</li>
+                </ul>
+                <p class="mt-3">While we strive to protect your information, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security.</p>
+            </div>
+        </div>
+        
+        <!-- 6. Your Rights and Choices -->
+        <div id="your-rights" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">6. Your Rights and Choices</h2>
+            <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>Depending on your location, you may have the following rights regarding your personal information:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Access:</strong> Request a copy of your personal information</li>
+                    <li><strong>Correction:</strong> Update or correct inaccurate information</li>
+                    <li><strong>Deletion:</strong> Request deletion of your personal information</li>
+                    <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications</li>
+                    <li><strong>Data Portability:</strong> Receive your data in a structured format</li>
+                    <li><strong>Restrict Processing:</strong> Limit how we use your information</li>
+                    <li><strong>Withdraw Consent:</strong> Withdraw previously given consent</li>
+                </ul>
+                <p class="mt-3">To exercise these rights, please contact us at <a href="mailto:privacy@secureaegix.com" class="text-blue-600 dark:text-blue-400 hover:underline">privacy@secureaegix.com</a>.</p>
+                <div class="mt-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <p class="text-sm"><strong>Account Settings:</strong> You can manage your communication preferences and update profile information through your account dashboard.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 7. Third-Party Links -->
+        <div id="third-party" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">7. Third-Party Links</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Our website may contain links to third-party websites, products, or services. We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies before providing any personal information.
+            </p>
+        </div>
+        
+        <!-- 8. Children's Privacy -->
+        <div id="children-privacy" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">8. Children's Privacy</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have inadvertently collected information from a child, please contact us immediately.
+            </p>
+        </div>
+        
+        <!-- 9. International Data Transfers -->
+        <div id="international" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">9. International Data Transfers</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your information in accordance with this Privacy Policy.
+            </p>
+        </div>
+        
+        <!-- 10. Policy Updates -->
+        <div id="policy-updates" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">10. Updates to This Policy</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                We may update this Privacy Policy periodically. The "Last Updated" date at the top of this page indicates when changes were made. We encourage you to review this policy regularly. Significant changes will be notified via email or website notice.
+            </p>
+        </div>
+        
+        <!-- 11. Contact Us -->
+        <div id="contact-us" class="mb-10 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">11. Contact Us</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:
+            </p>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-envelope text-blue-600 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Email:</p>
+                            <a href="mailto:info@secureaegix.com" class="text-blue-600 dark:text-blue-400 hover:underline">info@secureaegix.com</a>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-phone-alt text-blue-600 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Phone:</p>
+                            <a href="tel:+1234567890" class="text-blue-600 dark:text-blue-400 hover:underline">+1 (234) 567-8900</a>
+                        </div>
+                    </div>
+                    <!-- <div class="flex items-start gap-3">
+                        <i class="fas fa-map-marker-alt text-blue-600 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Address:</p>
+                            <p class="text-gray-600 dark:text-gray-400">123 Cybersecurity Avenue, Silicon Valley, CA 94025, United States</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Have Questions About Your Privacy?</h2>
+        <p class="text-white/90 mb-6">Our team is here to address your concerns about data privacy and security.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                Contact Privacy Team
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            <a href="/" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+                Return to Home
+                <i class="fas fa-home ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Smooth Scroll Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>

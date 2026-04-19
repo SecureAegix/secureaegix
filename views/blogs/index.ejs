@@ -3,8 +3,8 @@
 <!-- Hero Section -->
 <section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20 overflow-hidden">
     <div class="absolute inset-0 opacity-40 pointer-events-none">
-    <canvas id="particleCanvas" class="block w-full h-full"></canvas>
-</div>
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
     
     <div class="relative max-w-7xl mx-auto px-4 py-20 md:py-28 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl md:text-5xl font-bold mb-4">Cybersecurity Blog</h1>
@@ -13,6 +13,28 @@
         </p>
     </div>
 </section>
+
+<!-- Admin Action Bar (Visible only to admin) -->
+<% if (currUser && currUser.role === 'admin') { %>
+<section class="py-4 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-4 justify-between items-center">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Admin Controls</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Manage blog posts</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="/blogs/new" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Write New Blog
+                </a>
+                <!-- <a href="/blogs/yourblogs" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all flex items-center gap-2">
+                    <i class="fas fa-user-edit"></i> My Blogs
+                </a> -->
+            </div>
+        </div>
+    </div>
+</section>
+<% } %>
 
 <!-- Search and Filter Section -->
 <section class="py-8 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40">
@@ -80,7 +102,32 @@
         <% if (allBlogs && allBlogs.length > 0) { %>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <% allBlogs.forEach(blog => { %>
-                    <article class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                    <article class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group relative">
+                        
+                        <!-- Admin Overlay Buttons (Visible only to admin on hover) -->
+                        <% if (currUser && currUser.role === 'admin') { %>
+                        <div class="absolute top-2 right-2 z-20 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="/blogs/<%= blog._id %>/edit" 
+                               class="w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all"
+                               title="Edit Blog">
+                                <i class="fas fa-edit text-xs"></i>
+                            </a>
+                            <form action="/blogs/<%= blog._id %>?_method=PATCH" method="POST" style="display: inline;">
+                                <button type="submit" 
+                                        class="w-8 h-8 <%= blog.isvalid ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-500 hover:bg-yellow-600' %> text-white rounded-lg flex items-center justify-center transition-all"
+                                        title="<%= blog.isvalid ? 'Deactivate Blog' : 'Activate Blog' %>">
+                                    <i class="fas <%= blog.isvalid ? 'fa-check' : 'fa-exclamation' %> text-xs"></i>
+                                </button>
+                            </form>
+                            <button onclick="deleteBlog('<%= blog._id %>')" 
+                                    class="w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-all"
+                                    title="Delete Blog">
+                                <i class="fas fa-trash text-xs"></i>
+                            </button>
+                        </div>
+
+                        <% } %>
+                        
                         <!-- Blog Image -->
                         <a href="/blogs/<%= blog.id || blog._id %>" class="block relative h-56 overflow-hidden">
                             <% if (blog.image && blog.image.url) { %>
@@ -97,6 +144,13 @@
                             <% if (blog.category) { %>
                                 <span class="absolute top-4 left-4 px-3 py-1 bg-blue-600 text-white text-xs rounded-full font-semibold z-10">
                                     <%= blog.category %>
+                                </span>
+                            <% } %>
+                            
+                            <!-- Status Badge (Admin only) -->
+                            <% if (currUser && currUser.role === 'admin') { %>
+                                <span class="absolute top-4 right-4 px-2 py-1 <%= blog.isvalid ? 'bg-green-500' : 'bg-yellow-500' %> text-white text-xs rounded-full font-semibold z-10">
+                                    <%= blog.isvalid ? 'Published' : 'Pending Review' %>
                                 </span>
                             <% } %>
                             
@@ -160,6 +214,11 @@
                         <i class="fas fa-times mr-2"></i> Clear Filters
                     </a>
                 <% } %>
+                <% if (currUser && currUser.role === 'admin') { %>
+                    <a href="/blogs/new" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all ml-3">
+                        <i class="fas fa-plus mr-2"></i> Write First Blog
+                    </a>
+                <% } %>
             </div>
         <% } %>
         
@@ -211,11 +270,34 @@
     </div>
 </section>
 
-<!-- Newsletter CTA -->
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full">
+        <div class="p-6">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-trash-alt text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Delete Blog Post?</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Are you sure you want to delete this blog post? This action cannot be undone.
+                </p>
+                <div class="flex gap-3">
+                    <button onclick="confirmDelete()" class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all">
+                        Yes, Delete
+                    </button>
+                    <button onclick="closeDeleteModal()" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-semibold transition-all">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-<!-- JavaScript -->
 <script>
+    let blogToDelete = null;
+    
     // Apply filter function
     function applyFilter() {
         const category = document.getElementById('categoryFilter').value;
@@ -263,51 +345,68 @@
         applyFilter();
     });
     
-    // Newsletter subscription
-    const newsletterForm = document.getElementById('blogNewsletterForm');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('blogNewsletterEmail').value.trim();
-            const messageContainer = document.getElementById('blogNewsletterMessage');
-            const subscribeBtn = this.querySelector('button[type="submit"]');
-            
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                messageContainer.classList.remove('hidden');
-                messageContainer.innerHTML = '<div class="text-red-300 text-sm">Please enter a valid email</div>';
-                setTimeout(() => messageContainer.classList.add('hidden'), 3000);
-                return;
-            }
-            
-            subscribeBtn.disabled = true;
-            subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Subscribing...';
-            
-            try {
-                const response = await fetch('/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, source: 'blog' })
-                });
-                const data = await response.json();
-                
-                messageContainer.classList.remove('hidden');
-                if (data.success) {
-                    messageContainer.innerHTML = '<div class="text-green-300 text-sm"><i class="fas fa-check-circle mr-1"></i> ' + data.message + '</div>';
-                    document.getElementById('blogNewsletterEmail').value = '';
-                } else {
-                    messageContainer.innerHTML = '<div class="text-red-300 text-sm"><i class="fas fa-exclamation-circle mr-1"></i> ' + data.message + '</div>';
-                }
-                setTimeout(() => messageContainer.classList.add('hidden'), 5000);
-            } catch (error) {
-                messageContainer.classList.remove('hidden');
-                messageContainer.innerHTML = '<div class="text-red-300 text-sm">Network error. Please try again.</div>';
-                setTimeout(() => messageContainer.classList.add('hidden'), 3000);
-            } finally {
-                subscribeBtn.disabled = false;
-                subscribeBtn.innerHTML = 'Subscribe';
-            }
-        });
+    // Delete blog functions
+    function deleteBlog(blogId) {
+        blogToDelete = blogId;
+        document.getElementById('deleteModal').classList.remove('hidden');
+        document.getElementById('deleteModal').classList.add('flex');
+        document.body.style.overflow = 'hidden';
     }
+    
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+        document.getElementById('deleteModal').classList.remove('flex');
+        document.body.style.overflow = '';
+        blogToDelete = null;
+    }
+    
+    async function confirmDelete() {
+        if (!blogToDelete) return;
+        
+        try {
+            const response = await fetch(`/blogs/${blogToDelete}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                if (window.flashMessages) {
+                    window.flashMessages.success('Blog deleted successfully');
+                } else {
+                    alert('Blog deleted successfully');
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                if (window.flashMessages) {
+                    window.flashMessages.error(data.message || 'Failed to delete blog');
+                } else {
+                    alert('Failed to delete blog');
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            if (window.flashMessages) {
+                window.flashMessages.error('Failed to delete blog');
+            } else {
+                alert('Failed to delete blog');
+            }
+        } finally {
+            closeDeleteModal();
+        }
+    }
+    
+    // Close modal on outside click
+    document.getElementById('deleteModal')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDeleteModal();
+        }
+    });
     
     // Line clamp CSS
     const style = document.createElement('style');

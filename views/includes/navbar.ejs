@@ -38,7 +38,7 @@
                 <div>
                     <div class="flex items-baseline">
                         <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Secure</span>
-                        <span class="text-xl font-bold text-gray-800 dark:text-white">Aaegix</span>
+                        <span class="text-xl font-bold text-gray-800 dark:text-white">Aegix</span>
                     </div>
                     <div class="text-[10px] text-gray-500 dark:text-gray-400 tracking-wider">CYBERSECURITY</div>
                 </div>
@@ -54,24 +54,26 @@
                 <div class="relative group">
                     <button class="nav-link flex items-center">
                         <i class="fas fa-graduation-cap mr-1.5 text-sm"></i> 
-                        Courses
+                            Courses
                         <i class="fas fa-chevron-down ml-1.5 text-xs transition-transform duration-200 group-hover:rotate-180"></i>
                     </button>
-                    <div class="dropdown-menu">
-                        <div class="py-2">
-                            <a href="/courses/oscp" class="dropdown-item">OSCP Certification</a>
-                            <a href="/courses/oswe" class="dropdown-item">OSWE Certification</a>
-                            <a href="/courses/osed" class="dropdown-item">OSED Certification</a>
-                            <a href="/courses/crto" class="dropdown-item">CRTO Certification</a>
-                            <a href="/courses/crtp" class="dropdown-item">CRTP Certification</a>
-                            <a href="/courses/ejpt" class="dropdown-item">eJPT Certification</a>
-                            <hr class="my-2 border-gray-100 dark:border-gray-700">
-                            <a href="/courses" class="dropdown-item text-blue-600 dark:text-blue-400">
-                                View All Courses →
+                <div class="dropdown-menu">
+                <div class="py-2">
+                    <% if (navbarCourses && navbarCourses.length > 0) { %>
+                        <% navbarCourses.forEach(course => { %>
+                            <a href="<%= course.url %>" class="dropdown-item text-blue-600 dark:text-blue-400 font-semibold">
+                                <i class="fas fa-graduation-cap w-4 mr-2 text-<%= course.color %>-600"></i> 
+                                <%= course.name %>
                             </a>
-                        </div>
-                    </div>
+                        <% }) %>
+                        <hr class="my-2 border-gray-100 dark:border-gray-700">
+                    <% } %>
+                    <a href="/courses" class="dropdown-item text-blue-600 dark:text-blue-400 font-semibold">
+                        <i class="fas fa-arrow-right mr-2"></i> View All Courses
+                    </a>
                 </div>
+            </div>
+        </div>
 
                 <!-- Services Dropdown -->
                 <div class="relative group">
@@ -145,6 +147,13 @@
                                     <a href="/admin/dashboard" class="user-dropdown-item">
                                         <i class="fas fa-tachometer-alt w-4"></i> Admin Dashboard
                                     </a>
+                                    <a href="/admin/contacts" class="user-dropdown-item">
+                                        <i class="fas fa-address-book w-4"></i> Contact Messages
+                                    </a>
+                                    <a href="/admin/subscribers" class="user-dropdown-item">
+                                        <i class="fas fa-users w-4"></i> Subscribers
+                                    </a>
+
                                 <% } else { %>
                                     <a href="/user/dashboard" class="user-dropdown-item">
                                         <i class="fas fa-chart-line w-4"></i> Dashboard
@@ -268,6 +277,12 @@
                                 <a href="/admin/dashboard" class="mobile-nav-link">
                                     <i class="fas fa-tachometer-alt w-5 mr-3 text-blue-600"></i> Admin Dashboard
                                 </a>
+                                <a href="/admin/contacts" class="mobile-nav-link">
+                                        <i class="fas fa-address-book w-5 mr-3 text-blue-600"></i> Contact Messages
+                                    </a>
+                                    <a href="/admin/subscribers" class="mobile-nav-link">
+                                        <i class="fas fa-users w-5 mr-3 text-blue-600"></i> Subscribers
+                                    </a>
                             <% } else { %>
                                 <a href="/user/dashboard" class="mobile-nav-link">
                                     <i class="fas fa-chart-line w-5 mr-3 text-cyan-600"></i> My Dashboard

@@ -5,45 +5,25 @@ const Blog = require("../models/blog");
 const { all } = require("axios");
 
 module.exports.homePage = async (req, res, next) => {
-  if (!req.user) {
-    const totalUsers = (await User.find()).length;
-    const totalInstructors = (await User.find({ role: "admin" })).length;
-    const totalCources = (await Course.find()).length;
-    const cources = await Course.find().populate("teacher").limit(6);
-    const popularCourse = await Course.findOne({ isPopular: true }).populate(
-      "teacher",
-    );
-
-    const blogs = await Blog.find()
-      .populate("author")
-      .sort({ createdAt: -1 })
-      .limit(6);
-
-    res.render("secureaegix/home.ejs", {
-      totalUsers,
-      showsplash: true,
-      totalInstructors,
-      totalCources,
-      cources,
-      popularCourse,
-      blogs,
-    });
-  } else {
-    next();
-  }
-};
-
-module.exports.index = async (req, res) => {
   try {
     const totalUsers = (await User.find()).length;
     const totalInstructors = (await User.find({ role: "admin" })).length;
     const totalCources = (await Course.find()).length;
-    const cources = await Course.find({ addInHomePage: true })
-      .populate("teacher")
+
+    // Fetch courses for homepage (addInHomePage = true)
+    const homepageCourses = await Course.find({
+      addInHomePage: true,
+      isActive: true,
+    })
+      .populate("teacher", "name")
+      .sort({ homepageOrder: 1, createdAt: -1 })
       .limit(6);
-    const popularCourse = await Course.findOne({ isPopular: true }).populate(
-      "teacher",
-    );
+
+    const popularCourse = await Course.findOne({
+      isPopular: true,
+      isActive: true,
+    }).populate("teacher");
+
     const blogs = await Blog.find()
       .populate("author")
       .sort({ createdAt: -1 })
@@ -53,7 +33,7 @@ module.exports.index = async (req, res) => {
       totalUsers,
       totalInstructors,
       totalCources,
-      cources,
+      homepageCourses, // Pass to template
       popularCourse,
       blogs,
     });
@@ -64,6 +44,52 @@ module.exports.index = async (req, res) => {
   }
 };
 
+// module.exports.index = async (req, res) => {
+//   try {
+//     const totalUsers = (await User.find()).length;
+//     const totalInstructors = (await User.find({ role: "admin" })).length;
+//     const totalCources = (await Course.find()).length;
+
+//     // Get courses for homepage with new filters
+//     const cources = await Course.find({
+//       addInHomePage: true,
+//       isActive: true
+//     })
+//       .populate("teacher")
+//       .sort({ homepageOrder: 1, createdAt: -1 })
+//       .limit(6);
+
+//     const popularCourse = await Course.findOne({
+//       isPopular: true,
+//       isActive: true
+//     }).populate("teacher");
+
+//     // Get courses for navbar
+//     const navbarCourses = await Course.find({
+//       showInNavbar: true,
+//       isActive: true
+//     }).select("title navbarButtonText navbarButtonLink navbarButtonColor navbarButtonIcon");
+
+//     const blogs = await Blog.find()
+//       .populate("author")
+//       .sort({ createdAt: -1 })
+//       .limit(6);
+
+//     res.render("secureaegix/home.ejs", {
+//       totalUsers,
+//       totalInstructors,
+//       totalCources,
+//       cources,
+//       popularCourse,
+//       blogs,
+//       navbarCourses, // Pass to navbar
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     req.flash("error", "Something went wrong!");
+//     res.redirect("/login");
+//   }
+// };
 module.exports.profile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -84,8 +110,6 @@ module.exports.profile = async (req, res) => {
   }
 };
 
-
-
 module.exports.about = (req, res) => {
   res.render("others/about.ejs");
 };
@@ -102,36 +126,44 @@ module.exports.contact = (req, res) => {
 //courses
 module.exports.allCourses = async (req, res) => {
   try {
-    // Query params
     const page = parseInt(req.query.page) || 1;
-    const limit = 12;
+    const limit = 20;
+    const skip = (page - 1) * limit;
     const search = req.query.search || "";
+    const level = req.query.level || "";
+    const filter = req.query.filter || "all";
 
-    // Build search filter
-    const searchFilter = search
-      ? {
-          $or: [
-            { title: { $regex: search, $options: "i" } },
-            { shortDescription: { $regex: search, $options: "i" } },
-          ],
-        }
-      : {};
+    let query = {};
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
 
-    // Count total courses
-    const totalCourses = await Course.countDocuments(searchFilter);
+    if (level && level !== "all") {
+      query.courseLevel = level;
+    }
 
-    // Fetch paginated courses
-    const cources = await Course.find(searchFilter)
-      .populate("teacher", "name")
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort({ createdAt: -1 });
+    // Apply filters
+    if (filter === "active") query.isActive = true;
+    else if (filter === "inactive") query.isActive = false;
+    else if (filter === "popular") query.isPopular = true;
+    else if (filter === "navbar") query.showInNavbar = true;
+    else if (filter === "homepage") query.showInHomepage = true;
+
+    const totalCourses = await Course.countDocuments(query);
+    const courses = await Course.find(query)
+      .populate("teacher", "name email")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.render("secureaegix/courses.ejs", {
-      cources,
+      cources: courses,
       currentPage: page,
       totalPages: Math.ceil(totalCourses / limit),
+      totalCourses,
       search,
+      level,
+      filter,
     });
   } catch (error) {
     console.error(error);
@@ -155,31 +187,46 @@ module.exports.createNewCourse = async (req, res) => {
       courceType,
       duration,
       lounchedDate,
+      courseLevel,
       addInHomePage,
+      isPopular,
+      isActive,
+      showInNavbar,
+      navbarButtonText,
+      navbarButtonColor,
     } = req.body;
 
-    const course = new Course({
-      teacher: req.user._id, // assuming admin/teacher is logged in
+    // Create new course object
+    const newCourse = new Course({
+      teacher: req.user._id,
       title,
       shortDescription,
       discription: description,
-      price,
-      actualPrice,
+      price: Number(price),
+      actualPrice: Number(actualPrice),
       courceType,
-      duration,
+      duration: duration ? Number(duration) : undefined,
       lounchedDate: lounchedDate ? new Date(lounchedDate) : undefined,
+      courseLevel: courseLevel || "beginner",
       addInHomePage: addInHomePage === "on",
+      isPopular: isPopular === "on",
+      isActive: isActive === "on",
+      showInNavbar: showInNavbar === "on",
+      navbarButtonText: navbarButtonText || "",
+      navbarButtonColor: navbarButtonColor || "blue",
+      students: [],
     });
 
-    // Optional: handle image if using file upload
+    // Handle image upload
     if (req.file) {
-      course.image = {
-        url: req.file.path, // or req.file.filename if using multer
+      newCourse.image = {
+        url: req.file.path,
         filename: req.file.filename,
       };
     }
 
-    await course.save();
+    await newCourse.save();
+
     req.flash("success", "Course created successfully!");
     res.redirect("/courses"); // adjust redirect as needed
   } catch (error) {
@@ -212,18 +259,38 @@ module.exports.updateCourse = async (req, res) => {
     const { id } = req.params;
     const courseData = req.body;
 
-    // If new image uploaded
+    // Handle checkboxes
+    courseData.isActive = courseData.isActive === "on";
+    courseData.isPopular = courseData.isPopular === "on";
+    courseData.addInHomePage = courseData.addInHomePage === "on";
+    courseData.showInNavbar = courseData.showInNavbar === "on";
+
+    // Handle arrays
+    if (courseData.prerequisites) {
+      courseData.prerequisites = courseData.prerequisites
+        .split(",")
+        .map((p) => p.trim());
+    }
+    if (courseData.learningOutcomes) {
+      courseData.learningOutcomes = courseData.learningOutcomes
+        .split(",")
+        .map((o) => o.trim());
+    }
+    if (courseData.includes) {
+      courseData.includes = courseData.includes.split(",").map((i) => i.trim());
+    }
+
     if (req.file) {
+      // Delete old image if exists
+      const oldCourse = await Course.findById(id);
+      if (oldCourse.image && oldCourse.image.filename) {
+        await cloudinary.uploader.destroy(oldCourse.image.filename);
+      }
       courseData.image = {
-        url: req.file.path, // or req.file.location if using cloudinary
+        url: req.file.path,
         filename: req.file.filename,
       };
     }
-
-    // Handle checkboxes
-    courseData.isActive = req.body.isActive === "on";
-    courseData.isPopular = req.body.isPopular === "on";
-    courseData.addInHomePage = req.body.addInHomePage === "on";
 
     await Course.findByIdAndUpdate(id, courseData, { new: true });
 
@@ -242,22 +309,24 @@ module.exports.togglePopular = async (req, res) => {
     const { id } = req.params;
     const course = await Course.findById(id);
     if (!course) {
-      req.flash("error", "Course not found");
-      return res.redirect("/courses");
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
     }
 
     course.isPopular = !course.isPopular;
     await course.save();
 
-    req.flash(
-      "success",
-      `Course "${course.title}" is now ${course.isPopular ? "Popular" : "Not Popular"}`,
-    );
-    res.redirect("/courses");
+    res.json({
+      success: true,
+      isPopular: course.isPopular,
+      message: `Course ${course.isPopular ? "marked as" : "removed from"} popular`,
+    });
   } catch (error) {
-    console.log(error);
-    req.flash("error", "Could not update course popularity");
-    res.redirect("/courses");
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update popular status" });
   }
 };
 
@@ -286,25 +355,78 @@ module.exports.toggleActive = async (req, res) => {
   try {
     const { id } = req.params;
     const course = await Course.findById(id);
-
     if (!course) {
-      req.flash("error", "Course not found");
-      return res.redirect("/courses");
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
     }
 
-    // Flip the isActive boolean
     course.isActive = !course.isActive;
     await course.save();
 
-    req.flash(
-      "success",
-      `Course "${course.title}" has been ${course.isActive ? "activated" : "deactivated"}`,
-    );
-    res.redirect("/courses");
+    res.json({
+      success: true,
+      isActive: course.isActive,
+      message: `Course ${course.isActive ? "activated" : "deactivated"}`,
+    });
   } catch (error) {
-    console.log(error);
-    req.flash("error", "Could not update course status");
-    res.redirect("/courses");
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update active status" });
+  }
+};
+
+module.exports.toggleNavbarVisibility = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await Course.findById(id);
+    if (!course) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
+    }
+
+    course.showInNavbar = !course.showInNavbar;
+    await course.save();
+
+    res.json({
+      success: true,
+      showInNavbar: course.showInNavbar,
+      message: `Course ${course.showInNavbar ? "added to" : "removed from"} navbar`,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update navbar visibility" });
+  }
+};
+
+module.exports.toggleHomepageVisibility = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await Course.findById(id);
+    if (!course) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
+    }
+
+    course.showInHomepage = !course.showInHomepage;
+    await course.save();
+
+    res.json({
+      success: true,
+      showInHomepage: course.showInHomepage,
+      message: `Course ${course.showInHomepage ? "added to" : "removed from"} homepage`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update homepage visibility",
+    });
   }
 };
 
@@ -444,21 +566,6 @@ module.exports.enrollCourse = async (req, res) => {
     return res.redirect(redirectUrl);
   }
 };
-
-// view cource
-// const course = await Course.findById(req.params.id);
-
-// const dynamicMeta = {
-//   title: course.title + " | secureaegix Courses",
-//   description: course.shortDescription,
-//   keywords: course.keywords.join(", "),
-//   image: course.thumbnail,
-// };
-
-// res.render("courseView", {
-//   course,
-//   meta: dynamicMeta,
-// });
 
 module.exports.viewCourse = async (req, res) => {
   try {

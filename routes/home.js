@@ -6,10 +6,7 @@ const multer = require("multer");
 const { storage } = require("../Cloudconfig.js");
 const upload = multer({ storage });
 
-router
-  .route("/")
-  .get(homeController.homePage)
-  .get(isLoggedIn, homeController.index);
+router.route("/").get(homeController.homePage);
 router.get("/profile", isLoggedIn, homeController.profile);
 
 router.get("/about", homeController.about);
@@ -56,11 +53,27 @@ router.patch(
   homeController.togglePopular,
 );
 
+router.patch(
+  "/courses/:id/toggle-navbar",
+  isLoggedIn,
+  isAdmin,
+  homeController.toggleNavbarVisibility,
+);
+router.patch(
+  "/courses/:id/toggle-homepage",
+  isLoggedIn,
+  isAdmin,
+  homeController.toggleHomepageVisibility,
+);
+
 router
   .route("/enroll")
   .get(homeController.enrollCourseForm)
   .post(isLoggedIn, saveRedirectUrl, homeController.enrollCourse);
 
-router.post("/enroll/:courseId", isLoggedIn, homeController.enrollInNewCource);
+router
+  .route("/enroll/:courseId")
+  // .get(homeController.enrollNowCourseForm)
+  .post(isLoggedIn, homeController.enrollInNewCource);
 
 module.exports = router;

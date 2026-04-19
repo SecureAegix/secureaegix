@@ -69,16 +69,6 @@ const courcesSchema = new Schema({
   },
   courceType: {
     type: String,
-    enum: [
-      "CYBERSECURITY",
-      "WEB DEV",
-      "ADVANCED",
-      "MACHINE LEARNING",
-      "ETHICAL HACKING",
-      "DATA SCIENCE",
-      "ARTIFICIAL INTELLIGENCE",
-      "other",
-    ],
     required: true,
   },
   duration: {
@@ -99,6 +89,79 @@ const courcesSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  showInNavbar: {
+    type: Boolean,
+    default: false,
+  },
+  navbarButtonText: {
+    type: String,
+    default: "",
+    trim: true,
+  },
+  navbarButtonLink: {
+    type: String,
+    default: "",
+    trim: true,
+  },
+  navbarButtonColor: {
+    type: String,
+    enum: ["blue", "cyan", "purple", "green", "red", "yellow"],
+    default: "blue",
+  },
+  navbarButtonIcon: {
+    type: String,
+    default: "fa-arrow-right",
+  },
+  
+  // For homepage sections
+  showInHomepage: {
+    type: Boolean,
+    default: false,
+  },
+  homepageSection: {
+    type: String,
+    enum: ["hero", "featured", "popular", "new", "trending", "none"],
+    default: "none",
+  },
+  homepageOrder: {
+    type: Number,
+    default: 0,
+  },
+  
+  // Course metadata
+  featuredImage: {
+    url: String,
+    filename: String,
+  },
+  courseLevel: {
+    type: String,
+    enum: ["beginner", "intermediate", "advanced", "expert"],
+    default: "beginner",
+  },
+  rating: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5,
+  },
+  reviewCount: {
+    type: Number,
+    default: 0,
+  },
+  prerequisites: [{
+    type: String,
+  }],
+  learningOutcomes: [{
+    type: String,
+  }],
+  includes: [{
+    type: String,
+  }],
+  
+  // SEO fields
+  metaTitle: String,
+  metaDescription: String,
+  metaKeywords: String,
 });
 
 module.exports = mongoose.model("Cources", courcesSchema);

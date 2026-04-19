@@ -197,21 +197,20 @@
         <!-- Stats -->
         <div class="grid grid-cols-4 gap-6 fade-up delay-4">
           <div>
-            <div class="text-3xl font-bold text-white counter" data-target="5000">0</div>
-            <div class="text-sm text-gray-400">Students Trained</div>
-          </div>
-          <div>
-            <div class="text-3xl font-bold text-white counter" data-target="95">0</div>
-            <div class="text-sm text-gray-400">Pass Rate</div>
-          </div>
-          <div>
-            <div class="text-3xl font-bold text-white counter" data-target="12">0</div>
-            <div class="text-sm text-gray-400">Certifications</div>
-          </div>
-          <div>
-            <div class="text-3xl font-bold text-white">4.9<span class="text-cyan-400">★</span></div>
-            <div class="text-sm text-gray-400">Avg Rating</div>
-          </div>
+  <div class="text-3xl font-bold text-white counter" data-target="<%= totalUsers %>">0</div>
+  <div class="flex text-sm text-gray-400 whitespace-nowrap">Students Trained</div>
+</div>
+
+<div>
+  <div class="text-3xl font-bold text-white counter" data-target="<%= totalInstructors %>">0</div>
+  <div class="flex text-sm text-gray-400 whitespace-nowrap">Expert Instructors</div>
+</div>
+
+<div>
+  <div class="text-3xl font-bold text-white counter" data-target="<%= totalCources %>">0</div>
+  <div class="flex text-sm text-gray-400 whitespace-nowrap">Certifications</div>
+</div>
+          
         </div>
       </div>
       
@@ -238,30 +237,65 @@
           
           <!-- Enrollment Card -->
           <div class="p-5 border-t border-white/10 bg-gradient-to-r from-blue-600/10 to-cyan-600/10">
-            <div class="inline-block px-2 py-1 bg-red-500 text-white text-xs rounded mb-3 font-mono">30% OFF · ENDS SOON</div>
-            <div class="font-bold text-white mb-1">OSCP Certification Track</div>
-            <div class="text-xs text-gray-400 mb-4">Jan 2025 batch · Limited to 30 seats</div>
-            
-            <div class="mb-3">
-              <div class="flex justify-between text-xs text-gray-400 mb-1">
-                <span>OSCP</span>
-                <span class="text-red-400">85% filled</span>
-              </div>
-              <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
-            </div>
-            
-            <div>
-              <div class="flex justify-between text-xs text-gray-400 mb-1">
-                <span>CRTO</span>
-                <span class="text-cyan-400">40% filled</span>
-              </div>
-              <div class="progress-bar"><div class="progress-fill" style="width: 40%"></div></div>
-            </div>
-            
-            <a href="/signup" class="block text-center mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg transition-all">
-              Reserve Your Seat →
-            </a>
-          </div>
+  <% if (popularCourse) { %>
+    <!-- Dynamic Discount/Offer Badge -->
+    <% const discountPercent = Math.round(((popularCourse.price - popularCourse.actualPrice) / popularCourse.price) * 100); %>
+    <div class="inline-block px-2 py-1 bg-red-500 text-white text-xs rounded mb-3 font-mono">
+      <%= discountPercent %>% OFF · ENROLL NOW
+    </div>
+    
+    <!-- Dynamic Course Title -->
+    <div class="font-bold text-white mb-1"><%= popularCourse.title %> Certification Track</div>
+    <div class="text-xs text-gray-400 mb-4">
+      <%= popularCourse.lounchedDate ? new Date(popularCourse.lounchedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Next' %> batch · 
+      Limited to <%= popularCourse.students?.length ? 50 - popularCourse.students.length : 30 %> seats
+    </div>
+    
+    <!-- Dynamic Enrollment Progress for Popular Course -->
+    <div class="mb-3">
+      <div class="flex justify-between text-xs text-gray-400 mb-1">
+        <span><%= popularCourse.title %></span>
+        <span class="text-red-400"><%= popularCourse.students?.length ? Math.round((popularCourse.students.length / 50) * 100) : 85 %>% filled</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: <%= popularCourse.students?.length ? (popularCourse.students.length / 50) * 100 : 85 %>%"></div>
+      </div>
+    </div>
+  
+    
+    <!-- Dynamic Enroll Button -->
+    <a href="/enroll/<%= popularCourse._id %>" class="block text-center mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg transition-all">
+      Reserve Your Seat → 
+      <span class="text-xs opacity-80">(Only ₹<%= popularCourse.actualPrice || popularCourse.price %>)</span>
+    </a>
+    
+  <% } else { %>
+    <!-- Fallback Static Content if no popular course exists -->
+    <div class="inline-block px-2 py-1 bg-red-500 text-white text-xs rounded mb-3 font-mono">30% OFF · ENDS SOON</div>
+    <div class="font-bold text-white mb-1">OSCP Certification Track</div>
+    <div class="text-xs text-gray-400 mb-4">Jan 2025 batch · Limited to 30 seats</div>
+    
+    <div class="mb-3">
+      <div class="flex justify-between text-xs text-gray-400 mb-1">
+        <span>OSCP</span>
+        <span class="text-red-400">85% filled</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
+    </div>
+    
+    <div>
+      <div class="flex justify-between text-xs text-gray-400 mb-1">
+        <span>CRTO</span>
+        <span class="text-cyan-400">40% filled</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 40%"></div></div>
+    </div>
+    
+    <a href="/enroll" class="block text-center mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg transition-all">
+      Reserve Your Seat →
+    </a>
+  <% } %>
+</div>
         </div>
       </div>
       
@@ -299,122 +333,162 @@
         Industry-Recognized <span class="text-gradient">Credentials</span>
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        Choose from 12 globally recognized programs taught by active practitioners
+        Choose from our globally recognized programs taught by active practitioners
       </p>
     </div>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- OSCP Card -->
-      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
-        <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
-          <span class="absolute top-4 right-4 px-2 py-1 bg-red-500/10 text-red-500 text-xs rounded font-mono">🔥 Most Popular</span>
-          <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4">
-            <i class="fas fa-skull-crossbones text-red-600 text-xl"></i>
-          </div>
-          <div class="text-2xl font-bold text-gray-900 dark:text-white">OSCP</div>
-          <div class="text-xs text-gray-500 font-mono">Offensive Security Certified Professional</div>
-        </div>
-        <div class="p-6">
-          <div class="flex items-center gap-1 mb-3">
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <span class="text-xs text-gray-500 ml-2">5.0 (1,234)</span>
-          </div>
-          <div class="flex gap-4 mb-4 text-xs text-gray-500">
-            <span><i class="far fa-clock mr-1"></i> 8 weeks</span>
-            <span><i class="fas fa-flask mr-1"></i> 24/7 labs</span>
-            <span><i class="fas fa-signal mr-1"></i> Advanced</span>
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-            <div>
-              <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,499</span>
-              <span class="text-sm text-gray-400 line-through ml-2">$2,100</span>
+      <% if (homepageCourses && homepageCourses.length > 0) { %>
+        <% homepageCourses.forEach(course => { %>
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow transition-all duration-300">
+            <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
+              <!-- Popular Badge -->
+              <% if (course.isPopular) { %>
+                <span class="absolute top-4 right-4 px-2 py-1 bg-red-500/10 text-red-500 text-xs rounded font-mono">🔥 Most Popular</span>
+              <% } %>
+              <!-- Trending Badge -->
+              <% if (course.isTrending) { %>
+                <span class="absolute top-4 right-4 px-2 py-1 bg-cyan-500/10 text-cyan-500 text-xs rounded font-mono">↑ Trending</span>
+              <% } %>
+              
+              <!-- Course Icon based on type -->
+              <%
+  const typeMap = {
+    "CYBERSECURITY": {
+      icon: "fa-shield-alt",
+      textColor: "text-red-600",
+      bgColor: "bg-red-100 dark:bg-red-900/30"
+    },
+    "WEB DEV": {
+      icon: "fa-code",
+      textColor: "text-blue-600",
+      bgColor: "bg-blue-100 dark:bg-blue-900/30"
+    },
+    "ETHICAL HACKING": {
+      icon: "fa-user-secret",
+      textColor: "text-purple-600",
+      bgColor: "bg-purple-100 dark:bg-purple-900/30"
+    }
+  };
+
+  const config = typeMap[course.courceType] || {
+    icon: "fa-graduation-cap",
+    textColor: "text-cyan-600",
+    bgColor: "bg-cyan-100 dark:bg-cyan-900/30"
+  };
+%>
+
+<div class="w-12 h-12 <%= config.bgColor %> rounded-lg flex items-center justify-center mb-4">
+  <i class="fas <%= config.icon %> text-xl <%= config.textColor %>"></i>
+</div>
+              
+              <div class="text-2xl font-bold text-gray-900 dark:text-white"><%= course.title %></div>
+              <div class="text-xs text-gray-500 font-mono mt-1">
+                <%= course.courceType === 'CYBERSECURITY' ? 'Offensive Security Certified Professional' : course.courceType === 'WEB DEV' ? 'Web Development Expert' : course.courceType === 'ETHICAL HACKING' ? 'Certified Ethical Hacker' : 'Professional Certification' %>
+              </div>
             </div>
-            <a href="/courses/oscp" class="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- OSWE Card -->
-      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
-        <div class="p-6 border-b border-gray-100 dark:border-gray-700">
-          <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4">
-            <i class="fas fa-code text-purple-600 text-xl"></i>
-          </div>
-          <div class="text-2xl font-bold text-gray-900 dark:text-white">OSWE</div>
-          <div class="text-xs text-gray-500 font-mono">Offensive Security Web Expert</div>
-        </div>
-        <div class="p-6">
-          <div class="flex items-center gap-1 mb-3">
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
-            <span class="text-xs text-gray-500 ml-2">4.8 (892)</span>
-          </div>
-          <div class="flex gap-4 mb-4 text-xs text-gray-500">
-            <span><i class="far fa-clock mr-1"></i> 6 weeks</span>
-            <span><i class="fas fa-flask mr-1"></i> Source audit</span>
-            <span><i class="fas fa-signal mr-1"></i> Expert</span>
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-            <div>
-              <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,699</span>
-              <span class="text-sm text-gray-400 line-through ml-2">$2,400</span>
+            
+            <div class="p-6">
+              <!-- Rating -->
+              <div class="flex items-center gap-1 mb-3">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <% if (i <= (course.rating || 4.5)) { %>
+                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                  <% } else if (i - 0.5 <= (course.rating || 4.5)) { %>
+                    <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                  <% } else { %>
+                    <i class="far fa-star text-yellow-400 text-xs"></i>
+                  <% } %>
+                <% } %>
+                <span class="text-xs text-gray-500 ml-2"><%= course.rating || 4.8 %> (<%= course.reviewCount || 0 %> reviews)</span>
+              </div>
+              
+              <!-- Course Stats -->
+              <div class="flex gap-4 mb-4 text-xs text-gray-500">
+                <span><i class="far fa-clock mr-1"></i> <%= course.duration || 6 %> weeks</span>
+                <span><i class="fas fa-flask mr-1"></i> <%= course.courceType === 'CYBERSECURITY' ? '24/7 labs' : 'Hands-on projects' %></span>
+                <span><i class="fas fa-signal mr-1"></i> 
+                  <%= course.courseLevel === 'beginner' ? 'Beginner' : 
+                     course.courseLevel === 'intermediate' ? 'Intermediate' : 
+                     course.courseLevel === 'advanced' ? 'Advanced' : 'Expert' %>
+                </span>
+              </div>
+              
+              <!-- Short Description -->
+              <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+                <%= course.shortDescription %>
+              </p>
+              
+              <!-- Price and Button -->
+              <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                <div>
+                  <% if (course.actualPrice && course.actualPrice < course.price) { %>
+                    <span class="text-2xl font-bold text-gray-900 dark:text-white">₹<%= course.actualPrice %></span>
+                    <span class="text-[0.7rem] text-gray-400 line-through ml-2">₹<%= course.price %></span>
+                  <% } else { %>
+                    <span class="text-2xl font-bold text-gray-900 dark:text-white">₹<%= course.price %></span>
+                  <% } %>
+                </div>
+                
+                <!-- Dynamic Button based on user login status -->
+                
+                  <a href="/courses/<%= course._id %>" 
+                     class="flex px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-sm hover:shadow-lg transition-all flex items-center gap-1">
+                    Enroll Now
+                    <i class="fas fa-arrow-right text-xs"></i>
+                  </a>
+                
+              </div>
             </div>
-            <a href="/courses/oswe" class="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
-              <i class="fas fa-arrow-right"></i>
-            </a>
           </div>
-        </div>
-      </div>
-      
-      <!-- CRTO Card -->
-      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
-        <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
-          <span class="absolute top-4 right-4 px-2 py-1 bg-cyan-500/10 text-cyan-500 text-xs rounded font-mono">↑ Trending</span>
-          <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-4">
-            <i class="fas fa-crosshairs text-cyan-600 text-xl"></i>
-          </div>
-          <div class="text-2xl font-bold text-gray-900 dark:text-white">CRTO</div>
-          <div class="text-xs text-gray-500 font-mono">Certified Red Team Operator</div>
-        </div>
-        <div class="p-6">
-          <div class="flex items-center gap-1 mb-3">
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <span class="text-xs text-gray-500 ml-2">5.0 (567)</span>
-          </div>
-          <div class="flex gap-4 mb-4 text-xs text-gray-500">
-            <span><i class="far fa-clock mr-1"></i> 5 weeks</span>
-            <span><i class="fas fa-flask mr-1"></i> Cobalt Strike</span>
-            <span><i class="fas fa-signal mr-1"></i> Advanced</span>
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-            <div>
-              <span class="text-2xl font-bold text-gray-900 dark:text-white">$999</span>
-              <span class="text-sm text-gray-400 line-through ml-2">$1,400</span>
+        <% }) %>
+      <% } else { %>
+        <!-- Fallback Static Courses -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow">
+          <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
+            <span class="absolute top-4 right-4 px-2 py-1 bg-red-500/10 text-red-500 text-xs rounded font-mono">🔥 Most Popular</span>
+            <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-skull-crossbones text-red-600 text-xl"></i>
             </div>
-            <a href="/courses/crto" class="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
-              <i class="fas fa-arrow-right"></i>
-            </a>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">OSCP</div>
+            <div class="text-xs text-gray-500 font-mono">Offensive Security Certified Professional</div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-1 mb-3">
+              <i class="fas fa-star text-yellow-400 text-xs"></i>
+              <i class="fas fa-star text-yellow-400 text-xs"></i>
+              <i class="fas fa-star text-yellow-400 text-xs"></i>
+              <i class="fas fa-star text-yellow-400 text-xs"></i>
+              <i class="fas fa-star text-yellow-400 text-xs"></i>
+              <span class="text-xs text-gray-500 ml-2">5.0 (1,234)</span>
+            </div>
+            <div class="flex gap-4 mb-4 text-xs text-gray-500">
+              <span><i class="far fa-clock mr-1"></i> 8 weeks</span>
+              <span><i class="fas fa-flask mr-1"></i> 24/7 labs</span>
+              <span><i class="fas fa-signal mr-1"></i> Advanced</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+              <div>
+                <span class="text-2xl font-bold text-gray-900 dark:text-white">₹1,499</span>
+                <span class="text-sm text-gray-400 line-through ml-2">₹2,100</span>
+              </div>
+              <% if (currUser) { %>
+                <a href="/enroll/oscp" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg transition-all">Enroll Now →</a>
+              <% } else { %>
+                <a href="/login" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold text-sm hover:bg-blue-600 hover:text-white transition-all">Login to Enroll</a>
+              <% } %>
+            </div>
           </div>
         </div>
-      </div>
+        
+        <!-- Add more fallback courses as needed -->
+      <% } %>
     </div>
     
     <div class="text-center mt-10">
       <a href="/courses" class="inline-flex items-center px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all">
-        View All 12 Certifications →
+        View All Certifications →
+        <i class="fas fa-arrow-right ml-2"></i>
       </a>
     </div>
   </div>
@@ -442,7 +516,7 @@
         </div>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Penetration Testing</h3>
         <p class="text-gray-600 dark:text-gray-400 mb-4">Comprehensive adversarial assessments simulating real-world attacks against your network, applications, and people.</p>
-        <div class="text-sm text-gray-500 mb-4">Starting from <strong class="text-blue-600">$2,500</strong> / engagement</div>
+        <div class="text-sm text-gray-500 mb-4">Starting from <strong class="text-blue-600">₹2,500</strong> / engagement</div>
         <div class="flex flex-wrap gap-2">
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Network</span>
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Web Apps</span>
@@ -588,7 +662,7 @@
         Join 5,000+ professionals. No experience needed — just the will to learn.
       </p>
       <div class="flex flex-wrap gap-4 justify-center">
-        <a href="/signup" class="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+        <a href="/enroll" class="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
           Enroll Now — 30% Off
         </a>
         <a href="/contact" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">

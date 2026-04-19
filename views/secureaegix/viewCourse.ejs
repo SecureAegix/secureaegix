@@ -1,127 +1,162 @@
-<% layout("layouts/boilerplate") %>
+<% layout("/layouts/boilerplate") -%>
 
 <!-- Course Detail Page -->
-<div class="bg-gray-50 dark:bg-gray-900 min-h-screen py-8 transition-colors duration-200">
-  <div class="container mx-auto px-4">
+<div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen py-8 transition-colors duration-200">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Breadcrumb -->
     <nav class="flex mb-6 text-sm" aria-label="Breadcrumb">
-      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+      <ol class="inline-flex items-center flex-wrap gap-2">
         <li class="inline-flex items-center">
-          <a href="/" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">Home</a>
+          <a href="/" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
         </li>
         <li>
           <div class="flex items-center">
             <i class="fas fa-chevron-right text-gray-400 dark:text-gray-600 mx-2 text-xs"></i>
-            <a href="/courses" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">Courses</a>
+            <a href="/courses" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Courses</a>
           </div>
         </li>
         <li>
           <div class="flex items-center">
             <i class="fas fa-chevron-right text-gray-400 dark:text-gray-600 mx-2 text-xs"></i>
-            <span class="text-gray-500 dark:text-gray-500"><%= course.courceType %></span>
+            <span class="text-gray-700 dark:text-gray-300 font-medium"><%= course.title %></span>
           </div>
         </li>
-        
       </ol>
     </nav>
 
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       
-      <!-- Left Column - Course Details (2/3 width) -->
+      <!-- Left Column - Course Details -->
       <div class="lg:col-span-2 space-y-6">
         
         <!-- Course Header Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-900/30 overflow-hidden transition-colors duration-200">
-          <!-- Course Image -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
           <% if(course.image && course.image.url) { %>
-          <div class=" overflow-hidden">
+          <div class="relative h-64 md:h-80 overflow-hidden">
             <img src="<%= course.image.url %>" alt="<%= course.title %>" 
-                 class="w-full h-full object-cover">
+                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            
+            <!-- Badges Overlay -->
+            <div class="absolute top-4 left-4 flex gap-2">
+              <% if(course.isPopular) { %>
+                <span class="px-3 py-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-semibold rounded-full shadow-lg">
+                  <i class="fas fa-fire mr-1"></i> Most Popular
+                </span>
+              <% } %>
+              <% if(course.courseLevel) { %>
+                <span class="px-3 py-1 bg-blue-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full shadow-lg">
+                  <i class="fas fa-signal mr-1"></i> <%= course.courseLevel.charAt(0).toUpperCase() + course.courseLevel.slice(1) %>
+                </span>
+              <% } %>
+            </div>
+            
+            <!-- Price Badge Overlay -->
+            <div class="absolute bottom-4 right-4">
+              <div class="bg-black/70 backdrop-blur-sm rounded-xl px-4 py-2 text-right">
+                <% if (course.actualPrice && course.actualPrice < course.price) { %>
+                  <span class="text-2xl font-bold text-white">₹<%= course.actualPrice %></span>
+                  <span class="text-sm text-gray-300 line-through ml-2">₹<%= course.price %></span>
+                  <span class="ml-2 px-2 py-0.5 bg-green-500 text-white text-xs rounded-full">
+                    Save ₹<%= course.price - course.actualPrice %>
+                  </span>
+                <% } else { %>
+                  <span class="text-2xl font-bold text-white">₹<%= course.price %></span>
+                <% } %>
+              </div>
+            </div>
           </div>
           <% } %>
           
-          <div class="p-6">
-            <!-- Title and Badges -->
-            <div class="flex flex-wrap items-center gap-3 mb-4">
-              <h1 class="text-3xl font-bold text-gray-800 dark:text-white"><%= course.title %></h1>
-              <% if(course.isPopular) { %>
-                <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs font-semibold rounded-full">Popular</span>
-              <% } %>
-              <% if(!course.isActive) { %>
-                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs font-semibold rounded-full">Inactive</span>
-              <% } %>
+          <div class="p-6 md:p-8">
+            <div class="mb-6">
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-full">
+                  <i class="fas fa-tag mr-1"></i> <%= course.courceType %>
+                </span>
+                <div class="flex items-center gap-1">
+                  <i class="fas fa-star text-yellow-400 text-sm"></i>
+                  <i class="fas fa-star text-yellow-400 text-sm"></i>
+                  <i class="fas fa-star text-yellow-400 text-sm"></i>
+                  <i class="fas fa-star text-yellow-400 text-sm"></i>
+                  <i class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
+                  <span class="text-sm text-gray-500 ml-1">(4.8)</span>
+                </div>
+              </div>
+              
+              <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"><%= course.title %></h1>
+              <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed"><%= course.shortDescription %></p>
             </div>
 
-            <!-- Short Description -->
-            <p class="text-lg text-gray-600 dark:text-gray-300 mb-6"><%= course.shortDescription %></p>
-
-            <!-- Meta Information -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Category</p>
-                <p class="font-semibold text-gray-800 dark:text-white"><%= course.courceType %></p>
-              </div>
-              <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Duration</p>
+            <!-- Key Information Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
+                <i class="fas fa-clock text-blue-600 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500">Duration</p>
                 <p class="font-semibold text-gray-800 dark:text-white"><%= course.duration || 'Self-paced' %> hrs</p>
               </div>
-              <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Students</p>
+              <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
+                <i class="fas fa-users text-green-600 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500">Students</p>
                 <p class="font-semibold text-gray-800 dark:text-white"><%= totalStudents %> enrolled</p>
               </div>
-              <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Launched</p>
+              <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
+                <i class="fas fa-calendar-alt text-purple-600 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500">Launched</p>
                 <p class="font-semibold text-gray-800 dark:text-white">
-                  <%= course.lounchedDate ? new Date(course.lounchedDate).toLocaleDateString() : 'Coming soon' %>
+                  <%= course.lounchedDate ? new Date(course.lounchedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Coming soon' %>
                 </p>
               </div>
+              <div class="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
+                <i class="fas fa-certificate text-orange-600 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500">Certificate</p>
+                <p class="font-semibold text-gray-800 dark:text-white">Completion</p>
+              </div>
             </div>
 
-            <!-- Teacher Information -->
+            <!-- Instructor Section -->
             <% if(course.teacher) { %>
-            <div class="flex items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mb-6">
-              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+            <div class="flex items-center p-5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700/30 rounded-2xl mb-8">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
                 <%= course.teacher.name ? course.teacher.name.charAt(0).toUpperCase() : 'A' %>
               </div>
-              <div class="ml-4">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Course Instructor</p>
-                <p class="text-xl font-semibold text-gray-800 dark:text-white"><%= course.teacher.name %></p>
-                <p class="text-sm text-gray-600 dark:text-gray-300"><%= course.teacher.email %></p>
+              <div class="ml-4 flex-1">
+                <p class="text-sm text-gray-500">Course Instructor</p>
+                <p class="text-xl font-bold text-gray-800 dark:text-white"><%= course.teacher.name %></p>
+                <p class="text-sm text-gray-600"><%= course.teacher.email %></p>
               </div>
             </div>
             <% } %>
 
-            <!-- Course Description (HTML content) -->
-            <% if(course.discription) { %>
-            <div class="prose prose-lg max-w-none dark:prose-invert">
-              <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">About This Course</h2>
-              <div class="course-description dark:prose-invert">
-                <!-- This will render HTML content safely -->
-                <%- course.discription %>
-              </div>
-            </div>
-            <% } %>
-
-            <!-- Table of Contents -->
-            <% if(course.tableOfContent && course.tableOfContent.length > 0) { %>
-            <div class="mt-8">
-              <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Course Content</h2>
-              <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <% course.tableOfContent.forEach((item, index) => { %>
-                <div class="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700 last:border-0">
-                  <div class="flex items-center">
-                    <span class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mr-3">
-                      <%= index + 1 %>
-                    </span>
-                    <span class="text-gray-800 dark:text-gray-200"><%= item.tile %></span>
+            <!-- What You'll Learn -->
+            <% if(course.learningOutcomes && course.learningOutcomes.length > 0) { %>
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <i class="fas fa-graduation-cap text-blue-600 mr-3"></i> What You'll Learn
+              </h2>
+              <div class="grid md:grid-cols-2 gap-3">
+                <% course.learningOutcomes.forEach(outcome => { %>
+                  <div class="flex items-start gap-2">
+                    <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+                    <span class="text-gray-600 dark:text-gray-300"><%= outcome %></span>
                   </div>
-                  <% if(item.duration) { %>
-                  <span class="text-sm text-gray-500 dark:text-gray-400"><%= item.duration %> mins</span>
-                  <% } %>
-                </div>
                 <% }) %>
+              </div>
+            </div>
+            <% } %>
+
+            <!-- Full Description -->
+            <% if(course.discription) { %>
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <i class="fas fa-align-left text-cyan-600 mr-3"></i> Course Description
+              </h2>
+              <div class="course-description prose prose-lg max-w-none dark:prose-invert">
+                <%- course.discription %>
               </div>
             </div>
             <% } %>
@@ -129,77 +164,65 @@
         </div>
       </div>
 
-      <!-- Right Column - Enrollment Card (1/3 width) -->
+      <!-- Right Column - Enrollment Card -->
       <div class="lg:col-span-1">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-900/30 p-6 sticky top-4 transition-colors duration-200">
+        <div class="sticky top-24">
           
-          <!-- Price -->
-          <div class="mb-6">
-            <p class="text-3xl font-bold text-gray-800 dark:text-white">₹<%= course.actualPrice %></p>
-            <% if(course.actualPrice > course.price) { %>
-            <p class="text-sm text-gray-500 dark:text-gray-400 line-through">₹<%= course.actualPrice %></p>
-            <p class="text-sm text-green-600 dark:text-green-400">Save ₹<%= course.actualPrice - course.price %></p>
-            <% } %>
-          </div>
-
-          <!-- Enrollment Status -->
-          <% if(isEnrolled) { %>
-            <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <p class="text-green-800 dark:text-green-400 font-semibold flex items-center">
-                <i class="fas fa-check-circle mr-2"></i> You are enrolled in this course
-              </p>
-              <p class="text-sm text-green-600 dark:text-green-500 mt-1">
-                Enrolled on: <%= new Date(userEnrollment.enrolledAt).toLocaleDateString() %>
-              </p>
+          <!-- Enrollment Card -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            
+            <!-- Price Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-cyan-600 p-6 text-white">
+              <p class="text-sm opacity-90 mb-1">Course Price</p>
+              <div class="flex items-baseline gap-2">
+                <% if (course.actualPrice && course.actualPrice < course.price) { %>
+                  <span class="text-4xl font-bold">₹<%= course.actualPrice %></span>
+                  <span class="text-lg line-through opacity-70">₹<%= course.price %></span>
+                  <span class="ml-2 px-2 py-0.5 bg-yellow-400 text-gray-900 text-xs rounded-full font-semibold">
+                    <%= Math.round(((course.price - course.actualPrice) / course.price) * 100) %>% OFF
+                  </span>
+                <% } else { %>
+                  <span class="text-4xl font-bold">₹<%= course.price %></span>
+                <% } %>
+              </div>
+              <p class="text-xs opacity-80 mt-1">Inclusive of all taxes</p>
             </div>
             
-            <a href="https://wa.me/91<%= course.teacher.mobile %>?text=Hello%20<%= course.teacher.name %>,%20I%20have%20enrolled%20in%20the%20course%20<%= course.title %>.%20I%20would%20like%20to%20connect%20with%20you. %>" 
-               class="block w-full text-center px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-150 mb-3">
-              <i class="fas fa-play-circle mr-2"></i> Connect With Your Teacher
-            </a>
-            
-          <% } else { %>
-            
-            <% if(currentUser) { %>
-              <!-- <form action="/enroll/<%= course._id %>/enroll" method="POST"> -->
-                <a href="/enroll"> 
-                <button type="submit" 
-                        class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-150 mb-3"
-                        <%= !course.isActive ? 'disabled' : '' %>>
-                  <i class="fas fa-shopping-cart mr-2"></i> Enroll Now
-                </button>
-                </a>
-              <!-- </form> -->
-            <% } else { %>
-              <a href="/login?redirect=/courses/<%= course._id %>" 
-                 class="block w-full text-center px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-150 mb-3">
-                <i class="fas fa-sign-in-alt mr-2"></i> Login to Enroll
-              </a>
-            <% } %>
-            
-          <% } %>
-
-          <!-- Course Includes -->
-          <div class="mt-6">
-            <h3 class="font-semibold text-gray-800 dark:text-white mb-3">This course includes:</h3>
-            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-              <li class="flex items-center">
-                <i class="fas fa-video text-blue-500 dark:text-blue-400 w-5"></i>
-                <span>Full lifetime access</span>
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-mobile-alt text-blue-500 dark:text-blue-400 w-5"></i>
-                <span>Access on mobile and TV</span>
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-certificate text-blue-500 dark:text-blue-400 w-5"></i>
-                <span>Certificate of completion</span>
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-infinity text-blue-500 dark:text-blue-400 w-5"></i>
-                <span>Self-paced learning</span>
-              </li>
-            </ul>
+            <div class="p-6">
+              <% if(isEnrolled) { %>
+                <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200">
+                  <p class="text-green-800 dark:text-green-400 font-semibold flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i> You're enrolled!
+                  </p>
+                  <p class="text-sm text-green-600 mt-2">
+                    <i class="far fa-calendar-alt mr-1"></i> Enrolled on: <%= new Date(userEnrollment.enrolledAt).toLocaleDateString() %>
+                  </p>
+                </div>
+                <a href="#" class="block w-full text-center px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl">Continue Learning</a>
+              <% } else { %>
+                <% if(currentUser) { %>
+                  <button onclick="openEnrollmentModal()" 
+                          class="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+                    <i class="fas fa-shopping-cart mr-2"></i> Enroll Now
+                  </button>
+                <% } else { %>
+                  <a href="/login?redirect=/courses/<%= course._id %>" 
+                     class="block w-full text-center px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login to Enroll
+                  </a>
+                <% } %>
+              <% } %>
+              
+              <!-- Course Includes -->
+              <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <h3 class="font-semibold text-gray-800 dark:text-white mb-3">This course includes:</h3>
+                <ul class="space-y-2.5 text-sm text-gray-600 dark:text-gray-300">
+                  <li class="flex items-center"><i class="fas fa-video text-blue-500 w-5"></i> Full lifetime access</li>
+                  <li class="flex items-center"><i class="fas fa-certificate text-blue-500 w-5"></i> Certificate of completion</li>
+                  <li class="flex items-center"><i class="fas fa-infinity text-blue-500 w-5"></i> Self-paced learning</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -208,24 +231,18 @@
     <!-- Related Courses Section -->
     <% if(relatedCourses && relatedCourses.length > 0) { %>
     <div class="mt-12">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Related Courses</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">You Might Also Like</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <% relatedCourses.forEach(related => { %>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-900/30 overflow-hidden hover:shadow-lg dark:hover:shadow-gray-900/50 transition duration-150">
-          <% if(related.image && related.image.url) { %>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
           <a href="/courses/<%= related._id %>">
-            <img src="<%= related.image.url %>" alt="<%= related.title %>" 
-                 class="w-full h-40 object-cover">
+            <img src="<%= related.image?.url || '/images/default-course.jpg' %>" alt="<%= related.title %>" class="w-full h-40 object-cover">
           </a>
-          <% } %>
           <div class="p-4">
-            <h3 class="font-semibold text-gray-800 dark:text-white mb-2">
-              <a href="/courses/<%= related._id %>" class="hover:text-blue-600 dark:hover:text-blue-400"><%= related.title %></a>
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 mb-2"><%= related.shortDescription.substring(0, 60) %>...</p>
+            <h3 class="font-semibold text-gray-800 dark:text-white mb-2"><%= related.title %></h3>
             <div class="flex justify-between items-center">
-              <span class="text-lg font-bold text-blue-600 dark:text-blue-400">₹<%= related.price %></span>
-              <span class="text-xs text-gray-500 dark:text-gray-400"><%= related.courceType %></span>
+              <span class="text-lg font-bold text-blue-600">₹<%= related.actualPrice || related.price %></span>
+              <a href="/courses/<%= related._id %>" class="text-blue-600">View →</a>
             </div>
           </div>
         </div>
@@ -236,99 +253,195 @@
   </div>
 </div>
 
-<!-- Custom CSS for HTML content styling -->
+<!-- Enrollment Modal -->
+<div id="enrollmentModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4 mt-14">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[75vh] overflow-y-auto">
+    <!-- Modal Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-4  top-0">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-bold text-white">Complete Enrollment</h3>
+        <button onclick="closeEnrollmentModal()" class="text-white hover:text-gray-200 text-2xl">&times;</button>
+      </div>
+      <p class="text-blue-100 text-sm mt-1"><%= course.title %></p>
+    </div>
+    
+    <!-- Modal Body -->
+    <form id="enrollmentForm" action="/enroll" method="POST" class="p-6 space-y-4">
+      <!-- Course ID Hidden -->
+      <input type="hidden" name="courseId" value="<%= course._id %>">
+      
+      <!-- Price (Optional - can be auto-filled) -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Course Price</label>
+        <div class="relative">
+          <span class="absolute left-3 top-2.5 text-gray-500">₹</span>
+          <input type="number" name="paidPrice" value="<%= course.actualPrice || course.price %>" 
+                 class="w-full pl-8 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
+                 readonly>
+        </div>
+      </div>
+      
+      <!-- Full Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Full Name <span class="text-red-500">*</span>
+        </label>
+        <input type="text" name="name" value="<%= currentUser ? currentUser.name : '' %>" required
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Email Address <span class="text-red-500">*</span>
+        </label>
+        <input type="email" name="email" value="<%= currentUser ? currentUser.email : '' %>" required
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      
+      <!-- Mobile Number -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Mobile Number <span class="text-red-500">*</span>
+        </label>
+        <input type="tel" name="mobile" value="<%= currentUser ? currentUser.mobile : '' %>" required
+               placeholder="+91 98765 43210"
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      
+      <!-- Description/Requirements -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Any specific requirements or questions?
+        </label>
+        <textarea name="description" rows="3" 
+                  placeholder="Tell us about your goals or any questions you have..."
+                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+      
+      <!-- Terms and Conditions -->
+      <div class="flex items-start">
+        <input type="checkbox" id="terms" required class="mt-1 w-4 h-4 border border-gray-300 rounded">
+        <label for="terms" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+          I agree to the <a href="/terms" class="text-blue-600 hover:underline">Terms and Conditions</a> and 
+          <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a>
+        </label>
+      </div>
+      
+      <!-- Submit Button -->
+      <button type="submit" 
+              class="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+        <i class="fas fa-check-circle mr-2"></i>
+        Confirm Enrollment
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Open modal
+  function openEnrollmentModal() {
+    document.getElementById('enrollmentModal').classList.remove('hidden');
+    document.getElementById('enrollmentModal').classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  // Close modal
+  function closeEnrollmentModal() {
+    document.getElementById('enrollmentModal').classList.add('hidden');
+    document.getElementById('enrollmentModal').classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+  
+  // Close modal on outside click
+  document.getElementById('enrollmentModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeEnrollmentModal();
+    }
+  });
+  
+  // Mobile number validation
+  document.querySelector('#enrollmentForm input[name="mobile"]')?.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.slice(0, 10);
+    e.target.value = value;
+  });
+  
+  // Form validation
+  document.getElementById('enrollmentForm')?.addEventListener('submit', function(e) {
+    const name = this.querySelector('input[name="name"]').value.trim();
+    const email = this.querySelector('input[name="email"]').value.trim();
+    const mobile = this.querySelector('input[name="mobile"]').value.trim();
+    const terms = document.getElementById('terms').checked;
+    
+    if (!name) {
+      e.preventDefault();
+      alert('Please enter your full name');
+      return false;
+    }
+    
+    if (!email) {
+      e.preventDefault();
+      alert('Please enter your email address');
+      return false;
+    }
+    
+    if (!email.includes('@') || !email.includes('.')) {
+      e.preventDefault();
+      alert('Please enter a valid email address');
+      return false;
+    }
+    
+    if (!mobile) {
+      e.preventDefault();
+      alert('Please enter your mobile number');
+      return false;
+    }
+    
+    if (mobile.length < 10) {
+      e.preventDefault();
+      alert('Please enter a valid 10-digit mobile number');
+      return false;
+    }
+    
+    if (!terms) {
+      e.preventDefault();
+      alert('Please agree to the Terms and Conditions');
+      return false;
+    }
+    
+    return true;
+  });
+</script>
+
 <style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
   .course-description {
-    @apply text-gray-700 dark:text-gray-300 leading-relaxed;
+    color: #4b5563;
+    line-height: 1.7;
   }
-  
-  .course-description h1 {
-    @apply text-3xl font-bold text-gray-800 dark:text-white mt-6 mb-4;
-  }
-  
-  .course-description h2 {
-    @apply text-2xl font-semibold text-gray-800 dark:text-white mt-5 mb-3;
-  }
-  
-  .course-description h3 {
-    @apply text-xl font-semibold text-gray-800 dark:text-white mt-4 mb-2;
-  }
-  
-  .course-description p {
-    @apply mb-4;
-  }
-  
-  .course-description ul {
-    @apply list-disc pl-6 mb-4;
-  }
-  
-  .course-description ol {
-    @apply list-decimal pl-6 mb-4;
-  }
-  
-  .course-description li {
-    @apply mb-1;
-  }
-  
-  .course-description blockquote {
-    @apply border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400 pl-4 py-2 italic my-4 dark:text-gray-300;
-  }
-  
-  .course-description code {
-    @apply bg-gray-100 dark:bg-gray-700 text-pink-600 dark:text-pink-400 px-1 py-0.5 rounded text-sm;
-  }
-  
-  .course-description pre {
-    @apply bg-gray-800 dark:bg-gray-900 text-white p-4 rounded-lg overflow-x-auto my-4;
-  }
-  
-  .course-description pre code {
-    @apply bg-transparent text-white text-sm;
-  }
-  
-  .course-description img {
-    @apply rounded-lg max-w-full h-auto my-4;
-  }
-  
-  .course-description table {
-    @apply min-w-full divide-y divide-gray-200 dark:divide-gray-700 my-4;
-  }
-  
-  .course-description th {
-    @apply bg-gray-50 dark:bg-gray-800 px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase;
-  }
-  
-  .course-description td {
-    @apply px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700;
-  }
-  
-  .course-description a {
-    @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline;
-  }
-  
-  .course-description strong {
-    @apply font-semibold text-gray-900 dark:text-white;
-  }
-  
-  /* Dark mode specific adjustments for prose */
   .dark .course-description {
     color: #d1d5db;
   }
-  
-  .dark .course-description h1,
-  .dark .course-description h2,
-  .dark .course-description h3,
-  .dark .course-description strong {
+  .course-description h1, .course-description h2, .course-description h3 {
+    color: #1f2937;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .dark .course-description h1, .dark .course-description h2, .dark .course-description h3 {
     color: #ffffff;
   }
-  
-  /* Ensure images have proper contrast in dark mode */
-  .dark .course-description img {
-    filter: brightness(0.9);
+  .course-description ul, .course-description ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
   }
-  
-  /* Style horizontal rules */
-  .course-description hr {
-    @apply my-6 border-gray-200 dark:border-gray-700;
+  .course-description li {
+    margin-bottom: 0.25rem;
   }
 </style>

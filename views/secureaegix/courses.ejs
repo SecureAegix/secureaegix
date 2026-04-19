@@ -1,616 +1,399 @@
 <% layout("/layouts/boilerplate") -%>
 
-
-
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20 overflow-hidden">
-        <div class="absolute inset-0 opacity-40 pointer-events-none">
-            <canvas id="particleCanvas" class="block w-full h-full"></canvas>
-        </div>
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-16 overflow-hidden">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
     
-    <div class="relative max-w-7xl mx-auto py-20 md:py-28 px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Certification Courses</h1>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Cybersecurity Courses</h1>
         <p class="text-lg text-gray-200 max-w-2xl mx-auto">
-            Industry-recognized cybersecurity certifications to advance your career
+            Industry-recognized certifications to advance your cybersecurity career
         </p>
         
         <!-- Search Bar -->
         <div class="max-w-md mx-auto mt-8">
             <div class="relative">
-                <input type="text" id="searchCourses" placeholder="Search courses..." 
-                       class="w-full px-5 py-3 pl-12 rounded-lg text-gray-900 dark:text-white dark:bg-gray-800 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                <form action="/courses" method="GET">
+                    <input type="text" name="search" value="<%= search %>" 
+                           placeholder="Search courses..." 
+                           class="w-full px-5 py-3 pl-12 rounded-lg text-gray-900 dark:text-white dark:bg-gray-800 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                    <% if (search) { %>
+                        <a href="/courses" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    <% } %>
+                </form>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Filter Section -->
-<section class="py-8 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40">
+<section class="py-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 top-16 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-wrap gap-3 justify-center">
-            <button class="filter-btn active px-5 py-2 rounded-full bg-blue-600 text-white font-medium transition-all" data-filter="all">
-                All Courses
-            </button>
-            <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition-all" data-filter="beginner">
-                Beginner
-            </button>
-            <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition-all" data-filter="intermediate">
-                Intermediate
-            </button>
-            <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition-all" data-filter="advanced">
-                Advanced
-            </button>
-            <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition-all" data-filter="expert">
-                Expert
-            </button>
-        </div>
+    <a href="/courses?<%= search ? 'search=' + search + '&' : '' %>level=all" 
+       class="px-4 py-2 rounded-full transition-all duration-300 
+              <%= (!level || level === 'all') ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white' %>">
+        All Courses
+    </a>
+    <a href="/courses?<%= search ? 'search=' + search + '&' : '' %>level=beginner" 
+       class="px-4 py-2 rounded-full transition-all duration-300 
+              <%= level === 'beginner' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white' %>">
+        Beginner
+    </a>
+    <a href="/courses?<%= search ? 'search=' + search + '&' : '' %>level=intermediate" 
+       class="px-4 py-2 rounded-full transition-all duration-300 
+              <%= level === 'intermediate' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white' %>">
+        Intermediate
+    </a>
+    <a href="/courses?<%= search ? 'search=' + search + '&' : '' %>level=advanced" 
+       class="px-4 py-2 rounded-full transition-all duration-300 
+              <%= level === 'advanced' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white' %>">
+        Advanced
+    </a>
+    <a href="/courses?<%= search ? 'search=' + search + '&' : '' %>level=expert" 
+       class="px-4 py-2 rounded-full transition-all duration-300 
+              <%= level === 'expert' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white' %>">
+        Expert
+    </a>
+</div>
     </div>
 </section>
 
 <!-- Courses Grid -->
 <section class="py-16 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="coursesGrid">
-            
-            <!-- OSCP Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="advanced" data-name="oscp">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600" alt="OSCP" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">OSCP</div>
-                        <div class="text-xs text-gray-200">Offensive Security</div>
-                    </div>
-                    <div class="absolute top-4 right-4">
-                        <span class="px-2 py-1 bg-red-500 text-white text-xs rounded-full font-semibold">Most Popular</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(1,234 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs rounded-full font-mono">Advanced</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Offensive Security Certified Professional</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">The gold standard in penetration testing certification. Master real-world hacking techniques.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-blue-600"></i> 8 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-flask mr-2 text-blue-600"></i> 24/7 Lab
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-trophy mr-2 text-blue-600"></i> 95% Pass Rate
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-blue-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,499</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$2,199</span>
-                            </div>
-                            <a href="/courses/oscp" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- OSWE Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="expert" data-name="oswe">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" alt="OSWE" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">OSWE</div>
-                        <div class="text-xs text-gray-200">Web Expert</div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(892 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs rounded-full font-mono">Expert</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Offensive Security Web Expert</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Master advanced web application security and source code analysis techniques.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-purple-600"></i> 6 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-code mr-2 text-purple-600"></i> White-box
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-database mr-2 text-purple-600"></i> Advanced
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-purple-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,699</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$2,499</span>
-                            </div>
-                            <a href="/courses/oswe" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CRTO Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="advanced" data-name="crto">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600" alt="CRTO" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">CRTO</div>
-                        <div class="text-xs text-gray-200">Red Team Operator</div>
-                    </div>
-                    <div class="absolute top-4 right-4">
-                        <span class="px-2 py-1 bg-cyan-500 text-white text-xs rounded-full font-semibold">Trending</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(567 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 text-xs rounded-full font-mono">Advanced</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Certified Red Team Operator</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Learn adversary simulation and red teaming with Cobalt Strike.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-cyan-600"></i> 5 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-user-secret mr-2 text-cyan-600"></i> Cobalt Strike
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-network-wired mr-2 text-cyan-600"></i> Adversary Sim
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-cyan-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$999</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$1,499</span>
-                            </div>
-                            <a href="/courses/crto" class="px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- eJPT Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="beginner" data-name="ejpt">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600" alt="eJPT" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">eJPT</div>
-                        <div class="text-xs text-gray-200">Junior Pentester</div>
-                    </div>
-                    <div class="absolute top-4 right-4">
-                        <span class="px-2 py-1 bg-green-500 text-white text-xs rounded-full font-semibold">Beginner Friendly</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(2,100 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs rounded-full font-mono">Beginner</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">eLearnSecurity Junior Penetration Tester</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Start your cybersecurity journey with this beginner-friendly certification.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-green-600"></i> 4 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-flask mr-2 text-green-600"></i> Guided Labs
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-chart-line mr-2 text-green-600"></i> No Prerequisites
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-green-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$299</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$499</span>
-                            </div>
-                            <a href="/courses/ejpt" class="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- OSED Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="expert" data-name="osed">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" alt="OSED" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">OSED</div>
-                        <div class="text-xs text-gray-200">Exploit Developer</div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(341 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs rounded-full font-mono">Expert</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Offensive Security Exploit Developer</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Master binary exploitation and advanced exploit development techniques.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-orange-600"></i> 10 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-bug mr-2 text-orange-600"></i> Binary Exploit
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-microchip mr-2 text-orange-600"></i> Reverse Engineering
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-orange-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$1,999</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$2,799</span>
-                            </div>
-                            <a href="/courses/osed" class="px-4 py-2 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CRTP Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="intermediate" data-name="crtp">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600" alt="CRTP" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">CRTP</div>
-                        <div class="text-xs text-gray-200">Red Team Professional</div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(423 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 text-xs rounded-full font-mono">Intermediate</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Certified Red Team Professional</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Learn red teaming fundamentals and Active Directory attacks.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-yellow-600"></i> 4 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-network-wired mr-2 text-yellow-600"></i> AD Attacks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-chart-line mr-2 text-yellow-600"></i> Intermediate
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-yellow-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$799</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$1,199</span>
-                            </div>
-                            <a href="/courses/crtp" class="px-4 py-2 bg-gradient-to-r from-yellow-600 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- PNPT Course Card -->
-            <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-level="intermediate" data-name="pnpt">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600" alt="PNPT" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4">
-                        <div class="text-2xl font-bold text-white">PNPT</div>
-                        <div class="text-xs text-gray-200">Practical Network Pen Tester</div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-1">
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <i class="fas fa-star text-yellow-400 text-xs"></i>
-                            <span class="text-xs text-gray-500 ml-1">(678 reviews)</span>
-                        </div>
-                        <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs rounded-full font-mono">Intermediate</span>
-                    </div>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Practical Network Penetration Tester</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Comprehensive network penetration testing certification.</p>
-                    
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="far fa-clock mr-2 text-blue-600"></i> 6 weeks
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-network-wired mr-2 text-blue-600"></i> Network Pentest
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-chart-line mr-2 text-blue-600"></i> Intermediate
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-certificate mr-2 text-blue-600"></i> Official Cert
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">$599</span>
-                                <span class="text-sm text-gray-400 line-through ml-2">$899</span>
-                            </div>
-                            <a href="/courses/pnpt" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
-                                Enroll Now →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+        
+        <!-- Results Count -->
+        <div class="mb-6 flex justify-between items-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                Showing <span class="font-semibold"><%= cources.length %></span> courses
+            </p>
+            <% if (search) { %>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Search results for: <span class="font-semibold">"<%= search %>"</span>
+                </p>
+            <% } %>
         </div>
         
-        <!-- No Results Message -->
-        <div id="noResults" class="text-center py-12 hidden">
-            <i class="fas fa-search text-6xl text-gray-400 mb-4"></i>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No courses found</h3>
-            <p class="text-gray-600 dark:text-gray-400">Try adjusting your search or filter criteria</p>
-        </div>
-    </div>
-</section>
-
-<!-- Comparison Table -->
-<section class="py-16 bg-white dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Course Comparison</h2>
-            <p class="text-gray-600 dark:text-gray-400">Compare certifications to find the right path for you</p>
-        </div>
+        <!-- Admin Action Buttons (Only visible to admin) -->
+        <% if (currUser && currUser.role === 'admin') { %>
+            <div class="mb-6 flex gap-3 justify-end">
+                <a href="/courses/new" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all">
+                    <i class="fas fa-plus mr-2"></i> Create New Course
+                </a>
+                <a href="/courses" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all">
+                    <i class="fas fa-cog mr-2"></i> Admin Panel
+                </a>
+            </div>
+        <% } %>
         
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <th class="text-left py-4 px-4 text-gray-900 dark:text-white font-semibold">Certification</th>
-                        <th class="text-left py-4 px-4 text-gray-900 dark:text-white font-semibold">Level</th>
-                        <th class="text-left py-4 px-4 text-gray-900 dark:text-white font-semibold">Duration</th>
-                        <th class="text-left py-4 px-4 text-gray-900 dark:text-white font-semibold">Lab Access</th>
-                        <th class="text-left py-4 px-4 text-gray-900 dark:text-white font-semibold">Price</th>
-                        <th class="text-left py-4 px-4 text-gray-900 dark:text-white font-semibold"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-gray-900 dark:text-white">OSCP</td>
-                        <td class="py-3 px-4"><span class="px-2 py-1 bg-red-100 text-red-600 text-xs rounded-full">Advanced</span></td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">8 weeks</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">24/7 Labs</td>
-                        <td class="py-3 px-4 text-gray-900 dark:text-white font-semibold">$1,499</td>
-                        <td class="py-3 px-4"><a href="/courses/oscp" class="text-blue-600 hover:text-blue-700 text-sm">View →</a></td>
-                    </tr>
-                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-gray-900 dark:text-white">OSWE</td>
-                        <td class="py-3 px-4"><span class="px-2 py-1 bg-purple-100 text-purple-600 text-xs rounded-full">Expert</span></td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">6 weeks</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">Source Code Access</td>
-                        <td class="py-3 px-4 text-gray-900 dark:text-white font-semibold">$1,699</td>
-                        <td class="py-3 px-4"><a href="/courses/oswe" class="text-blue-600 hover:text-blue-700 text-sm">View →</a></td>
-                    </tr>
-                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-gray-900 dark:text-white">CRTO</td>
-                        <td class="py-3 px-4"><span class="px-2 py-1 bg-cyan-100 text-cyan-600 text-xs rounded-full">Advanced</span></td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">5 weeks</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">Cobalt Strike Lab</td>
-                        <td class="py-3 px-4 text-gray-900 dark:text-white font-semibold">$999</td>
-                        <td class="py-3 px-4"><a href="/courses/crto" class="text-blue-600 hover:text-blue-700 text-sm">View →</a></td>
-                    </tr>
-                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-gray-900 dark:text-white">eJPT</td>
-                        <td class="py-3 px-4"><span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded-full">Beginner</span></td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">4 weeks</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">Guided Labs</td>
-                        <td class="py-3 px-4 text-gray-900 dark:text-white font-semibold">$299</td>
-                        <td class="py-3 px-4"><a href="/courses/ejpt" class="text-blue-600 hover:text-blue-700 text-sm">View →</a></td>
-                    </tr>
-                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-gray-900 dark:text-white">OSED</td>
-                        <td class="py-3 px-4"><span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">Expert</span></td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">10 weeks</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">Exploit Dev Lab</td>
-                        <td class="py-3 px-4 text-gray-900 dark:text-white font-semibold">$1,999</td>
-                        <td class="py-3 px-4"><a href="/courses/osed" class="text-blue-600 hover:text-blue-700 text-sm">View →</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- Courses Grid -->
+        <% if (cources && cources.length > 0) { %>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% cources.forEach(course => { %>
+                    <div class="course-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative">
+                        
+                        <!-- Admin Badges -->
+                        <% if (currUser && currUser.role === 'admin') { %>
+                            <div class="absolute top-2 right-2 z-20 flex gap-1">
+                                <button onclick="toggleStatus('<%= course._id %>', '<%= !course.isActive %>')" 
+                                        class="w-8 h-8 rounded-full <%= course.isActive ? 'bg-green-500' : 'bg-red-500' %> text-white flex items-center justify-center hover:scale-110 transition-all"
+                                        title="<%= course.isActive ? 'Deactivate Course' : 'Activate Course' %>">
+                                    <i class="fas <%= course.isActive ? 'fa-check' : 'fa-ban' %> text-xs"></i>
+                                </button>
+                                <button onclick="togglePopular('<%= course._id %>', '<%= !course.isPopular %>')" 
+                                        class="w-8 h-8 rounded-full <%= course.isPopular ? 'bg-yellow-500' : 'bg-gray-500' %> text-white flex items-center justify-center hover:scale-110 transition-all"
+                                        title="<%= course.isPopular ? 'Remove from Popular' : 'Mark as Popular' %>">
+                                    <i class="fas fa-star text-xs"></i>
+                                </button>
+                                <button onclick="toggleNavbar('<%= course._id %>', '<%= !course.showInNavbar %>')" 
+                                        class="w-8 h-8 rounded-full <%= course.showInNavbar ? 'bg-blue-500' : 'bg-gray-500' %> text-white flex items-center justify-center hover:scale-110 transition-all"
+                                        title="<%= course.showInNavbar ? 'Remove from Navbar' : 'Add to Navbar' %>">
+                                    <i class="fas fa-bars text-xs"></i>
+                                </button>
+                                <button onclick="toggleHomepage('<%= course._id %>', '<%= !course.showInHomepage %>')" 
+                                        class="w-8 h-8 rounded-full <%= course.showInHomepage ? 'bg-cyan-600' : 'bg-gray-500' %> text-white flex items-center justify-center hover:scale-110 transition-all"
+                                        title="<%= course.showInHomepage ? 'Remove from Homepage' : 'Add to Homepage' %>">
+                                    <i class="fas fa-home text-xs"></i>
+                                </button>
+                            </div>
+                        <% } %>
+                        
+                        <!-- Course Image -->
+                        <a href="/courses/<%= course._id %>" class="block relative h-56 overflow-hidden">
+                            <% if (course.image && course.image.url) { %>
+                                <img src="<%= course.image.url %>" alt="<%= course.title %>" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <% } else { %>
+                                <div class="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-6xl text-white/30"></i>
+                                </div>
+                            <% } %>
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <% if (course.isPopular) { %>
+                                    <span class="px-2 py-1 bg-yellow-500 text-white text-xs rounded-full font-semibold">
+                                        <i class="fas fa-star mr-1"></i> Popular
+                                    </span>
+                                <% } %>
+                                <% if (course.courseLevel) { %>
+                                    <span class="px-2 py-1 bg-blue-600 text-white text-xs rounded-full font-semibold">
+                                        <%= course.courseLevel.charAt(0).toUpperCase() + course.courseLevel.slice(1) %>
+                                    </span>
+                                <% } %>
+                            </div>
+                            
+                            <!-- Price Badge -->
+                            <div class="absolute bottom-4 right-4 flex flex-col items-end gap-1">
+                                 <% if (course.actualPrice && course.actualPrice < course.price) { %>
+                                    <!-- Original Price (Crossed out) -->
+                                    <span class="px-2 py-0.5 bg-white/80 backdrop-blur-sm text-gray-500 text-xs rounded-full line-through">
+                                        ₹<%= course.price %>
+                                    </span>
+                                    <!-- Actual Price (Highlighted) -->
+                                    <span class="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-bold rounded-full shadow-lg animate-pulse">
+                                        ₹<%= course.actualPrice %>
+                                </span>
+                                <% } else { %>
+                                    <!-- Single Price (No discount) -->
+                                    <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-sm font-bold rounded-full">
+                                        ₹<%= course.price %>
+                                    </span>
+                                <% } %>
+                            
+                            </div>
+                        </a>
+                        
+                        <div class="p-6">
+                            <!-- Course Type -->
+                            <div class="text-xs text-blue-600 dark:text-blue-400 font-semibold mb-2">
+                                <%= course.courceType %>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                                <a href="/course/<%= course._id %>" class="hover:text-blue-600 transition-colors">
+                                    <%= course.title %>
+                                </a>
+                            </h3>
+                            
+                            <!-- Description -->
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+                                <%= course.shortDescription %>
+                            </p>
+                            
+                            <!-- Course Stats -->
+                            <div class="flex items-center justify-between mb-4 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-user-graduate text-gray-400"></i>
+                                    <span class="text-gray-600 dark:text-gray-400"><%= course.students?.length || 0 %> students</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-gray-600 dark:text-gray-400"><%= course.rating || 4.5 %></span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="far fa-clock text-gray-400"></i>
+                                    <span class="text-gray-600 dark:text-gray-400"><%= course.duration || 8 %> days</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Instructor -->
+                            <div class="flex items-center gap-2 pt-3 border-t border-gray-100 dark:border-gray-700">
+                                <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
+                                    <%= course.teacher?.name?.charAt(0).toUpperCase() || 'A' %>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">
+                                    By <%= course.teacher?.name || 'SecureAaegix' %>
+                                </span>
+                            </div>
+                            
+                            <!-- Admin Actions -->
+                            <% if (currUser && currUser.role === 'admin') { %>
+                                <div class="flex gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
+                                    <a href="/courses/<%= course._id %>/edit" class="flex-1 px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-all text-center">
+                                        <i class="fas fa-edit mr-1"></i> Edit
+                                    </a>
+                                    <button onclick="deleteCourse('<%= course._id %>')" class="flex-1 px-3 py-1.5 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-all">
+                                        <i class="fas fa-trash mr-1"></i> Delete
+                                    </button>
+                                </div>
+                            <% } else { %>
+                                <div class="mt-4">
+                                    <a href="/course/<%= course._id %>" class="block text-center px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                                        View Course Details
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <!-- No Results -->
+            <div class="text-center py-16">
+                <i class="fas fa-search text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">No courses found</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Try adjusting your search or browse all courses
+                </p>
+                <a href="/courses" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                    View All Courses
+                </a>
+            </div>
+        <% } %>
+        
+        <!-- Pagination -->
+        <% if (totalPages > 1) { %>
+            <div class="flex justify-center mt-12">
+                <nav class="flex items-center gap-2 flex-wrap">
+                    <% if (currentPage > 1) { %>
+                        <a href="?page=<%= currentPage - 1 %><%= search ? '&search=' + search : '' %>" 
+                           class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    <% } %>
+                    
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <% if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) { %>
+                            <a href="?page=<%= i %><%= search ? '&search=' + search : '' %>" 
+                               class="px-4 py-2 rounded-lg transition-colors <%= i === currentPage ? 'bg-blue-600 text-white' : 'border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700' %>">
+                                <%= i %>
+                            </a>
+                        <% } else if (i === currentPage - 3 || i === currentPage + 3) { %>
+                            <span class="px-2 text-gray-500">...</span>
+                        <% } %>
+                    <% } %>
+                    
+                    <% if (currentPage < totalPages) { %>
+                        <a href="?page=<%= currentPage + 1 %><%= search ? '&search=' + search : '' %>" 
+                           class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    <% } %>
+                </nav>
+            </div>
+        <% } %>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
-    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-            Not sure which course is right for you?
-        </h2>
-        <p class="text-lg text-white/90 mb-6">
-            Talk to our career advisors for personalized guidance
-        </p>
-        <a href="/contact" class="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
-            Schedule a Free Consultation
-        </a>
-    </div>
-</section>
-
-<!-- Filter and Search JavaScript -->
+<!-- Admin Action JavaScript -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const courseCards = document.querySelectorAll('.course-card');
-    const searchInput = document.getElementById('searchCourses');
-    const noResults = document.getElementById('noResults');
-    let currentFilter = 'all';
-    let currentSearch = '';
-    
-    function filterCourses() {
-        let visibleCount = 0;
-        
-        courseCards.forEach(card => {
-            const level = card.getAttribute('data-level');
-            const name = card.getAttribute('data-name');
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const description = card.querySelector('p').textContent.toLowerCase();
-            
-            const matchesFilter = currentFilter === 'all' || level === currentFilter;
-            const matchesSearch = currentSearch === '' || 
-                title.includes(currentSearch) || 
-                description.includes(currentSearch) ||
-                name.includes(currentSearch);
-            
-            if (matchesFilter && matchesSearch) {
-                card.style.display = 'block';
-                visibleCount++;
-                // Add animation
-                card.style.animation = 'fadeIn 0.5s ease';
-            } else {
-                card.style.display = 'none';
-            }
+// Toggle Course Status
+async function toggleStatus(courseId, newStatus) {
+    try {
+        const response = await fetch(`/courses/${courseId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' }
         });
-        
-        // Show/hide no results message
-        if (visibleCount === 0) {
-            noResults.classList.remove('hidden');
+        const data = await response.json();
+        if (data.success) {
+            window.flashMessages?.success(data.message);
+            setTimeout(() => location.reload(), 1000);
         } else {
-            noResults.classList.add('hidden');
+            window.flashMessages?.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        window.flashMessages?.error('Failed to update course status');
+    }
+}
+
+// Toggle Popular Status
+async function togglePopular(courseId, isPopular) {
+    try {
+        const response = await fetch(`/courses/${courseId}/popular`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json();
+        if (data.success) {
+            window.flashMessages?.success(data.message);
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            window.flashMessages?.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        window.flashMessages?.error('Failed to update popular status');
+    }
+}
+
+// Toggle Navbar Visibility
+async function toggleNavbar(courseId, showInNavbar) {
+    try {
+        const response = await fetch(`/courses/${courseId}/toggle-navbar`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json();
+        if (data.success) {
+            window.flashMessages?.success(data.message);
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            window.flashMessages?.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        window.flashMessages?.error('Failed to update navbar visibility');
+    }
+}
+
+// Toggle Homepage Visibility
+async function toggleHomepage(courseId, showInHomepage) {
+    try {
+        const response = await fetch(`/courses/${courseId}/toggle-homepage`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json();
+        if (data.success) {
+            window.flashMessages?.success(data.message);
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            window.flashMessages?.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        window.flashMessages?.error('Failed to update homepage visibility');
+    }
+}
+
+// Delete Course
+async function deleteCourse(courseId) {
+    if (confirm('Are you sure you want to delete this course? This action cannot be undone.')) {
+        try {
+            const response = await fetch(`/courses/${courseId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await response.json();
+            if (data.success) {
+                window.flashMessages?.success(data.message);
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                window.flashMessages?.error(data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            window.flashMessages?.error('Failed to delete course');
         }
     }
-    
-    // Filter button click handlers
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Update active state
-            filterBtns.forEach(b => b.classList.remove('active', 'bg-blue-600', 'text-white'));
-            filterBtns.forEach(b => b.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300'));
-            btn.classList.remove('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
-            btn.classList.add('active', 'bg-blue-600', 'text-white');
-            
-            currentFilter = btn.getAttribute('data-filter');
-            filterCourses();
-        });
-    });
-    
-    // Search input handler
-    searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value.toLowerCase().trim();
-        filterCourses();
-    });
-    
-    // Add fadeIn animation style
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    `;
-    document.head.appendChild(style);
-});
+}
 </script>
+
+<style>
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>

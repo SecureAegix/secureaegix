@@ -1,4 +1,4 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate") -%>
 
 <div class="min-h-screen bg-gradient-to-br from-gray-900 to-black py-8 px-4">
     <div class="max-w-6xl mx-auto">
@@ -12,7 +12,7 @@
 
         <!-- Form Container -->
         <div class="bg-gray-900/50 backdrop-blur-xl rounded-2xl border border-gray-700/50 shadow-2xl overflow-hidden">
-            <form action="/courses" method="POST" enctype="multipart/form-data" class="space-y-8 p-8">
+            <form action="/courses" method="POST" enctype="multipart/form-data" class="space-y-8 p-8" id="courseForm">
                 
                 <!-- Progress Steps -->
                 <div class="mb-10">
@@ -28,7 +28,7 @@
                             <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">
                                 <span class="text-sm font-bold text-gray-400">2</span>
                             </div>
-                            <span class="text-sm font-semibold text-gray-400">Content</span>
+                            <span class="text-sm font-semibold text-gray-400">Pricing</span>
                         </div>
                         <div class="h-1 flex-1 mx-4 bg-gray-700"></div>
                         <div class="flex items-center space-x-2">
@@ -69,7 +69,7 @@
                             <label for="shortDescription" class="block mb-3 font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors">
                                 Short Description <span class="text-red-500">*</span>
                             </label>
-                            <textarea id="shortDescription" name="shortDescription" required rows=""
+                            <textarea id="shortDescription" name="shortDescription" required rows="3"
                                 placeholder="Brief overview for course listings (2-3 sentences)"
                                 class="w-full px-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
                                        placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 
@@ -108,10 +108,10 @@
                         <!-- Original Price -->
                         <div class="group">
                             <label for="price" class="block mb-3 font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors">
-                                Original Price <span class="text-red-500">*</span>
+                                Price <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">₹</span>
                                 <input type="number" id="price" name="price" required min="0" step="0.01"
                                     placeholder="99.99"
                                     class="w-full pl-10 pr-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
@@ -120,13 +120,13 @@
                             </div>
                         </div>
 
-                        <!-- Discounted Price -->
+                        <!-- Actual Price (Discounted) -->
                         <div class="group">
                             <label for="actualPrice" class="block mb-3 font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors">
-                                Discounted Price <span class="text-red-500">*</span>
+                                Actual Price <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">₹</span>
                                 <input type="number" id="actualPrice" name="actualPrice" required min="0" step="0.01"
                                     placeholder="79.99"
                                     class="w-full pl-10 pr-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
@@ -135,10 +135,10 @@
                             </div>
                         </div>
 
-                        <!-- Discount Percentage (Auto-calculated) -->
+                        <!-- Discount Percentage -->
                         <div class="group">
                             <label class="block mb-3 font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors">
-                                Discount Percentage
+                                Discount
                             </label>
                             <div class="px-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700">
                                 <span id="discountPercentage" class="text-2xl font-bold text-green-400">0%</span>
@@ -180,12 +180,12 @@
                         <!-- Duration -->
                         <div class="group">
                             <label for="duration" class="block mb-3 font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors">
-                                Duration (Hours)
+                                Duration (Days)
                             </label>
                             <div class="relative">
-                                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">hrs</span>
-                                <input type="number" id="duration" name="duration" min="1" max="500"
-                                    placeholder="e.g., 40"
+                                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">days</span>
+                                <input type="number" id="duration" name="duration" min="1" max="52"
+                                    placeholder="e.g., 8"
                                     class="w-full pr-16 pl-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
                                            placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 
                                            focus:ring-cyan-500/20 transition-all duration-300">
@@ -203,18 +203,45 @@
                                        transition-all duration-300">
                         </div>
                     </div>
+
+
+                        <div class="group">
+                            <label for="courseLevel" class="block mb-3 font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors">
+                                Course Level <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select id="courseLevel" name="courseLevel" required
+                                    class="w-full px-5 py-3.5 rounded-xl max-w-md bg-gray-800/70 border border-gray-700 text-white 
+                                           focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 
+                                           appearance-none transition-all duration-300">
+                                    <option value="" class="bg-gray-800">Select Level</option>
+                                    <option value="beginner" class="bg-gray-800">🌱 Beginner</option>
+                                    <option value="intermediate" class="bg-gray-800">📘 Intermediate</option>
+                                    <option value="advanced" class="bg-gray-800">🚀 Advanced</option>
+                                    <option value="expert" class="bg-gray-800">🏆 Expert</option>
+                                </select>
+                                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
                 </div>
 
-                <!-- Additional Features Section -->
+                <!-- Display Settings Section -->
                 <div class="space-y-6">
                     <div class="border-l-4 border-cyan-500 pl-4">
-                        <h2 class="text-xl font-bold text-white">Additional Features</h2>
-                        <p class="text-gray-400 text-sm">Enhance your course with extra options</p>
+                        <h2 class="text-xl font-bold text-white">Display Settings</h2>
+                        <p class="text-gray-400 text-sm">Control where and how the course appears</p>
                     </div>
 
-                    <!-- Checkbox Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Home Page -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Add to Homepage -->
                         <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
                             <div class="flex items-center h-5">
                                 <input type="checkbox" id="addInHomePage" name="addInHomePage"
@@ -222,74 +249,73 @@
                                            focus:ring-cyan-500 focus:ring-2">
                             </div>
                             <div>
-                                <label for="addInHomePage" class="font-semibold text-white">Featured on Homepage</label>
-                                <p class="text-sm text-gray-400 mt-1">Display prominently on main page</p>
+                                <label for="addInHomePage" class="font-semibold text-white">Show on Homepage</label>
+                                <p class="text-sm text-gray-400 mt-1">Display course on the main landing page</p>
                             </div>
                         </div>
 
-                        <!-- Certificate -->
+                        <!-- Mark as Popular -->
                         <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
                             <div class="flex items-center h-5">
-                                <input type="checkbox" id="hasCertificate" name="hasCertificate"
+                                <input type="checkbox" id="isPopular" name="isPopular"
+                                    class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-yellow-500 
+                                           focus:ring-yellow-500 focus:ring-2">
+                            </div>
+                            <div>
+                                <label for="isPopular" class="font-semibold text-white">Mark as Popular</label>
+                                <p class="text-sm text-gray-400 mt-1">Featured as a popular course</p>
+                            </div>
+                        </div>
+
+                        <!-- Active Status -->
+                        <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
+                            <div class="flex items-center h-5">
+                                <input type="checkbox" id="isActive" name="isActive" checked
+                                    class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-green-500 
+                                           focus:ring-green-500 focus:ring-2">
+                            </div>
+                            <div>
+                                <label for="isActive" class="font-semibold text-white">Active Course</label>
+                                <p class="text-sm text-gray-400 mt-1">Make course available to students</p>
+                            </div>
+                        </div>
+
+                        <!-- Navbar Display -->
+                        <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
+                            <div class="flex items-center h-5">
+                                <input type="checkbox" id="showInNavbar" name="showInNavbar"
                                     class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-cyan-500 
                                            focus:ring-cyan-500 focus:ring-2">
                             </div>
                             <div>
-                                <label for="hasCertificate" class="font-semibold text-white">Include Certificate</label>
-                                <p class="text-sm text-gray-400 mt-1">Provide completion certificate</p>
+                                <label for="showInNavbar" class="font-semibold text-white">Show in Navigation</label>
+                                <p class="text-sm text-gray-400 mt-1">Add direct link in navbar</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Lifetime Access -->
-                        <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
-                            <div class="flex items-center h-5">
-                                <input type="checkbox" id="lifetimeAccess" name="lifetimeAccess" checked
-                                    class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-cyan-500 
-                                           focus:ring-cyan-500 focus:ring-2">
-                            </div>
-                            <div>
-                                <label for="lifetimeAccess" class="font-semibold text-white">Lifetime Access</label>
-                                <p class="text-sm text-gray-400 mt-1">Unlimited access to course content</p>
-                            </div>
+                    <!-- Navbar Button Settings (conditional) -->
+                    <div id="navbarSettings" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 p-4 rounded-xl bg-gray-800/30 border border-gray-700">
+                        <div>
+                            <label for="navbarButtonText" class="block text-sm font-medium text-gray-300 mb-2">
+                                Navbar Button Text
+                            </label>
+                            <input type="text" id="navbarButtonText" name="navbarButtonText" 
+                                placeholder="e.g., OSCP Certification"
+                                class="w-full px-4 py-2 rounded-lg bg-gray-800/70 border border-gray-700 text-white">
                         </div>
-
-                        <!-- Community Access -->
-                        <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
-                            <div class="flex items-center h-5">
-                                <input type="checkbox" id="communityAccess" name="communityAccess"
-                                    class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-cyan-500 
-                                           focus:ring-cyan-500 focus:ring-2">
-                            </div>
-                            <div>
-                                <label for="communityAccess" class="font-semibold text-white">Community Access</label>
-                                <p class="text-sm text-gray-400 mt-1">Private student community</p>
-                            </div>
-                        </div>
-
-                        <!-- Q&A Support -->
-                        <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
-                            <div class="flex items-center h-5">
-                                <input type="checkbox" id="qaSupport" name="qaSupport" checked
-                                    class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-cyan-500 
-                                           focus:ring-cyan-500 focus:ring-2">
-                            </div>
-                            <div>
-                                <label for="qaSupport" class="font-semibold text-white">Q&A Support</label>
-                                <p class="text-sm text-gray-400 mt-1">Direct instructor support</p>
-                            </div>
-                        </div>
-
-                        <!-- Downloadable Resources -->
-                        <div class="flex items-start space-x-3 p-4 rounded-xl bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300">
-                            <div class="flex items-center h-5">
-                                <input type="checkbox" id="downloadableResources" name="downloadableResources" checked
-                                    class="w-5 h-5 rounded-lg bg-gray-700 border-gray-600 text-cyan-500 
-                                           focus:ring-cyan-500 focus:ring-2">
-                            </div>
-                            <div>
-                                <label for="downloadableResources" class="font-semibold text-white">Resources</label>
-                                <p class="text-sm text-gray-400 mt-1">Downloadable code & materials</p>
-                            </div>
+                        <div>
+                            <label for="navbarButtonColor" class="block text-sm font-medium text-gray-300 mb-2">
+                                Button Color
+                            </label>
+                            <select id="navbarButtonColor" name="navbarButtonColor"
+                                class="w-full px-4 py-2 rounded-lg bg-gray-800/70 border border-gray-700 text-white">
+                                <option value="blue">Blue</option>
+                                <option value="cyan">Cyan</option>
+                                <option value="purple">Purple</option>
+                                <option value="green">Green</option>
+                                <option value="red">Red</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -297,8 +323,8 @@
                 <!-- Media Upload Section -->
                 <div class="space-y-6">
                     <div class="border-l-4 border-cyan-500 pl-4">
-                        <h2 class="text-xl font-bold text-white">Media & Resources</h2>
-                        <p class="text-gray-400 text-sm">Upload course images and promotional materials</p>
+                        <h2 class="text-xl font-bold text-white">Course Image</h2>
+                        <p class="text-gray-400 text-sm">Upload a thumbnail for your course</p>
                     </div>
 
                     <!-- Image Upload -->
@@ -315,7 +341,7 @@
                                            hover:file:bg-cyan-500/30 hover:border-cyan-500/50 transition-all duration-300 
                                            focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20">
                             </div>
-                            <p class="mt-2 text-sm text-gray-400">Recommended: 1280x720px, max 5MB</p>
+                            <p class="mt-2 text-sm text-gray-400">Recommended: 1280x720px, max 5MB (JPG, PNG, WebP)</p>
                         </div>
 
                         <!-- Preview Section -->
@@ -345,23 +371,13 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                             </svg>
-                            <span>Launch Course</span>
+                            <span>Create Course</span>
                         </button>
                         
-                        <button type="button" onclick="window.history.back()"
+                        <button type="button" onclick="window.location.href='/courses'"
                             class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold py-4 px-8 
                                    rounded-xl transition-all duration-300 border border-gray-700">
                             Cancel
-                        </button>
-                        
-                        <button type="button"
-                            class="flex-1 bg-gray-800/50 hover:bg-gray-800 text-gray-300 font-bold py-4 px-8 
-                                   rounded-xl transition-all duration-300 border border-gray-700 
-                                   flex items-center justify-center space-x-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-                            </svg>
-                            <span>Save Draft</span>
                         </button>
                     </div>
                 </div>
@@ -370,10 +386,10 @@
     </div>
 </div>
 
-<!-- JavaScript for enhanced features -->
+<!-- JavaScript -->
 <script>
-    // Character counters
     document.addEventListener('DOMContentLoaded', function() {
+        // Character counters
         const titleInput = document.getElementById('title');
         const shortDescInput = document.getElementById('shortDescription');
         const descInput = document.getElementById('description');
@@ -382,89 +398,119 @@
         const discountElement = document.getElementById('discountPercentage');
         const imageInput = document.getElementById('image');
         const imagePreview = document.getElementById('imagePreview');
+        const showInNavbar = document.getElementById('showInNavbar');
+        const navbarSettings = document.getElementById('navbarSettings');
 
-        // Character counter for title
-        titleInput.addEventListener('input', function() {
-            const counter = document.getElementById('title-counter');
-            counter.textContent = `${this.value.length}/120`;
-            if (this.value.length > 100) {
-                counter.classList.add('text-yellow-400');
-            } else {
-                counter.classList.remove('text-yellow-400');
-            }
-        });
+        // Title counter
+        if (titleInput) {
+            titleInput.addEventListener('input', function() {
+                const counter = document.getElementById('title-counter');
+                counter.textContent = `${this.value.length}/120`;
+            });
+        }
 
-        // Character counter for short description
-        shortDescInput.addEventListener('input', function() {
-            const counter = document.getElementById('shortDesc-counter');
-            counter.textContent = `${this.value.length}/250`;
-        });
+        // Short description counter
+        if (shortDescInput) {
+            shortDescInput.addEventListener('input', function() {
+                const counter = document.getElementById('shortDesc-counter');
+                counter.textContent = `${this.value.length}/250`;
+            });
+        }
 
-        // Character counter for description
-        descInput.addEventListener('input', function() {
-            const counter = document.getElementById('desc-counter');
-            counter.textContent = `${this.value.length}/000`;
-        });
+        // Description counter
+        if (descInput) {
+            descInput.addEventListener('input', function() {
+                const counter = document.getElementById('desc-counter');
+                counter.textContent = `${this.value.length}/5000`;
+            });
+        }
 
-        // Calculate discount percentage
+        // Calculate discount
         function calculateDiscount() {
-            const price = parseFloat(priceInput.value) || 0;
-            const actualPrice = parseFloat(actualPriceInput.value) || 0;
+            const price = parseFloat(priceInput?.value) || 0;
+            const actualPrice = parseFloat(actualPriceInput?.value) || 0;
             
             if (price > 0 && actualPrice < price) {
                 const discount = ((price - actualPrice) / price * 100).toFixed(1);
-                discountElement.textContent = `${discount}%`;
-                
-                // Color coding based on discount
-                if (discount >= 50) {
-                    discountElement.classList.remove('text-green-400', 'text-yellow-400');
-                    discountElement.classList.add('text-red-400');
-                } else if (discount >= 20) {
-                    discountElement.classList.remove('text-green-400', 'text-red-400');
-                    discountElement.classList.add('text-yellow-400');
-                } else {
-                    discountElement.classList.remove('text-yellow-400', 'text-red-400');
-                    discountElement.classList.add('text-green-400');
+                if (discountElement) {
+                    discountElement.textContent = `${discount}%`;
+                    if (discount >= 50) {
+                        discountElement.className = 'text-2xl font-bold text-red-400';
+                    } else if (discount >= 20) {
+                        discountElement.className = 'text-2xl font-bold text-yellow-400';
+                    } else {
+                        discountElement.className = 'text-2xl font-bold text-green-400';
+                    }
                 }
-            } else {
+            } else if (discountElement) {
                 discountElement.textContent = '0%';
-                discountElement.classList.remove('text-yellow-400', 'text-red-400');
-                discountElement.classList.add('text-green-400');
+                discountElement.className = 'text-2xl font-bold text-green-400';
             }
         }
 
-        priceInput.addEventListener('input', calculateDiscount);
-        actualPriceInput.addEventListener('input', calculateDiscount);
+        if (priceInput && actualPriceInput) {
+            priceInput.addEventListener('input', calculateDiscount);
+            actualPriceInput.addEventListener('input', calculateDiscount);
+        }
 
         // Image preview
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    imagePreview.innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover rounded-xl" alt="Preview">`;
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        if (imagePreview) {
+                            imagePreview.innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover rounded-xl" alt="Preview">`;
+                        }
+                    }
+                    reader.readAsDataURL(file);
                 }
-                reader.readAsDataURL(file);
-            }
-        });
+            });
+        }
 
-        // Auto-set launch date to tomorrow
+        // Show/hide navbar settings
+        if (showInNavbar && navbarSettings) {
+            showInNavbar.addEventListener('change', function() {
+                if (this.checked) {
+                    navbarSettings.classList.remove('hidden');
+                } else {
+                    navbarSettings.classList.add('hidden');
+                }
+            });
+        }
+
+        // Set default launch date to tomorrow
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
         const formattedDate = tomorrow.toISOString().split('T')[0];
-        document.getElementById('lounchedDate').value = formattedDate;
-        document.getElementById('lounchedDate').min = formattedDate;
+        const launchDateInput = document.getElementById('lounchedDate');
+        if (launchDateInput) {
+            launchDateInput.value = formattedDate;
+            launchDateInput.min = formattedDate;
+        }
 
         // Form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const price = parseFloat(priceInput.value);
-            const actualPrice = parseFloat(actualPriceInput.value);
-            
-            if (actualPrice > price) {
-                e.preventDefault();
-                alert('Discounted price cannot be higher than original price');
-                actualPriceInput.focus();
-            }
-        });
+        const courseForm = document.getElementById('courseForm');
+        if (courseForm) {
+            courseForm.addEventListener('submit', function(e) {
+                const price = parseFloat(priceInput?.value) || 0;
+                const actualPrice = parseFloat(actualPriceInput?.value) || 0;
+                
+                if (actualPrice > price) {
+                    e.preventDefault();
+                    alert('Actual price cannot be higher than original price');
+                    actualPriceInput?.focus();
+                }
+                
+                // Validate image
+                const imageFile = imageInput?.files[0];
+                if (!imageFile) {
+                    e.preventDefault();
+                    alert('Please upload a course thumbnail image');
+                    imageInput?.focus();
+                }
+            });
+        }
     });
 </script>

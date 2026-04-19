@@ -1,24 +1,24 @@
 <% layout("layouts/boilerplate") %>
 
-<div class="min-h-screen bg-gray-50 py-8">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors duration-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Header -->
     <div class="mb-8">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h1 class="text-3xl font-bold text-gray-900">Newsletter Subscribers</h1>
-          <p class="text-gray-600 mt-2">Manage your email subscribers and newsletter list</p>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Newsletter Subscribers</h1>
+          <p class="text-gray-600 dark:text-gray-400 mt-2">Manage your email subscribers and newsletter list</p>
         </div>
         <div class="flex items-center space-x-4">
           <!-- Export Button -->
           <button onclick="exportSubscribers()" 
-                  class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                  class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
             <i class="fas fa-download mr-2"></i> Export CSV
           </button>
           <!-- Add Subscriber Button -->
           <button onclick="openAddSubscriberModal()" 
-                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
             <i class="fas fa-plus mr-2"></i> Add Subscriber
           </button>
         </div>
@@ -26,54 +26,54 @@
       
       <!-- Stats Cards -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 transition-colors duration-200">
           <div class="flex items-center">
-            <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3">
-              <i class="fas fa-users text-blue-600 text-xl"></i>
+            <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3">
+              <i class="fas fa-users text-blue-600 dark:text-blue-400 text-xl"></i>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-500">Total Subscribers</p>
-              <p class="text-2xl font-semibold text-gray-900"><%= subscribers.length %></p>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Subscribers</p>
+              <p class="text-2xl font-semibold text-gray-900 dark:text-white"><%= subscribers.length %></p>
             </div>
           </div>
         </div>
         
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 transition-colors duration-200">
           <div class="flex items-center">
-            <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
-              <i class="fas fa-check-circle text-green-600 text-xl"></i>
+            <div class="flex-shrink-0 bg-green-100 dark:bg-green-900/30 rounded-lg p-3">
+              <i class="fas fa-check-circle text-green-600 dark:text-green-400 text-xl"></i>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-500">Active Subscribers</p>
-              <p class="text-2xl font-semibold text-gray-900">
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Active Subscribers</p>
+              <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                 <%= subscribers.filter(s => s.isActive).length %>
               </p>
             </div>
           </div>
         </div>
         
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 transition-colors duration-200">
           <div class="flex items-center">
-            <div class="flex-shrink-0 bg-red-100 rounded-lg p-3">
-              <i class="fas fa-ban text-red-600 text-xl"></i>
+            <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/30 rounded-lg p-3">
+              <i class="fas fa-ban text-red-600 dark:text-red-400 text-xl"></i>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-500">Inactive</p>
-              <p class="text-2xl font-semibold text-gray-900">
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Inactive</p>
+              <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                 <%= subscribers.filter(s => !s.isActive).length %>
               </p>
             </div>
           </div>
         </div>
         
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 transition-colors duration-200">
           <div class="flex items-center">
-            <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
-              <i class="fas fa-calendar-alt text-purple-600 text-xl"></i>
+            <div class="flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 rounded-lg p-3">
+              <i class="fas fa-calendar-alt text-purple-600 dark:text-purple-400 text-xl"></i>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-500">New This Month</p>
-              <p class="text-2xl font-semibold text-gray-900">
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">New This Month</p>
+              <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                 <% 
                   const thisMonth = new Date().getMonth();
                   const thisYear = new Date().getFullYear();
@@ -93,22 +93,22 @@
     </div>
 
     <!-- Filters and Actions -->
-    <div class="bg-white rounded-lg shadow mb-6 p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow mb-6 p-4 transition-colors duration-200">
       <div class="flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
         <div class="flex space-x-4">
           <button id="filterAll" 
                   onclick="filterSubscribers('all')"
-                  class="px-4 py-2 rounded-lg bg-blue-100 text-blue-700">
+                  class="px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
             All Subscribers
           </button>
           <button id="filterActive" 
                   onclick="filterSubscribers('active')"
-                  class="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
+                  class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
             Active Only
           </button>
           <button id="filterInactive" 
                   onclick="filterSubscribers('inactive')"
-                  class="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
+                  class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
             Inactive Only
           </button>
         </div>
@@ -119,17 +119,17 @@
             <input type="text" 
                    id="searchSubscribers" 
                    placeholder="Search subscribers..." 
-                   class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full md:w-64"
+                   class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full md:w-64 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                    oninput="searchSubscribers()">
             <div class="absolute left-3 top-2.5">
-              <i class="fas fa-search text-gray-400"></i>
+              <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
             </div>
           </div>
           
           <!-- Sort Options -->
           <select id="sortSubscribers" 
                   onchange="sortSubscribers()"
-                  class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  class="border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
             <option value="email-asc">Email A-Z</option>
@@ -141,18 +141,18 @@
 
     <!-- Subscribers List -->
     <% if(subscribers.length > 0){ %>
-      <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden transition-colors duration-200">
         <!-- Bulk Actions -->
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 flex items-center justify-between flex-wrap gap-4">
           <div class="flex items-center space-x-4">
             <input type="checkbox" 
                    id="selectAll" 
                    onchange="toggleSelectAll()"
-                   class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
-            <label for="selectAll" class="text-sm text-gray-700">Select All</label>
+                   class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+            <label for="selectAll" class="text-sm text-gray-700 dark:text-gray-300">Select All</label>
             
             <select id="bulkAction" 
-                    class="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
               <option value="">Bulk Actions</option>
               <option value="activate">Activate Selected</option>
               <option value="deactivate">Deactivate Selected</option>
@@ -160,61 +160,61 @@
             </select>
             
             <button onclick="applyBulkAction()" 
-                    class="px-4 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+                    class="px-4 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors">
               Apply
             </button>
           </div>
           
-          <div class="text-sm text-gray-600">
+          <div class="text-sm text-gray-600 dark:text-gray-400">
             Showing <span id="showingCount"><%= subscribers.length %></span> of <%= subscribers.length %> subscribers
           </div>
         </div>
         
         <!-- Table -->
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700/50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
-                  <input type="checkbox" class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12">
+                  <input type="checkbox" class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Email
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Status
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Subscribed Date
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200" id="subscribersTable">
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" id="subscribersTable">
               <% for(let subscriber of subscribers){ %>
                 <tr data-email="<%= subscriber.email.toLowerCase() %>" 
                     data-status="<%= subscriber.isActive ? 'active' : 'inactive' %>"
-                    class="hover:bg-gray-50 transition-colors duration-150">
+                    class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150">
                   <!-- Checkbox -->
                   <td class="px-6 py-4 whitespace-nowrap">
                     <input type="checkbox" 
                            value="<%= subscriber._id %>"
-                           class="subscriber-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
+                           class="subscriber-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                   </td>
                   
                   <!-- Email -->
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-envelope text-blue-600"></i>
+                      <div class="flex-shrink-0 h-10 w-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-envelope text-blue-600 dark:text-blue-400"></i>
                       </div>
                       <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">
                           <%= subscriber.email %>
                         </div>
-                        <div class="text-xs text-gray-500">
+                        <div class="text-xs text-gray-500 dark:text-gray-400">
                           ID: <%= subscriber._id.toString().slice(-8) %>
                         </div>
                       </div>
@@ -224,11 +224,11 @@
                   <!-- Status -->
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span class="px-3 py-1 text-xs font-medium rounded-full 
-                      <%= subscriber.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+                      <%= subscriber.isActive ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' %>">
                       <%= subscriber.isActive ? 'Active' : 'Inactive' %>
                     </span>
                     <% if(new Date(subscriber.subscribedAt) > new Date(Date.now() - 7*24*60*60*1000)) { %>
-                      <span class="ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                      <span class="ml-2 px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">
                         New
                       </span>
                     <% } %>
@@ -236,10 +236,10 @@
                   
                   <!-- Date -->
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">
+                    <div class="text-sm text-gray-900 dark:text-white">
                       <%= new Date(subscriber.subscribedAt).toLocaleDateString() %>
                     </div>
-                    <div class="text-xs text-gray-500">
+                    <div class="text-xs text-gray-500 dark:text-gray-400">
                       <%= new Date(subscriber.subscribedAt).toLocaleTimeString() %>
                     </div>
                   </td>
@@ -253,7 +253,7 @@
                             class="inline">
                         <input type="hidden" name="_method" value="PATCH">
                         <button type="submit" 
-                                class="<%= subscriber.isActive ? 'text-yellow-600 hover:text-yellow-900' : 'text-green-600 hover:text-green-900' %>">
+                                class="<%= subscriber.isActive ? 'text-yellow-600 dark:text-yellow-400 hover:text-yellow-900 dark:hover:text-yellow-300' : 'text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300' %>">
                           <i class="fas fa-<%= subscriber.isActive ? 'ban' : 'check-circle' %> mr-1"></i>
                           <%= subscriber.isActive ? 'Deactivate' : 'Activate' %>
                         </button>
@@ -261,7 +261,7 @@
                       
                       <!-- Send Email -->
                       <button onclick="sendEmailToSubscriber('<%= subscriber.email %>')" 
-                              class="text-blue-600 hover:text-blue-900">
+                              class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
                         <i class="fas fa-paper-plane mr-1"></i> Email
                       </button>
                       
@@ -272,7 +272,7 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" 
                                 onclick="return confirm('Are you sure you want to delete this subscriber?')"
-                                class="text-red-600 hover:text-red-900">
+                                class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
                           <i class="fas fa-trash mr-1"></i> Delete
                         </button>
                       </form>
@@ -287,17 +287,17 @@
       
       <!-- Pagination -->
       <div class="mt-6 flex items-center justify-between">
-        <div class="text-sm text-gray-700">
+        <div class="text-sm text-gray-700 dark:text-gray-400">
           Showing <span class="font-medium" id="visibleCount"><%= subscribers.length %></span> of 
           <span class="font-medium"><%= subscribers.length %></span> subscribers
         </div>
         <div class="flex space-x-2">
           <button onclick="prevPage()" 
-                  class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
             Previous
           </button>
           <button onclick="nextPage()" 
-                  class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50">
+                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             Next
           </button>
         </div>
@@ -305,15 +305,15 @@
     <% } else { %>
       <!-- Empty State -->
       <div class="text-center py-16">
-        <div class="mx-auto w-24 h-24 text-gray-400 mb-4">
+        <div class="mx-auto w-24 h-24 text-gray-400 dark:text-gray-600 mb-4">
           <i class="fas fa-users-slash text-6xl"></i>
         </div>
-        <h3 class="text-xl font-medium text-gray-900 mb-2">No subscribers yet</h3>
-        <p class="text-gray-500 max-w-md mx-auto mb-6">
+        <h3 class="text-xl font-medium text-gray-900 dark:text-white mb-2">No subscribers yet</h3>
+        <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6">
           Your newsletter subscribers will appear here. You can also manually add subscribers using the button below.
         </p>
         <button onclick="openAddSubscriberModal()" 
-                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
           <i class="fas fa-plus mr-2"></i> Add First Subscriber
         </button>
       </div>
@@ -322,11 +322,11 @@
 </div>
 
 <!-- Add Subscriber Modal -->
-<div id="addSubscriberModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
-    <div class="flex justify-between items-center p-6 border-b border-gray-200">
-      <h3 class="text-2xl font-bold text-gray-900">Add New Subscriber</h3>
-      <button onclick="closeAddSubscriberModal()" class="text-gray-400 hover:text-gray-600">
+<div id="addSubscriberModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 hidden items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full transition-colors duration-200">
+    <div class="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Add New Subscriber</h3>
+      <button onclick="closeAddSubscriberModal()" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400">
         <i class="fas fa-times text-2xl"></i>
       </button>
     </div>
@@ -334,13 +334,13 @@
     <form id="addSubscriberForm" class="p-6">
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
           <input type="email" 
                  name="email" 
                  required
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                  placeholder="subscriber@example.com">
-          <p class="text-xs text-gray-500 mt-1">Email must be unique and valid</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Email must be unique and valid</p>
         </div>
         
         <div>
@@ -348,21 +348,21 @@
             <input type="checkbox" 
                    name="isActive" 
                    checked
-                   class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
-            <span class="text-sm text-gray-700">Active Subscriber</span>
+                   class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Active Subscriber</span>
           </label>
-          <p class="text-xs text-gray-500 mt-1">Inactive subscribers won't receive newsletters</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Inactive subscribers won't receive newsletters</p>
         </div>
       </div>
       
       <div class="mt-8 flex justify-end space-x-4">
         <button type="button" 
                 onclick="closeAddSubscriberModal()"
-                class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                class="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
           Cancel
         </button>
         <button type="submit" 
-                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
           Add Subscriber
         </button>
       </div>
@@ -371,11 +371,11 @@
 </div>
 
 <!-- Send Email Modal -->
-<div id="sendEmailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
-    <div class="flex justify-between items-center p-6 border-b border-gray-200">
-      <h3 class="text-2xl font-bold text-gray-900">Send Email</h3>
-      <button onclick="closeSendEmailModal()" class="text-gray-400 hover:text-gray-600">
+<div id="sendEmailModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 hidden items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full transition-colors duration-200">
+    <div class="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Send Email</h3>
+      <button onclick="closeSendEmailModal()" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400">
         <i class="fas fa-times text-2xl"></i>
       </button>
     </div>
@@ -383,47 +383,47 @@
     <form id="sendEmailForm" class="p-6">
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Recipient</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Recipient</label>
           <input type="text" 
                  id="recipientEmail" 
                  readonly
-                 class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg">
+                 class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-300">
         </div>
         
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject *</label>
           <input type="text" 
                  name="subject" 
                  required
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                  placeholder="Newsletter or update...">
         </div>
         
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message *</label>
           <textarea name="message" 
                     rows="6"
                     required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Write your email content here..."></textarea>
         </div>
         
         <div class="flex items-center space-x-3">
           <input type="checkbox" 
                  name="sendCopy" 
-                 class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
-          <span class="text-sm text-gray-700">Send a copy to myself</span>
+                 class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+          <span class="text-sm text-gray-700 dark:text-gray-300">Send a copy to myself</span>
         </div>
       </div>
       
       <div class="mt-8 flex justify-end space-x-4">
         <button type="button" 
                 onclick="closeSendEmailModal()"
-                class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                class="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
           Cancel
         </button>
         <button type="submit" 
-                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
           <i class="fas fa-paper-plane mr-2"></i> Send Email
         </button>
       </div>
@@ -451,11 +451,11 @@ function filterSubscribers(filter) {
   
   // Update button styles
   document.getElementById('filterAll').className = 
-    `px-4 py-2 rounded-lg ${filter === 'all' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`;
+    `px-4 py-2 rounded-lg ${filter === 'all' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`;
   document.getElementById('filterActive').className = 
-    `px-4 py-2 rounded-lg ${filter === 'active' ? 'bg-green-100 text-green-700' : 'text-gray-700 hover:bg-gray-100'}`;
+    `px-4 py-2 rounded-lg ${filter === 'active' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`;
   document.getElementById('filterInactive').className = 
-    `px-4 py-2 rounded-lg ${filter === 'inactive' ? 'bg-red-100 text-red-700' : 'text-gray-700 hover:bg-gray-100'}`;
+    `px-4 py-2 rounded-lg ${filter === 'inactive' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`;
   
   updateTable();
 }
@@ -757,6 +757,10 @@ updateTable();
   border-radius: 4px;
 }
 
+.dark #subscribersTable::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
 #subscribersTable::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 4px;
@@ -764,6 +768,14 @@ updateTable();
 
 #subscribersTable::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.dark #subscribersTable::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark #subscribersTable::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
 }
 
 /* Modal animations */
@@ -791,6 +803,10 @@ tbody tr {
 tbody tr:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dark tbody tr:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Status badges animation */

@@ -42,6 +42,7 @@ router
     validateBlog,
     wrapAsync(blogsController.updateBlog),
   )
+  .patch(isLoggedIn, isAdmin, wrapAsync(blogsController.activateBlog))
   .delete(isLoggedIn, isAdmin, wrapAsync(blogsController.destroyBlog));
 
 //Edit Route

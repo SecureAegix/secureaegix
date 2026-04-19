@@ -98,7 +98,7 @@ module.exports.showBlog = async (req, res) => {
   })
     .populate("author")
     .limit(10);
-  
+
   const dynamicMeta = {
     title: blog.title + " | SecureAegix Blog",
     description: blog.shortdescription,
@@ -366,6 +366,22 @@ module.exports.yourBlogs = async (req, res) => {
     req.flash("error", "Unable to fetch your blogs.");
     res.redirect("/blogs");
   }
+};
+
+module.exports.activateBlog = async (req, res) => {
+  const { id } = req.params;
+  const blog = await Blog.findById(id);
+  if (!blog) {
+    req.flash("error", "Blog not found.");
+    return res.redirect("/blogs");
+  }
+  blog.isvalid = !blog.isvalid;
+  await blog.save();
+  req.flash(
+    "success",
+    `Blog has been ${blog.isvalid ? "activated" : "deactivated"}!`,
+  );
+  res.redirect("/blogs");
 };
 
 // download blog controller

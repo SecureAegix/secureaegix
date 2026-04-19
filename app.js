@@ -33,6 +33,7 @@ const blogRouter = require("./routes/blog.js");
 const serviceRouter = require("./routes/service.js");
 const sitemapRouter = require("./routes/sitemap.js");
 const seoMeta = require("./utils/seoMeta.json");
+const Cources = require("./models/cources.js");
 
 const dbUrl = process.env.ATLUSDB_URL;
 
@@ -154,6 +155,36 @@ app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   res.locals.showsplash = false;
   next();
+});
+
+// Navbar Courses Middleware
+app.use(async (req, res, next) => {
+    try {
+        const courses = await Cources.find({ isActive: true });
+        
+        if (courses && courses.length > 0) {
+            const navbarCourses = courses.filter(course => course.showInNavbar === true);
+            
+            const navbarItems = (navbarCourses || []).map(course => ({
+                id: course._id,
+                name: course.navbarButtonText || course.title,
+                color: course.navbarButtonColor || "blue",
+                url: `/courses/${course._id}`
+            }));
+            
+          res.locals.navbarCourses = navbarItems;
+          //console.log("Navbar Courses Middleware: Found courses for navbar", navbarItems);
+        } else {
+            // No courses found in database
+            res.locals.navbarCourses = [];
+        }
+        next();
+    } catch (error) {
+        console.error("Navbar Courses Middleware Error:", error);
+        // Always set empty array to avoid undefined errors in views
+        res.locals.navbarCourses = [];
+        next();
+    }
 });
 
 app.use((req, res, next) => {

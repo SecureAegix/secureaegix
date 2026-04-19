@@ -205,15 +205,7 @@
                             </div>
 
                             <!-- Progress Bar -->
-                            <div class="mb-4">
-                                <div class="flex items-center justify-between text-sm mb-1">
-                                    <span class="text-gray-600 dark:text-gray-400">Progress</span>
-                                    <span class="font-medium text-gray-900 dark:text-white">45%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                    <div class="progress-bar h-2 rounded-full" style="width: 45%"></div>
-                                </div>
-                            </div>
+                            
 
                             <!-- Action Buttons -->
                             <div class="flex gap-3">
@@ -264,30 +256,12 @@
         <% if (enrolledCourses && enrolledCourses.length > 0) { %>
             <div class="mt-12">
                 <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-                        <i class="fas fa-star text-yellow-400 mr-2"></i>
-                        Recommended for You
-                    </h2>
                     <a href="/courses/recommended" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium">
                         View All <i class="fas fa-arrow-right ml-1"></i>
                     </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- You can loop through recommended courses here -->
-                    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-500 transition-all duration-200">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-code text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-900 dark:text-white">Advanced Web Development</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">By John Doe</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more recommendation items -->
-                </div>
+                
             </div>
         <% } %>
     </div>

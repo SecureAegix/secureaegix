@@ -68,4 +68,5 @@ router.delete(
   adminController.deleteSubscriber,
 );
 
+
 module.exports = router;

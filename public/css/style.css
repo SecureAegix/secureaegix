@@ -1,0 +1,15 @@
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE (rare) */
+* {
+  -ms-overflow-style: none;
+}

@@ -98,12 +98,12 @@
               <span class="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400">₹<%= totalPaid %></span>
             </div>
             
-            <% if(certificates.length > 0) { %>
+            <!-- <% if(certificates.length > 0) { %>
               <div class="flex justify-between items-center">
                 <span class="text-gray-600 dark:text-gray-300">Certificates Earned</span>
                 <span class="text-xl md:text-2xl font-bold text-purple-600 dark:text-purple-400"><%= certificates.length %></span>
               </div>
-            <% } %>
+            <% } %> -->
           </div>
           
           <div class="mt-6 pt-5 md:pt-6 border-t border-gray-100 dark:border-gray-700">
@@ -133,7 +133,7 @@
               <i class="fas fa-chevron-right text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400"></i>
             </a>
             
-            <a href="/certificates" 
+            <!-- <a href="/certificates" 
                class="flex items-center justify-between p-3 md:p-4 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 rounded-xl transition-colors group">
               <div class="flex items-center">
                 <div class="w-8 h-8 md:w-10 md:h-10 bg-green-100 dark:bg-green-800 rounded-lg flex items-center justify-center mr-3 md:mr-4 group-hover:bg-green-200 dark:group-hover:bg-green-700">
@@ -142,7 +142,7 @@
                 <span class="font-medium text-gray-800 dark:text-gray-200 text-sm md:text-base">My Certificates</span>
               </div>
               <i class="fas fa-chevron-right text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-400"></i>
-            </a>
+            </a> -->
             
             <% if(user.role === 'teacher') { %>
               <a href="/instructor/dashboard" 

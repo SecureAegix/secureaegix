@@ -11,14 +11,14 @@ module.exports.welComeEmail = async ({ name, email }) => {
     process.env.BREVO_API_KEY,
   );
 
-  // ROOTSHIELD THEME - WELCOME EMAIL HTML
+  // SecureAegix THEME - WELCOME EMAIL HTML
   const htmlContent = `
           <!DOCTYPE html>
           <html>
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Welcome to RootShield | Your Cybersecurity Journey Begins</title>
+            <title>Welcome to SecureAegix | Your Cybersecurity Journey Begins</title>
             <style>
               @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
               
@@ -311,7 +311,7 @@ module.exports.welComeEmail = async ({ name, email }) => {
               <!-- Header -->
               <div class="header">
                 <div class="logo">
-                  <span class="logo-gradient">RootShield</span>
+                  <span class="logo-gradient">SecureAegix</span>
                 </div>
                 <div class="subtitle">Welcome Aboard</div>
                 <div class="tagline">Your Cybersecurity Journey Begins</div>
@@ -320,11 +320,11 @@ module.exports.welComeEmail = async ({ name, email }) => {
               <!-- Content -->
               <div class="content">
                 <div class="greeting">
-                  Welcome to RootShield, ${name}!
+                  Welcome to SecureAegix, ${name}!
                 </div>
                 
                 <div class="welcome-message">
-                  <p>Thank you for joining <strong>RootShield</strong> – India's premier platform for cybersecurity and web development education. We're excited to have you as part of our growing community of security enthusiasts and developers.</p>
+                  <p>Thank you for joining <strong>SecureAegix</strong> – India's premier platform for cybersecurity and web development education. We're excited to have you as part of our growing community of security enthusiasts and developers.</p>
                   
                   <p>Your account has been successfully created and verified via Google. You now have full access to our platform's features and learning resources.</p>
                 </div>
@@ -408,7 +408,7 @@ module.exports.welComeEmail = async ({ name, email }) => {
               <!-- Footer -->
               <div class="footer">
                 <div>
-                  <strong>RootShield</strong><br>
+                  <strong>SecureAegix</strong><br>
                   <span style="font-size: 13px;">Udyam Registered Education Platform</span>
                 </div>
                 
@@ -419,10 +419,10 @@ module.exports.welComeEmail = async ({ name, email }) => {
                 </div>
                 
                 <div class="social-links">
-                  <a href="https://twitter.com/rootshield" class="social-icon">𝕏</a>
-                  <a href="https://linkedin.com/company/rootshield" class="social-icon">in</a>
-                  <a href="https://github.com/rootshield" class="social-icon">{} </a>
-                  <a href="https://discord.gg/rootshield" class="social-icon">#</a>
+                  <a href="https://twitter.com/SecureAegix" class="social-icon">𝕏</a>
+                  <a href="https://linkedin.com/company/SecureAegix" class="social-icon">in</a>
+                  <a href="https://github.com/SecureAegix" class="social-icon">{} </a>
+                  <a href="https://discord.gg/SecureAegix" class="social-icon">#</a>
                 </div>
                 
                 <div style="margin-top: 25px; font-size: 12px; color: #9ca3af;">
@@ -432,7 +432,7 @@ module.exports.welComeEmail = async ({ name, email }) => {
                     <a href="${process.env.DOMAIN || "https://secureaegix.com"}/privacy" style="color: #6b7280; text-decoration: underline;">Privacy Policy</a>.
                   </p>
                   <p style="margin-top: 15px;">
-                    © ${new Date().getFullYear()} RootShield. All rights reserved.<br>
+                    © ${new Date().getFullYear()} SecureAegix. All rights reserved.<br>
                     MSME Registered • GST Compliant
                   </p>
                 </div>
@@ -444,12 +444,12 @@ module.exports.welComeEmail = async ({ name, email }) => {
 
   // Plain text version
   const textContent = `
-          WELCOME TO ROOTSHIELD
+          WELCOME TO SecureAegix
           =====================
           
           Hello ${name},
           
-          Welcome to RootShield - India's premier platform for cybersecurity and web development education!
+          Welcome to SecureAegix - India's premier platform for cybersecurity and web development education!
           
           Your account has been successfully created and verified via Google authentication. 
           You now have full access to our learning platform.
@@ -484,21 +484,21 @@ module.exports.welComeEmail = async ({ name, email }) => {
           Website: ${process.env.DOMAIN || "https://secureaegix.com"}
           
           ---
-          RootShield | Udyam Registered Education Platform
+          SecureAegix | Udyam Registered Education Platform
           Delhi, India | info@secureaegix.com | secureaegix.com
           
           This is an automated welcome email. Please do not reply directly.
-          © ${new Date().getFullYear()} RootShield. All rights reserved.
+          © ${new Date().getFullYear()} SecureAegix. All rights reserved.
         `;
 
   try {
     await apiInstance.sendTransacEmail({
       sender: {
         email: "info@secureaegix.com",
-        name: "RootShield Welcome Team",
+        name: "SecureAegix Welcome Team",
       },
       to: [{ email, name }],
-      subject: "🎉 Welcome to RootShield! Your Cybersecurity Journey Begins",
+      subject: "🎉 Welcome to SecureAegix! Your Cybersecurity Journey Begins",
       htmlContent: htmlContent,
       textContent: textContent,
     });

@@ -5,8 +5,7 @@ const Blog = require("../models/blog");
 const Course = require("../models/cources");
 
 router.get("/sitemap.xml", async (req, res) => {
-  const baseUrl = "https://rootshield.in";
-
+  const baseUrl = "https://secureaegix.com";
   let urls = `
     <url><loc>${baseUrl}/</loc></url>
 	<url><loc>${baseUrl}/login</loc></url>

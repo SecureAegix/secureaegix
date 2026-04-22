@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Servise = require("../models/services");
 const Course = require("../models/cources");
 const Blog = require("../models/blog");
-const cloudinary = require("../cloudConfig"); 
+const cloudinary = require("../Cloudconfig.js"); 
 const { all } = require("axios");
 
 module.exports.homePage = async (req, res, next) => {

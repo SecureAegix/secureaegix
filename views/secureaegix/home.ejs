@@ -343,8 +343,17 @@
           <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift card-glow transition-all duration-300">
             <div class="p-6 border-b border-gray-100 dark:border-gray-700 relative">
               <!-- Popular Badge -->
-              <% if (course.isPopular) { %>
-                <span class="absolute top-4 right-4 px-2 py-1 bg-red-500/10 text-red-500 text-xs rounded font-mono">🔥 Most Popular</span>
+              <% if (course.courseLevel) { %>
+                <span class="absolute top-4 right-4 px-2 py-1 
+                <% if (course.courseLevel === 'beginner') { %>
+                  bg-green-500/10 text-green-500
+                  <% } else if (course.courseLevel === 'intermediate') { %>
+                    bg-blue-500/10 text-blue-500
+                    <% } else if (course.courseLevel === 'advanced') { %>
+                      bg-yellow-500/10 text-yellow-500
+                      <% } else { %>
+                        bg-red-500/10 text-red-500
+                    <% } %> text-xs rounded font-mono"><%= course.courseLevel %></span>
               <% } %>
               <!-- Trending Badge -->
               <% if (course.isTrending) { %>
@@ -354,24 +363,29 @@
               <!-- Course Icon based on type -->
               <%
   const typeMap = {
-    "CYBERSECURITY": {
-      icon: "fa-shield-alt",
-      textColor: "text-red-600",
-      bgColor: "bg-red-100 dark:bg-red-900/30"
+    "beginner": {
+      icon: "fa-seedling",
+      textColor: "text-green-600",
+      bgColor: "bg-green-100 dark:bg-green-900/30"
     },
-    "WEB DEV": {
-      icon: "fa-code",
+    "intermediate": {
+      icon: "fa-chart-line",
       textColor: "text-blue-600",
       bgColor: "bg-blue-100 dark:bg-blue-900/30"
     },
-    "ETHICAL HACKING": {
-      icon: "fa-user-secret",
-      textColor: "text-purple-600",
-      bgColor: "bg-purple-100 dark:bg-purple-900/30"
+    "advanced": {
+      icon: "fa-crown",
+      textColor: "text-yellow-600",
+      bgColor: "bg-yellow-100 dark:bg-yellow-900/30"
+    },
+    "expert": {
+      icon: "fa-skull-crossbones",
+      textColor: "text-red-600",
+      bgColor: "bg-red-100 dark:bg-red-900/30"
     }
   };
 
-  const config = typeMap[course.courceType] || {
+  const config = typeMap[course.courseLevel] || {
     icon: "fa-graduation-cap",
     textColor: "text-cyan-600",
     bgColor: "bg-cyan-100 dark:bg-cyan-900/30"

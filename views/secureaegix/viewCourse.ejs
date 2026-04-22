@@ -84,7 +84,7 @@
                   <i class="fas fa-star text-yellow-400 text-sm"></i>
                   <i class="fas fa-star text-yellow-400 text-sm"></i>
                   <i class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
-                  <span class="text-sm text-gray-500 ml-1">(4.8)</span>
+                  <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">(4.8)</span>
                 </div>
               </div>
               
@@ -94,40 +94,40 @@
 
             <!-- Key Information Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
-                <i class="fas fa-clock text-blue-600 text-2xl mb-2"></i>
-                <p class="text-xs text-gray-500">Duration</p>
+              <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:bg-gradient-to-br dark:from-blue-900 dark:to-cyan-900 dark:border dark:border-blue-800/30 p-4 rounded-xl text-center">
+                <i class="fas fa-clock text-blue-600 dark:text-blue-400 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Duration</p>
                 <p class="font-semibold text-gray-800 dark:text-white"><%= course.duration || 'Self-paced' %> hrs</p>
               </div>
-              <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
-                <i class="fas fa-users text-green-600 text-2xl mb-2"></i>
-                <p class="text-xs text-gray-500">Students</p>
+              <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:bg-gradient-to-br dark:from-green-900 dark:to-emerald-900 dark:border dark:border-green-800/30 p-4 rounded-xl text-center">
+                <i class="fas fa-users text-green-600 dark:text-green-400 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Students</p>
                 <p class="font-semibold text-gray-800 dark:text-white"><%= totalStudents %> enrolled</p>
               </div>
-              <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
-                <i class="fas fa-calendar-alt text-purple-600 text-2xl mb-2"></i>
-                <p class="text-xs text-gray-500">Launched</p>
+              <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:bg-gradient-to-br dark:from-purple-900 dark:to-pink-900 dark:border dark:border-purple-800/30 p-4 rounded-xl text-center">
+                <i class="fas fa-calendar-alt text-purple-600 dark:text-purple-400 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Launched</p>
                 <p class="font-semibold text-gray-800 dark:text-white">
                   <%= course.lounchedDate ? new Date(course.lounchedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Coming soon' %>
                 </p>
               </div>
-              <div class="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-gray-700/50 p-4 rounded-xl text-center">
-                <i class="fas fa-certificate text-orange-600 text-2xl mb-2"></i>
-                <p class="text-xs text-gray-500">Certificate</p>
+              <div class="bg-gradient-to-br from-orange-50 to-amber-50 dark:bg-gradient-to-br dark:from-orange-900/20 dark:to-amber-900/20 dark:border dark:border-orange-800/30 p-4 rounded-xl text-center">
+                <i class="fas fa-certificate text-orange-600 dark:text-orange-400 text-2xl mb-2"></i>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Certificate</p>
                 <p class="font-semibold text-gray-800 dark:text-white">Completion</p>
               </div>
             </div>
 
             <!-- Instructor Section -->
             <% if(course.teacher) { %>
-            <div class="flex items-center p-5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700/30 rounded-2xl mb-8">
-              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+            <div class="flex items-center p-5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 dark:border dark:border-blue-800/30 rounded-2xl mb-8">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg dark:shadow-purple-900/50">
                 <%= course.teacher.name ? course.teacher.name.charAt(0).toUpperCase() : 'A' %>
               </div>
               <div class="ml-4 flex-1">
-                <p class="text-sm text-gray-500">Course Instructor</p>
+                <p class="text-sm text-gray-500 dark:text-gray-200">Course Instructor</p>
                 <p class="text-xl font-bold text-gray-800 dark:text-white"><%= course.teacher.name %></p>
-                <p class="text-sm text-gray-600"><%= course.teacher.email %></p>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><%= course.teacher.email %></p>
               </div>
             </div>
             <% } %>
@@ -194,7 +194,7 @@
                   <p class="text-green-800 dark:text-green-400 font-semibold flex items-center">
                     <i class="fas fa-check-circle mr-2"></i> You're enrolled!
                   </p>
-                  <p class="text-sm text-green-600 mt-2">
+                  <p class="text-sm text-green-600 dark:text-green-500 mt-2">
                     <i class="far fa-calendar-alt mr-1"></i> Enrolled on: <%= new Date(userEnrollment.enrolledAt).toLocaleDateString() %>
                   </p>
                 </div>
@@ -241,8 +241,8 @@
           <div class="p-4">
             <h3 class="font-semibold text-gray-800 dark:text-white mb-2"><%= related.title %></h3>
             <div class="flex justify-between items-center">
-              <span class="text-lg font-bold text-blue-600">₹<%= related.actualPrice || related.price %></span>
-              <a href="/courses/<%= related._id %>" class="text-blue-600">View →</a>
+              <span class="text-lg font-bold text-blue-600 dark:text-blue-400">₹<%= related.actualPrice || related.price %></span>
+              <a href="/courses/<%= related._id %>" class="text-blue-600 dark:text-blue-400 hover:dark:text-blue-300">View →</a>
             </div>
           </div>
         </div>
@@ -274,7 +274,7 @@
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Course Price</label>
         <div class="relative">
-          <span class="absolute left-3 top-2.5 text-gray-500">₹</span>
+          <span class="absolute left-3 top-2.5 text-gray-500 dark:text-gray-400">₹</span>
           <input type="number" name="paidPrice" value="<%= course.actualPrice || course.price %>" 
                  class="w-full pl-8 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
                  readonly>
@@ -306,7 +306,7 @@
         </label>
         <input type="tel" name="mobile" value="<%= currentUser ? currentUser.mobile : '' %>" required
                placeholder="+91 98765 43210"
-               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
       </div>
       
       <!-- Description/Requirements -->
@@ -316,12 +316,12 @@
         </label>
         <textarea name="description" rows="3" 
                   placeholder="Tell us about your goals or any questions you have..."
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
       
       <!-- Terms and Conditions -->
       <div class="flex items-start">
-        <input type="checkbox" id="terms" required class="mt-1 w-4 h-4 border border-gray-300 rounded">
+        <input type="checkbox" id="terms" required class="mt-1 w-4 h-4 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700">
         <label for="terms" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
           I agree to the <a href="/terms" class="text-blue-600 hover:underline">Terms and Conditions</a> and 
           <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a>

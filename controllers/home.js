@@ -172,8 +172,16 @@ module.exports.allCourses = async (req, res) => {
   }
 };
 
-module.exports.renderNewCourseForm = (req, res) => {
-  res.render("secureaegix/newcourse.ejs", { course: {} });
+module.exports.renderNewCourseForm = async (req, res) => {
+  // Get all teachers (users with role 'teacher' or 'admin' who can teach)
+  const teachers = await User.find({ 
+    role: { $in: ["admin", "teacher"] } 
+  }).select("name email");
+  
+  res.render("secureaegix/newcourse.ejs", { 
+    course: {}, 
+    teachers: teachers || [] 
+  });
 };
 
 module.exports.createNewCourse = async (req, res) => {
@@ -194,11 +202,25 @@ module.exports.createNewCourse = async (req, res) => {
       showInNavbar,
       navbarButtonText,
       navbarButtonColor,
+      teacher  // Add this line
     } = req.body;
+
+    // Validate teacher selection
+    if (!teacher) {
+      req.flash("error", "Please select a teacher for this course");
+      return res.redirect("/courses/new");
+    }
+
+    // Verify teacher exists
+    const teacherExists = await User.findById(teacher);
+    if (!teacherExists || (teacherExists.role !== "admin" && teacherExists.role !== "teacher")) {
+      req.flash("error", "Selected teacher is not valid");
+      return res.redirect("/courses/new");
+    }
 
     // Create new course object
     const newCourse = new Course({
-      teacher: req.user._id,
+      teacher: teacher,  // Use selected teacher instead of req.user._id
       title,
       shortDescription,
       discription: description,
@@ -228,7 +250,7 @@ module.exports.createNewCourse = async (req, res) => {
     await newCourse.save();
 
     req.flash("success", "Course created successfully!");
-    res.redirect("/courses"); // adjust redirect as needed
+    res.redirect("/courses");
   } catch (error) {
     console.log(error);
     req.flash("error", "Something went wrong!");
@@ -245,7 +267,16 @@ module.exports.renderEditCourseForm = async (req, res) => {
       req.flash("error", "Course not found");
       return res.redirect("/courses");
     }
-    res.render("secureaegix/editcourse.ejs", { course });
+    
+    // Get all teachers for dropdown
+    const teachers = await User.find({ 
+      role: { $in: ["admin", "teacher"] } 
+    }).select("name email");
+    
+    res.render("secureaegix/editcourse.ejs", { 
+      course,
+      teachers: teachers || []
+    });
   } catch (error) {
     console.log(error);
     req.flash("error", "Something went wrong!");
@@ -278,6 +309,15 @@ module.exports.updateCourse = async (req, res) => {
     }
     if (courseData.includes) {
       courseData.includes = courseData.includes.split(",").map((i) => i.trim());
+    }
+
+    // Validate teacher if provided
+    if (courseData.teacher) {
+      const teacherExists = await User.findById(courseData.teacher);
+      if (!teacherExists || (teacherExists.role !== "admin" && teacherExists.role !== "teacher")) {
+        req.flash("error", "Selected teacher is not valid");
+        return res.redirect(`/courses/${id}/edit`);
+      }
     }
 
     if (req.file) {

@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") -%>
 
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20">
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20 overflow-hidden">
     <div class="absolute inset-0 opacity-40 pointer-events-none">
         <canvas id="particleCanvas" class="block w-full h-full"></canvas>
     </div>
@@ -42,12 +42,11 @@
                     <div class="p-5 font-mono text-sm">
                         <div class="text-gray-300"><span class="text-cyan-400">$</span> nmap -sV -sC -p- target.com</div>
                         <div class="text-gray-500 mt-1">Starting Nmap 7.94...</div>
-                        <div class="text-yellow-400">Discovered open ports: 22, 80, 443, 3306, 8080</div>
+                        <div class="text-yellow-400">Discovered open ports: 22, 80, 443</div>
                         <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> gobuster dir -u https://target.com</div>
                         <div class="text-green-400">✔ /admin (200)</div>
                         <div class="text-green-400">✔ /api (200)</div>
-                        <div class="text-green-400">✔ /backup (403)</div>
-                        <div class="text-red-400">⚠ Critical vulnerability found: SQL Injection</div>
+                        <div class="text-red-400">⚠ Critical vulnerability found</div>
                         <div class="text-gray-300 mt-2"><span class="text-cyan-400">$</span> <span class="t-blink">█</span></div>
                     </div>
                 </div>
@@ -65,105 +64,57 @@
                 What We <span class="text-gradient">Test</span>
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                We cover all aspects of your security posture with industry-standard methodologies
+                We cover all aspects of your security posture
             </p>
         </div>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Network Penetration Testing -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
-                <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-network-wired text-2xl text-blue-600"></i>
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-network-wired text-xl text-blue-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Network Penetration Testing</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    Identify vulnerabilities in your internal and external network infrastructure, including firewalls, routers, switches, and servers.
-                </p>
-                <ul class="space-y-2 text-sm text-gray-500">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> External/Internal Network</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Firewall Rule Review</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> VLAN Segmentation Testing</li>
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Network Testing</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Internal and external network infrastructure assessment</p>
             </div>
             
-            <!-- Web Application Testing -->
             <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
-                <div class="w-14 h-14 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-globe text-2xl text-cyan-600"></i>
+                <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-globe text-xl text-cyan-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Web Application Testing</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    Comprehensive security assessment of web applications following OWASP Top 10 methodology.
-                </p>
-                <ul class="space-y-2 text-sm text-gray-500">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> SQL Injection, XSS, CSRF</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Authentication & Authorization</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> API Security Testing</li>
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Web Application</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Comprehensive web app security assessment</p>
             </div>
             
-            <!-- Mobile Application Testing -->
             <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
-                <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-mobile-alt text-2xl text-purple-600"></i>
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-mobile-alt text-xl text-purple-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Mobile Application Testing</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    Security assessment of iOS and Android applications for vulnerabilities and data leakage.
-                </p>
-                <ul class="space-y-2 text-sm text-gray-500">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> iOS & Android Apps</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Data Storage Analysis</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Network Communication</li>
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Mobile App Testing</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">iOS and Android security assessment</p>
             </div>
             
-            <!-- Cloud Security Testing -->
             <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
-                <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-cloud text-2xl text-green-600"></i>
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-cloud text-xl text-green-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Cloud Security Testing</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    Assess your cloud infrastructure (AWS, Azure, GCP) for misconfigurations and security gaps.
-                </p>
-                <ul class="space-y-2 text-sm text-gray-500">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> IAM Policy Review</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> S3 Bucket Security</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Container Security</li>
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Cloud Security</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">AWS, Azure, GCP infrastructure review</p>
             </div>
             
-            <!-- Wireless Testing -->
             <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
-                <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-wifi text-2xl text-orange-600"></i>
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-wifi text-xl text-orange-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Wireless Security Testing</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    Evaluate the security of your wireless networks and identify rogue access points.
-                </p>
-                <ul class="space-y-2 text-sm text-gray-500">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> WPA/WPA2/WPA3 Testing</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Rogue AP Detection</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Client Isolation Testing</li>
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Wireless Security</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">WiFi network security assessment</p>
             </div>
             
-            <!-- Social Engineering -->
             <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all group">
-                <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-user-secret text-2xl text-red-600"></i>
+                <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-user-secret text-xl text-red-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Social Engineering</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    Test your employees' security awareness through simulated phishing and physical security assessments.
-                </p>
-                <ul class="space-y-2 text-sm text-gray-500">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Phishing Simulations</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Vishing & SMS Phishing</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Physical Security Testing</li>
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Social Engineering</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">Phishing and security awareness testing</p>
             </div>
         </div>
     </div>
@@ -175,340 +126,277 @@
         <div class="text-center mb-12">
             <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Process</span>
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                Proven <span class="text-gradient">Methodology</span>
+                Our <span class="text-gradient">Methodology</span>
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                We follow industry-standard frameworks to ensure thorough and professional testing
+                A systematic approach to thorough security testing
             </p>
         </div>
         
-        <div class="grid md:grid-cols-4 gap-6">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                    <span class="text-white font-bold text-xl">1</span>
-                    <div class="absolute -right-2 top-1/2 transform -translate-y-1/2 hidden md:block">
-                        <i class="fas fa-arrow-right text-gray-400 text-xl"></i>
-                    </div>
+        <div class="grid md:grid-cols-4 gap-4">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-5 text-center">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-blue-600 font-bold">1</span>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Reconnaissance</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Information gathering and asset discovery</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Reconnaissance</h3>
+                <p class="text-xs text-gray-500">Information gathering</p>
             </div>
-            
-            <div class="text-center">
-                <div class="w-16 h-16 bg-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                    <span class="text-white font-bold text-xl">2</span>
-                    <div class="absolute -right-2 top-1/2 transform -translate-y-1/2 hidden md:block">
-                        <i class="fas fa-arrow-right text-gray-400 text-xl"></i>
-                    </div>
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-5 text-center">
+                <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-cyan-600 font-bold">2</span>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Scanning</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Vulnerability identification and enumeration</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Scanning</h3>
+                <p class="text-xs text-gray-500">Vulnerability identification</p>
             </div>
-            
-            <div class="text-center">
-                <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                    <span class="text-white font-bold text-xl">3</span>
-                    <div class="absolute -right-2 top-1/2 transform -translate-y-1/2 hidden md:block">
-                        <i class="fas fa-arrow-right text-gray-400 text-xl"></i>
-                    </div>
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-5 text-center">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-purple-600 font-bold">3</span>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Exploitation</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Controlled exploitation of vulnerabilities</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Exploitation</h3>
+                <p class="text-xs text-gray-500">Controlled exploitation</p>
             </div>
-            
-            <div class="text-center">
-                <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-white font-bold text-xl">4</span>
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-5 text-center">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-green-600 font-bold">4</span>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Reporting</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Detailed findings and remediation guidance</p>
-            </div>
-        </div>
-        
-        <!-- Methodology Details -->
-        <div class="mt-12 grid md:grid-cols-2 gap-6">
-            <div class="bg-white dark:bg-gray-900 rounded-xl p-6">
-                <h3 class="font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <i class="fas fa-check-circle text-green-500"></i> Standards We Follow
-                </h3>
-                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                    <li>• OWASP Testing Guide</li>
-                    <li>• PTES (Penetration Testing Execution Standard)</li>
-                    <li>• NIST SP 800-115</li>
-                    <li>• OSSTMM (Open Source Security Testing Methodology Manual)</li>
-                    <li>• CIS Controls</li>
-                </ul>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-900 rounded-xl p-6">
-                <h3 class="font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <i class="fas fa-tools text-blue-600"></i> Tools We Use
-                </h3>
-                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                    <li>• Nmap, Masscan, RustScan (Network Scanning)</li>
-                    <li>• Burp Suite, OWASP ZAP (Web Testing)</li>
-                    <li>• Metasploit, Cobalt Strike (Exploitation)</li>
-                    <li>• Nessus, OpenVAS (Vulnerability Scanning)</li>
-                    <li>• Custom scripts and manual testing techniques</li>
-                </ul>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Reporting</h3>
+                <p class="text-xs text-gray-500">Findings & remediation</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Why Choose Us Section -->
+<!-- Pricing Section - Realistic Startup Pricing -->
 <section class="py-20 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Why Choose Us</span>
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Pricing</span>
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                What Makes Us <span class="text-gradient">Different</span>
-            </h2>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center">
-                <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-certificate text-3xl text-blue-600"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Certified Experts</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Our team holds OSCP, OSWE, CRTO, and other industry-leading certifications</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="w-20 h-20 bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-file-alt text-3xl text-cyan-600"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Detailed Reporting</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Executive summaries, technical findings, and actionable remediation steps</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="w-20 h-20 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-shield-alt text-3xl text-purple-600"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Confidential & Secure</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Strict NDAs and secure handling of your sensitive data</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Deliverables Section -->
-<section class="py-20 bg-gray-50 dark:bg-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">What You Get</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                    Comprehensive <span class="text-gradient">Deliverables</span>
-                </h2>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3">
-                        <i class="fas fa-file-pdf text-red-500 text-xl mt-1"></i>
-                        <div>
-                            <span class="font-semibold text-gray-900 dark:text-white">Executive Summary Report</span>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">High-level overview for management and stakeholders</p>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fas fa-chart-line text-blue-500 text-xl mt-1"></i>
-                        <div>
-                            <span class="font-semibold text-gray-900 dark:text-white">Technical Findings Document</span>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Detailed vulnerabilities with proof of concept and CVSS scores</p>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fas fa-clipboard-list text-green-500 text-xl mt-1"></i>
-                        <div>
-                            <span class="font-semibold text-gray-900 dark:text-white">Remediation Plan</span>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Step-by-step guidance to fix identified issues</p>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fas fa-sync-alt text-purple-500 text-xl mt-1"></i>
-                        <div>
-                            <span class="font-semibold text-gray-900 dark:text-white">Retesting Support</span>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Free validation of fixed vulnerabilities</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Sample Report Structure</h3>
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
-                        <span class="text-gray-600 dark:text-gray-400">Executive Summary</span>
-                        <span class="text-green-500">✓ Included</span>
-                    </div>
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
-                        <span class="text-gray-600 dark:text-gray-400">Methodology</span>
-                        <span class="text-green-500">✓ Included</span>
-                    </div>
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
-                        <span class="text-gray-600 dark:text-gray-400">Findings Overview</span>
-                        <span class="text-green-500">✓ Included</span>
-                    </div>
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
-                        <span class="text-gray-600 dark:text-gray-400">Risk Ratings (CVSS)</span>
-                        <span class="text-green-500">✓ Included</span>
-                    </div>
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
-                        <span class="text-gray-600 dark:text-gray-400">Proof of Concept</span>
-                        <span class="text-green-500">✓ Included</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-600 dark:text-gray-400">Remediation Steps</span>
-                        <span class="text-green-500">✓ Included</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Pricing Section -->
-<section class="py-20 bg-white dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Investment</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                Transparent <span class="text-gradient">Pricing</span>
+                Simple, <span class="text-gradient">Transparent Pricing</span>
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Customized solutions based on your scope and requirements
+                Pay only for what you need. No hidden costs.
             </p>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Basic Assessment</h3>
-                <div class="text-3xl font-bold text-blue-600 mb-2">₹2,500+</div>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Small business / Single application</p>
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <!-- Basic -->
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center hover:shadow-lg transition-all">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Basic Scan</h3>
+                <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">₹25,000</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Single website / Small network</p>
                 <ul class="text-left space-y-2 text-sm mb-6">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> External Network Scan</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> 1 Web Application</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Basic Reporting</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> External Network Scan</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> 1 Web Application</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Basic Vulnerability Report</li>
                 </ul>
                 <a href="/contact" class="block text-center px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Get Quote</a>
             </div>
             
-            <div class="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-6 text-white text-center transform scale-105 shadow-xl">
+            <!-- Professional - Most Popular -->
+            <div class="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-6 text-white text-center transform scale-105 shadow-xl relative">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-xs font-bold">Most Popular</div>
-                <h3 class="text-lg font-bold mb-2">Professional Assessment</h3>
-                <div class="text-3xl font-bold mb-2">₹7,500+</div>
-                <p class="text-sm text-white/90 mb-4">Mid-size / Multiple assets</p>
+                <h3 class="text-lg font-bold mb-2">Professional</h3>
+                <div class="text-3xl font-bold mb-2">₹75,000</div>
+                <p class="text-sm text-white/90 mb-4">Complete security assessment</p>
                 <ul class="text-left space-y-2 text-sm mb-6">
                     <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Full Network Assessment</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Up to 5 Applications</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> API & Mobile Testing</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Detailed Reporting</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Up to 3 Web Applications</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> API Security Testing</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Detailed Report with Fixes</li>
                 </ul>
                 <a href="/contact" class="block text-center px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">Get Quote</a>
             </div>
             
-            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center">
+            <!-- Enterprise -->
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center hover:shadow-lg transition-all">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Enterprise</h3>
-                <div class="text-3xl font-bold text-blue-600 mb-2">Custom</div>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Large organization / Full scope</p>
+                <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">Custom</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Tailored to your needs</p>
                 <ul class="text-left space-y-2 text-sm mb-6">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Everything in Professional</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Cloud Security Review</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Social Engineering</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Priority Support</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Everything in Professional</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cloud Security Review</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Social Engineering</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Priority Support</li>
                 </ul>
                 <a href="/contact" class="block text-center px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Contact Sales</a>
             </div>
         </div>
+        
+        <p class="text-center text-sm text-gray-500 mt-6">*Prices are indicative. Final quote depends on scope and requirements.</p>
     </div>
 </section>
 
-<!-- FAQ Section -->
+<!-- Why Choose Us -->
 <section class="py-20 bg-gray-50 dark:bg-gray-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">FAQ</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                Frequently Asked <span class="text-gradient">Questions</span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Why Choose <span class="text-gradient">SecureAaegix</span>
             </h2>
         </div>
         
-        <div class="space-y-4">
-            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
-                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <span class="font-semibold text-gray-900 dark:text-white">How long does a penetration test take?</span>
-                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
-                </button>
-                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
-                    <p class="text-gray-600 dark:text-gray-400">Typical engagements last 2-4 weeks depending on scope, including testing and reporting time.</p>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="text-center">
+                <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-certificate text-blue-600 text-xl"></i>
                 </div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Certified Experts</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">OSCP, CEH certified professionals</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-file-alt text-cyan-600 text-xl"></i>
+                </div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Detailed Reports</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Actionable remediation steps</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-shield-alt text-purple-600 text-xl"></i>
+                </div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Confidential</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Strict NDAs & secure handling</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Deliverables -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    What You'll <span class="text-gradient">Receive</span>
+                </h2>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-file-alt text-blue-500 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Executive Summary</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">For management and stakeholders</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-chart-line text-cyan-500 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Technical Report</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Detailed findings with CVSS scores</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-clipboard-list text-green-500 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Remediation Guide</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Step-by-step fixing instructions</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-sync-alt text-purple-500 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white">Free Retest</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Validation of fixed vulnerabilities</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
             
-            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
-                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <span class="font-semibold text-gray-900 dark:text-white">Do you provide remediation support?</span>
-                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
-                </button>
-                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
-                    <p class="text-gray-600 dark:text-gray-400">Yes, we provide detailed remediation guidance and free retesting after fixes are implemented.</p>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
-                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <span class="font-semibold text-gray-900 dark:text-white">Is my data secure during testing?</span>
-                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
-                </button>
-                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
-                    <p class="text-gray-600 dark:text-gray-400">Absolutely. We sign NDAs, use secure channels, and follow strict data handling protocols.</p>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
-                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <span class="font-semibold text-gray-900 dark:text-white">What certifications do your testers hold?</span>
-                    <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
-                </button>
-                <div class="faq-answer px-6 py-4 border-t border-gray-200 dark:border-gray-700 hidden">
-                    <p class="text-gray-600 dark:text-gray-400">Our team holds OSCP, OSWE, CRTO, CEH, and other industry-recognized certifications.</p>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-3">What's Included</h3>
+                <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                        <span>Vulnerability Assessment</span>
+                        <span class="text-green-500">✓</span>
+                    </div>
+                    <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                        <span>Manual Testing</span>
+                        <span class="text-green-500">✓</span>
+                    </div>
+                    <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                        <span>Risk Rating (CVSS)</span>
+                        <span class="text-green-500">✓</span>
+                    </div>
+                    <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                        <span>Proof of Concept</span>
+                        <span class="text-green-500">✓</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Remediation Support</span>
+                        <span class="text-green-500">✓</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
-    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Secure Your Infrastructure?</h2>
-        <p class="text-lg text-white/90 mb-8">Get a free consultation and customized quote for your organization</p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+<!-- FAQ -->
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                FAQs
+            </h2>
+        </div>
+        
+        <div class="space-y-3">
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-5 py-3 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <span class="font-medium text-gray-900 dark:text-white">How long does testing take?</span>
+                    <i class="fas fa-chevron-down text-gray-500 text-sm transition-transform"></i>
+                </button>
+                <div class="faq-answer px-5 py-3 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Typically 2-4 weeks depending on scope.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-5 py-3 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <span class="font-medium text-gray-900 dark:text-white">Do you provide remediation help?</span>
+                    <i class="fas fa-chevron-down text-gray-500 text-sm transition-transform"></i>
+                </button>
+                <div class="faq-answer px-5 py-3 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Yes, we provide detailed guidance and free retesting.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+                <button class="faq-question w-full text-left px-5 py-3 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <span class="font-medium text-gray-900 dark:text-white">Is my data secure?</span>
+                    <i class="fas fa-chevron-down text-gray-500 text-sm transition-transform"></i>
+                </button>
+                <div class="faq-answer px-5 py-3 border-t border-gray-200 dark:border-gray-700 hidden">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Absolutely. We sign NDAs and follow strict protocols.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-12 bg-gradient-to-r from-blue-600 to-cyan-600">
+    <div class="max-w-3xl mx-auto text-center px-4">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Ready to Secure Your Business?</h2>
+        <p class="text-white/90 mb-5">Get a free consultation and customized quote</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="/contact" class="px-6 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all">
                 Request a Quote
-                <i class="fas fa-arrow-right ml-2"></i>
             </a>
-            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+            <a href="/contact" class="px-6 py-2 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
                 Schedule Consultation
-                <i class="fas fa-calendar ml-2"></i>
             </a>
         </div>
     </div>
 </section>
 
-<!-- FAQ Accordion Script -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const icon = question.querySelector('i');
-            
-            answer.classList.toggle('hidden');
-            icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-        });
+document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const icon = btn.querySelector('i');
+        answer.classList.toggle('hidden');
+        icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
     });
 });
 </script>

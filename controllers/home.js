@@ -325,7 +325,7 @@ module.exports.updateCourse = async (req, res) => {
       // Delete old image if exists
       const oldCourse = await Course.findById(id);
       if (oldCourse.image && oldCourse.image.filename) {
-        await cloudinary.uploader.destroy(oldCourse.image.filename);
+        //await cloudinary.uploader.destroy(oldCourse.image.filename);
       }
       courseData.image = {
         url: req.file.path,

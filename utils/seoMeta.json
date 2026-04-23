@@ -1,157 +1,157 @@
 {
   "/": {
-    "title": "SecureAaegix | Elite Cybersecurity Training & Certifications",
+    "title": "SecureAegix | Elite Cybersecurity Training & Certifications",
     "description": "Master cybersecurity with industry-recognized certifications including OSCP, OSWE, CRTO, and eJPT. Join 5000+ professionals with hands-on labs and expert instructors.",
-    "keywords": "cybersecurity training, OSCP certification, OSWE course, CRTO training, eJPT exam, ethical hacking course, penetration testing training, red team operations, vulnerability assessment, incident response, cybersecurity certifications india, best cybersecurity training platform, SecureAaegix, online security courses, cyber security coaching"
+    "keywords": "cybersecurity training, OSCP certification, OSWE course, CRTO training, eJPT exam, ethical hacking course, penetration testing training, red team operations, vulnerability assessment, incident response, cybersecurity certifications india, best cybersecurity training platform, SecureAegix, online security courses, cyber security coaching"
   },
 
   "/login": {
-    "title": "Login | Access Your SecureAaegix Cybersecurity Account",
-    "description": "Sign in to your SecureAaegix account to access premium cybersecurity courses, track certification progress, and manage your learning dashboard.",
-    "keywords": "SecureAaegix login, cybersecurity account access, student login portal, certification dashboard sign in, ethical hacking course login, OSCP training access"
+    "title": "Login | Access Your SecureAegix Cybersecurity Account",
+    "description": "Sign in to your SecureAegix account to access premium cybersecurity courses, track certification progress, and manage your learning dashboard.",
+    "keywords": "SecureAegix login, cybersecurity account access, student login portal, certification dashboard sign in, ethical hacking course login, OSCP training access"
   },
 
   "/signup": {
-    "title": "Sign Up | Start Your Cybersecurity Journey with SecureAaegix",
-    "description": "Create your SecureAaegix account and begin your path to becoming a certified cybersecurity professional. Access world-class training and hands-on labs.",
-    "keywords": "SecureAaegix signup, cybersecurity registration, create account for OSCP training, join ethical hacking course, certification program enrollment, student registration"
+    "title": "Sign Up | Start Your Cybersecurity Journey with SecureAegix",
+    "description": "Create your SecureAegix account and begin your path to becoming a certified cybersecurity professional. Access world-class training and hands-on labs.",
+    "keywords": "SecureAegix signup, cybersecurity registration, create account for OSCP training, join ethical hacking course, certification program enrollment, student registration"
   },
 
   "/courses": {
-    "title": "Cybersecurity Courses | OSCP, OSWE, CRTO & More | SecureAaegix",
+    "title": "Cybersecurity Courses | OSCP, OSWE, CRTO & More | SecureAegix",
     "description": "Explore our comprehensive cybersecurity certification courses. From beginner to expert - OSCP, OSWE, OSED, CRTO, CRTP, eJPT. Start your training today.",
     "keywords": "cybersecurity courses, OSCP certification training, OSWE web security, CRTO red team course, eJPT beginner pentesting, OSED exploit development, CRTP active directory, online security certifications, best cybersecurity courses india"
   },
 
   "/courses/oscp": {
-    "title": "OSCP Certification Training | Offensive Security | SecureAaegix",
+    "title": "OSCP Certification Training | Offensive Security | SecureAegix",
     "description": "Prepare for OSCP certification with our comprehensive training. 8-week program with 24/7 lab access, expert instructors, and 95% pass rate.",
     "keywords": "OSCP training, Offensive Security Certified Professional, penetration testing certification, ethical hacking course, OSCP exam preparation, kali linux training"
   },
 
   "/courses/oswe": {
-    "title": "OSWE Certification | Web Security Expert Training | SecureAaegix",
+    "title": "OSWE Certification | Web Security Expert Training | Secureaegix",
     "description": "Master web application security with OSWE certification. Advanced white-box testing, source code analysis, and exploitation techniques.",
     "keywords": "OSWE certification, web application security, offensive security web expert, white-box testing course, source code analysis training"
   },
 
   "/courses/crto": {
-    "title": "CRTO Certification | Red Team Operator Training | SecureAaegix",
+    "title": "CRTO Certification | Red Team Operator Training | SecureAegix",
     "description": "Become a certified red team operator. Master Cobalt Strike, adversary simulation, and advanced red teaming techniques.",
     "keywords": "CRTO certification, red team operator training, Cobalt Strike course, adversary simulation, red teaming techniques, advanced penetration testing"
   },
 
   "/courses/ejpt": {
-    "title": "eJPT Certification | Junior Penetration Tester | SecureAaegix",
+    "title": "eJPT Certification | Junior Penetration Tester | SecureAegix",
     "description": "Start your cybersecurity career with eJPT certification. Beginner-friendly course with hands-on labs and practical exam.",
     "keywords": "eJPT certification, junior penetration tester, beginner cybersecurity course, ethical hacking fundamentals, entry level security training"
   },
 
   "/services": {
-    "title": "Cybersecurity Services | Penetration Testing & Red Teaming | SecureAaegix",
+    "title": "Cybersecurity Services | Penetration Testing & Red Teaming | SecureAegix",
     "description": "Professional cybersecurity services including penetration testing, vulnerability assessment, incident response, and red team operations for enterprise clients.",
     "keywords": "penetration testing services, vulnerability assessment, incident response team, red team operations, security auditing, enterprise cybersecurity, VAPT services india"
   },
 
   "/services/penetration-testing": {
-    "title": "Penetration Testing Services | Network & Web App Security | SecureAaegix",
+    "title": "Penetration Testing Services | Network & Web App Security | SecureAegix",
     "description": "Professional penetration testing services to identify vulnerabilities before attackers do. Network, web application, and mobile security testing.",
     "keywords": "penetration testing, network security assessment, web application pentesting, mobile app security testing, ethical hacking services, VAPT services"
   },
 
   "/services/vulnerability-assessment": {
-    "title": "Vulnerability Assessment | Security Scanning & Risk Analysis | SecureAaegix",
+    "title": "Vulnerability Assessment | Security Scanning & Risk Analysis | SecureAegix",
     "description": "Comprehensive vulnerability assessment services to identify, classify, and prioritize security weaknesses in your infrastructure.",
     "keywords": "vulnerability assessment, security scanning, risk analysis, compliance testing, infrastructure security, vulnerability management"
   },
 
   "/services/incident-response": {
-    "title": "Incident Response Services | 24/7 Security Breach Response | SecureAaegix",
+    "title": "Incident Response Services | 24/7 Security Breach Response | SecureAegix",
     "description": "24/7 incident response services for security breaches. Rapid containment, forensic investigation, and recovery support for cyber attacks.",
     "keywords": "incident response, security breach response, cyber attack recovery, forensic investigation, data breach containment, 24/7 security support"
   },
 
   "/services/red-team": {
-    "title": "Red Team Operations | Advanced Adversary Simulation | SecureAaegix",
+    "title": "Red Team Operations | Advanced Adversary Simulation | SecureAegix",
     "description": "Elite red team operations simulating real-world adversaries. Test your defenses with APT-level tactics, techniques, and procedures.",
     "keywords": "red team operations, adversary simulation, APT emulation, security assessment, defense testing, purple team exercises"
   },
 
   "/about": {
-    "title": "About SecureAaegix | Cybersecurity Training Experts Since 2020",
-    "description": "Learn about SecureAaegix - founded in 2020, we've trained over 5,000 cybersecurity professionals across 50+ countries with industry-recognized certifications.",
-    "keywords": "about SecureAaegix, cybersecurity training company, information security experts, ethical hacking instructors, OSCP trainers, red team specialists, cyber security institute india"
+    "title": "About SecureAegix | Cybersecurity Training Experts Since 2020",
+    "description": "Learn about SecureAegix - founded in 2020, we've trained over 5,000 cybersecurity professionals across 50+ countries with industry-recognized certifications.",
+    "keywords": "about SecureAegix, cybersecurity training company, information security experts, ethical hacking instructors, OSCP trainers, red team specialists, cyber security institute india"
   },
 
   "/contact": {
-    "title": "Contact SecureAaegix | Get Support for Cybersecurity Training",
-    "description": "Reach out to SecureAaegix for course inquiries, corporate training, security services, or technical support. Our team is ready to assist you.",
-    "keywords": "contact SecureAaegix, cybersecurity training support, course inquiry, corporate training request, security services consultation, technical help, support team"
+    "title": "Contact SecureAegix | Get Support for Cybersecurity Training",
+    "description": "Reach out to SecureAegix for course inquiries, corporate training, security services, or technical support. Our team is ready to assist you.",
+    "keywords": "contact SecureAegix, cybersecurity training support, course inquiry, corporate training request, security services consultation, technical help, support team"
   },
 
   "/blogs": {
-    "title": "Cybersecurity Blog | Latest Trends, Tips & Tutorials | SecureAaegix",
+    "title": "Cybersecurity Blog | Latest Trends, Tips & Tutorials | SecureAegix",
     "description": "Stay updated with the latest cybersecurity trends, OSCP preparation tips, red teaming techniques, and career advice from industry experts.",
     "keywords": "cybersecurity blog, OSCP preparation tips, red teaming articles, ethical hacking tutorials, security news, career advice cybersecurity, penetration testing guides"
   },
 
   "/careers": {
-    "title": "Careers at SecureAaegix | Join Our Cybersecurity Team",
-    "description": "Join the SecureAaegix team! We're hiring cybersecurity experts, instructors, and security professionals passionate about education and defense.",
-    "keywords": "cybersecurity careers, ethical hacking jobs, security trainer positions, red team jobs, information security employment, join SecureAaegix team, cybersecurity jobs india"
+    "title": "Careers at SecureAegix | Join Our Cybersecurity Team",
+    "description": "Join the SecureAegix team! We're hiring cybersecurity experts, instructors, and security professionals passionate about education and defense.",
+    "keywords": "cybersecurity careers, ethical hacking jobs, security trainer positions, red team jobs, information security employment, join SecureAegix team, cybersecurity jobs india"
   },
 
   "/privacy": {
-    "title": "Privacy Policy | SecureAaegix Data Protection & Security",
-    "description": "Read SecureAaegix's privacy policy to understand how we collect, use, and protect your personal information while you learn cybersecurity with us.",
-    "keywords": "privacy policy SecureAaegix, data protection, user privacy, information security, GDPR compliance, personal data handling, secure platform"
+    "title": "Privacy Policy | SecureAegix Data Protection & Security",
+    "description": "Read SecureAegix's privacy policy to understand how we collect, use, and protect your personal information while you learn cybersecurity with us.",
+    "keywords": "privacy policy SecureAegix, data protection, user privacy, information security, GDPR compliance, personal data handling, secure platform"
   },
 
   "/terms": {
-    "title": "Terms of Service | SecureAaegix Platform Usage Agreement",
-    "description": "Review SecureAaegix's terms of service for course access, certification policies, payment terms, and user responsibilities on our platform.",
-    "keywords": "terms of service SecureAaegix, user agreement, course terms, certification policies, payment terms, refund policy, platform usage rules"
+    "title": "Terms of Service | SecureAegix Platform Usage Agreement",
+    "description": "Review SecureAegix's terms of service for course access, certification policies, payment terms, and user responsibilities on our platform.",
+    "keywords": "terms of service SecureAegix, user agreement, course terms, certification policies, payment terms, refund policy, platform usage rules"
   },
 
   "/user/dashboard": {
-    "title": "Dashboard | Your Cybersecurity Learning Progress | SecureAaegix",
+    "title": "Dashboard | Your Cybersecurity Learning Progress | SecureAegix",
     "description": "Access your personalized dashboard to track course progress, view certifications, and manage your cybersecurity learning journey.",
-    "keywords": "user dashboard, course progress tracking, certification status, learning analytics, student dashboard, SecureAaegix account"
+    "keywords": "user dashboard, course progress tracking, certification status, learning analytics, student dashboard, SecureAegix account"
   },
 
   "/profile": {
-    "title": "Profile Settings | Manage Your SecureAaegix Account",
-    "description": "Update your profile information, change password, and manage account preferences for your SecureAaegix cybersecurity training account.",
-    "keywords": "profile settings, account management, update profile, change password, user preferences, SecureAaegix account"
+    "title": "Profile Settings | Manage Your SecureAegix Account",
+    "description": "Update your profile information, change password, and manage account preferences for your SecureAegix cybersecurity training account.",
+    "keywords": "profile settings, account management, update profile, change password, user preferences, SecureAegix account"
   },
 
   "/my-courses": {
-    "title": "My Courses | Your Enrolled Cybersecurity Courses | SecureAaegix",
-    "description": "View all your enrolled cybersecurity courses, track completion progress, and access course materials from your SecureAaegix learning portal.",
+    "title": "My Courses | Your Enrolled Cybersecurity Courses | SecureAegix",
+    "description": "View all your enrolled cybersecurity courses, track completion progress, and access course materials from your SecureAegix learning portal.",
     "keywords": "my courses, enrolled courses, course progress, learning materials, certification preparation, student courses"
   },
 
   "/certificates": {
-    "title": "My Certifications | Verified Cybersecurity Credentials | SecureAaegix",
+    "title": "My Certifications | Verified Cybersecurity Credentials | SecureAegix",
     "description": "View and download your earned cybersecurity certifications. Share verified credentials with employers and professional networks.",
     "keywords": "my certificates, earned certifications, cybersecurity credentials, verify certificate, download certificate, OSCP certificate, CRTO certification"
   },
 
   "/corporate": {
-    "title": "Corporate Training | Cybersecurity Programs for Organizations | SecureAaegix",
+    "title": "Corporate Training | Cybersecurity Programs for Organizations | SecureAegix",
     "description": "Enterprise cybersecurity training solutions for organizations. Custom programs, team dashboards, and dedicated support for corporate clients.",
     "keywords": "corporate training, enterprise cybersecurity, team training programs, organizational security awareness, company upskilling, business security solutions"
   },
 
   "/verify-email": {
-    "title": "Email Verification | Secure Your SecureAaegix Account",
-    "description": "Verify your email address to activate your SecureAaegix account and access cybersecurity training courses and resources.",
+    "title": "Email Verification | Secure Your SecureAegix Account",
+    "description": "Verify your email address to activate your SecureAegix account and access cybersecurity training courses and resources.",
     "keywords": "email verification, account activation, OTP verification, secure account, verify email address, complete registration"
   },
 
   "/reset-password": {
-    "title": "Reset Password | Recover Your SecureAaegix Account Access",
-    "description": "Reset your password to regain access to your SecureAaegix cybersecurity training account and continue your learning journey.",
+    "title": "Reset Password | Recover Your SecureAegix Account Access",
+    "description": "Reset your password to regain access to your SecureAegix cybersecurity training account and continue your learning journey.",
     "keywords": "reset password, account recovery, forgot password, password reset link, regain account access, secure password change"
   }
 }

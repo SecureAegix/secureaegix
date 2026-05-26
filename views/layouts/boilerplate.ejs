@@ -115,6 +115,26 @@
   gtag('config', 'G-YP04N0626F');
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "SecureAegix",
+      "url": "<%= requestUrl.replace(currentPath, '') %>",
+      "logo": "<%= meta.image || '/images/logo.png' %>",
+      "sameAs": []
+    },
+    {
+      "@type": "WebSite",
+      "url": "<%= requestUrl.replace(currentPath, '') %>",
+      "name": "<%= meta.title %>",
+      "description": "<%= meta.description %>"
+    }
+  ]
+}
+</script>
 
 </head>
 

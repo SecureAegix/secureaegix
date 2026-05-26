@@ -198,13 +198,24 @@ app.use((req, res, next) => {
     else meta = seoMeta["/"];
   }
 
+  const host = process.env.DOMAIN || req.get('host');
+  const fullUrl = req.protocol + '://' + host + req.originalUrl;
+
+  meta = Object.assign(
+    {
+      image: '/images/logo.png',
+      canonical: fullUrl,
+    },
+    meta
+  );
+
   res.locals.meta = meta;
   next();
 });
 
 app.use((req, res, next) => {
-  res.locals.requestUrl =
-    req.protocol + "://" + "SecureAegix.com.in" + req.originalUrl;
+  const host = process.env.DOMAIN || req.get('host');
+  res.locals.requestUrl = req.protocol + '://' + host + req.originalUrl;
   next();
 });
 

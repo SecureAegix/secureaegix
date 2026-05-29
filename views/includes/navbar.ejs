@@ -1,6 +1,6 @@
 <nav class="navbar bg-white dark:bg-gray-900 shadow-md transition-colors duration-300">
-    <!-- Top Bar - Hidden on screens smaller than 600px -->
-    <div class="hidden min-[600px]:block bg-gray-50 dark:bg-gray-800 text-xs py-1.5 border-b border-gray-100 dark:border-gray-700">
+    <!-- Top Bar - Simplified -->
+    <div class="hidden md:block bg-gray-50 dark:bg-gray-800 text-xs py-1.5 border-b border-gray-100 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-6">
@@ -44,8 +44,8 @@
                 </div>
             </div>
 
-            <!-- Desktop Navigation - Hidden on screens smaller than 600px -->
-            <div class="hidden min-[600px]:flex items-center space-x-1">
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-1">
                 <a href="/" class="nav-link <%= currentPath === '/' ? 'active' : '' %>">
                     <i class="fas fa-home mr-1.5 text-sm"></i> Home
                 </a>
@@ -111,8 +111,8 @@
 
             <!-- Right Actions -->
             <div class="flex items-center space-x-2">
-                <!-- Search - Desktop with dropdown - Hidden on screens smaller than 600px -->
-                <div class="hidden min-[600px]:block relative">
+                <!-- Search - Desktop with dropdown -->
+                <div class="hidden lg:block relative">
                     <div class="relative">
                         <input type="text" id="searchInput" placeholder="Search courses, services, blogs..." 
                                class="w-64 px-3 py-1.5 pl-8 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
@@ -126,9 +126,9 @@
                     <i id="darkModeIcon" class="fas fa-moon"></i>
                 </button>
 
-                <!-- User Section - Desktop View - Hidden on screens smaller than 600px -->
+                <!-- User Section - Desktop View -->
                 <% if (currUser) { %>
-                    <div class="relative group hidden min-[600px]:block">
+                    <div class="relative group hidden md:block">
                         <button class="user-menu-btn">
                             <div class="user-avatar">
                                 <%= currUser.name.charAt(0).toUpperCase() %>
@@ -173,7 +173,7 @@
                         </div>
                     </div>
                 <% } else { %>
-                    <div class="hidden min-[600px]:flex items-center space-x-2">
+                    <div class="hidden md:flex items-center space-x-2">
                         <a href="/login" class="px-4 py-1.5 text-blue-600 dark:text-blue-400 text-sm font-medium hover:bg-blue-50 dark:hover:bg-gray-800 rounded-md transition-colors">
                             Login
                         </a>
@@ -183,16 +183,16 @@
                     </div>
                 <% } %>
 
-                <!-- Mobile Menu Button - Visible only on screens smaller than 600px -->
-                <button id="mobileMenuBtn" class="min-[600px]:hidden w-8 h-8 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden w-8 h-8 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Mobile Menu - Visible only on screens smaller than 600px -->
-    <div id="mobileMenu" class="mobile-menu min-[600px]:hidden">
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu md:hidden">
         <div class="flex flex-col h-full">
             <!-- Mobile Menu Header -->
             <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
@@ -705,39 +705,26 @@
     background: #94a3b8;
 }
 
-/* ============================================ */
-/* MOBILE MENU STYLES - Only for screens < 600px */
-/* ============================================ */
+/* Mobile Menu Styles (keep your existing mobile menu styles) */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: block !important;
+}
 
-@media (max-width: 599px) {
-    .mobile-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: white;
-        z-index: 9999;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-        display: block !important;
-    }
-    
-    .dark .mobile-menu {
-        background-color: #111827;
-    }
-    
-    .mobile-menu.open {
-        transform: translateX(0);
-    }
-    
-    /* Body scroll lock */
-    body.menu-open {
-        overflow: hidden;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-    }
+.dark .mobile-menu {
+    background-color: #111827;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
 }
 
 .mobile-nav-link {
@@ -808,12 +795,6 @@
     animation: slideIn 0.3s ease forwards;
     opacity: 0;
 }
-
-.mobile-menu.open .mobile-nav-link:nth-child(1) { animation-delay: 0.05s; }
-.mobile-menu.open .mobile-nav-link:nth-child(2) { animation-delay: 0.1s; }
-.mobile-menu.open .mobile-nav-link:nth-child(3) { animation-delay: 0.15s; }
-.mobile-menu.open .mobile-nav-link:nth-child(4) { animation-delay: 0.2s; }
-.mobile-menu.open .mobile-nav-link:nth-child(5) { animation-delay: 0.25s; }
 </style>
 
 <script>
@@ -939,7 +920,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ${escapeHtml(result.title)}
                         <span class="search-result-badge ${getBadgeClass(result.type)}">${getBadgeText(result.type)}</span>
                     </div>
-                    ${result.description ? `<div class="search-result-description">${escapeHtml(result.description.substring(0, 50))}${result.description.length > 100 ? '...' : ''}</div>` : ''}
+                    ${result.description ? `<div class="search-result-description">${escapeHtml(result.description.substring(0, 100))}${result.description.length > 100 ? '...' : ''}</div>` : ''}
                     ${result.price ? `<div class="search-result-price">₹${result.price}</div>` : ''}
                 </div>
             </div>
@@ -955,6 +936,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+    
+    // Close search results when clicking outside
+    function closeSearchOnClickOutside(event, container, inputElement) {
+        if (container && !container.contains(event.target) && event.target !== inputElement) {
+            container.classList.add('hidden');
+        }
     }
     
     // Desktop search handler with debouncing
@@ -1000,7 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
-    // MOBILE MENU TOGGLE - Updated for 600px breakpoint
+    // MOBILE MENU TOGGLE
     // ============================================
     
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1015,7 +1003,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.top = `-${scrollY}px`;
             document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
-            document.body.classList.add('menu-open');
             document.body.dataset.scrollY = scrollY;
         }
         
@@ -1026,7 +1013,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.top = '';
             document.body.style.width = '';
             document.body.style.overflow = '';
-            document.body.classList.remove('menu-open');
             if (scrollY) {
                 window.scrollTo(0, parseInt(scrollY));
             }
@@ -1188,10 +1174,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Handle window resize - Updated for 600px breakpoint
+// Handle window resize
 window.addEventListener('resize', function() {
     const mobileMenu = document.getElementById('mobileMenu');
-    const isDesktop = window.innerWidth >= 600; // Changed from 768 to 600
+    const isDesktop = window.innerWidth >= 768;
     
     if (isDesktop && mobileMenu && mobileMenu.classList.contains('open')) {
         mobileMenu.classList.remove('open');
@@ -1199,7 +1185,6 @@ window.addEventListener('resize', function() {
         document.body.style.top = '';
         document.body.style.width = '';
         document.body.style.overflow = '';
-        document.body.classList.remove('menu-open');
     }
 });
 </script>

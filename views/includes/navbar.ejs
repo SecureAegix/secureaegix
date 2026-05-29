@@ -54,26 +54,26 @@
                 <div class="relative group">
                     <button class="nav-link flex items-center">
                         <i class="fas fa-graduation-cap mr-1.5 text-sm"></i> 
-                            Courses
+                        Courses
                         <i class="fas fa-chevron-down ml-1.5 text-xs transition-transform duration-200 group-hover:rotate-180"></i>
                     </button>
-                <div class="dropdown-menu">
-                <div class="py-2">
-                    <% if (navbarCourses && navbarCourses.length > 0) { %>
-                        <% navbarCourses.forEach(course => { %>
-                            <a href="<%= course.url %>" class="dropdown-item text-blue-600 dark:text-blue-400 font-semibold">
-                                <i class="fas fa-graduation-cap w-4 mr-2 text-<%= course.color %>-600"></i> 
-                                <%= course.name %>
+                    <div class="dropdown-menu">
+                        <div class="py-2">
+                            <% if (navbarCourses && navbarCourses.length > 0) { %>
+                                <% navbarCourses.forEach(course => { %>
+                                    <a href="<%= course.url %>" class="dropdown-item text-blue-600 dark:text-blue-400 font-semibold">
+                                        <i class="fas fa-graduation-cap w-4 mr-2 text-<%= course.color %>-600"></i> 
+                                        <%= course.name %>
+                                    </a>
+                                <% }) %>
+                                <hr class="my-2 border-gray-100 dark:border-gray-700">
+                            <% } %>
+                            <a href="/courses" class="dropdown-item text-blue-600 dark:text-blue-400 font-semibold">
+                                <i class="fas fa-arrow-right mr-2"></i> View All Courses
                             </a>
-                        <% }) %>
-                        <hr class="my-2 border-gray-100 dark:border-gray-700">
-                    <% } %>
-                    <a href="/courses" class="dropdown-item text-blue-600 dark:text-blue-400 font-semibold">
-                        <i class="fas fa-arrow-right mr-2"></i> View All Courses
-                    </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
                 <!-- Services Dropdown -->
                 <div class="relative group">
@@ -111,12 +111,13 @@
 
             <!-- Right Actions -->
             <div class="flex items-center space-x-2">
-                <!-- Search - Desktop -->
-                <div class="hidden lg:block">
+                <!-- Search - Desktop with dropdown -->
+                <div class="hidden lg:block relative">
                     <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Search..." 
-                               class="w-48 px-3 py-1.5 pl-8 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                        <input type="text" id="searchInput" placeholder="Search courses, services, blogs..." 
+                               class="w-64 px-3 py-1.5 pl-8 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
                         <i class="fas fa-search absolute left-2.5 top-2 text-gray-400 text-xs"></i>
+                        <div id="searchResults" class="search-results hidden"></div>
                     </div>
                 </div>
 
@@ -153,7 +154,6 @@
                                     <a href="/admin/subscribers" class="user-dropdown-item">
                                         <i class="fas fa-users w-4"></i> Subscribers
                                     </a>
-
                                 <% } else { %>
                                     <a href="/user/dashboard" class="user-dropdown-item">
                                         <i class="fas fa-chart-line w-4"></i> Dashboard
@@ -207,7 +207,17 @@
                 </button>
             </div>
             
-            <div class="flex-1 overflow-y-auto  py-4">
+            <div class="flex-1 overflow-y-auto py-4">
+                <!-- Search in Mobile Menu -->
+                <div class="px-4 mb-4">
+                    <div class="relative">
+                        <input type="text" id="mobileSearchInput" placeholder="Search courses, services, blogs..." 
+                               class="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                    </div>
+                    <div id="mobileSearchResults" class="mobile-search-results hidden"></div>
+                </div>
+                
                 <!-- User Profile Section - Mobile Only -->
                 <% if (currUser) { %>
                     <div class="px-4 pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -278,11 +288,11 @@
                                     <i class="fas fa-tachometer-alt w-5 mr-3 text-blue-600"></i> Admin Dashboard
                                 </a>
                                 <a href="/admin/contacts" class="mobile-nav-link">
-                                        <i class="fas fa-address-book w-5 mr-3 text-blue-600"></i> Contact Messages
-                                    </a>
-                                    <a href="/admin/subscribers" class="mobile-nav-link">
-                                        <i class="fas fa-users w-5 mr-3 text-blue-600"></i> Subscribers
-                                    </a>
+                                    <i class="fas fa-address-book w-5 mr-3 text-blue-600"></i> Contact Messages
+                                </a>
+                                <a href="/admin/subscribers" class="mobile-nav-link">
+                                    <i class="fas fa-users w-5 mr-3 text-blue-600"></i> Subscribers
+                                </a>
                             <% } else { %>
                                 <a href="/user/dashboard" class="mobile-nav-link">
                                     <i class="fas fa-chart-line w-5 mr-3 text-cyan-600"></i> My Dashboard
@@ -311,22 +321,13 @@
                         </a>
                     </div>
                 <% } %>
-                
-                <!-- Search in Mobile Menu -->
-                <div class="mt-6 px-4">
-                    <div class="relative">
-                        <input type="text" id="mobileSearchInput" placeholder="Search courses..." 
-                               class="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </nav>
 
 <style>
-/* Navbar Styles */
+/* Existing styles remain the same... */
 .navbar {
     position: sticky;
     top: 0;
@@ -525,10 +526,207 @@
 }
 
 /* ============================================ */
-/* MOBILE MENU - COMPLETELY FIXED */
+/* SEARCH RESULTS STYLES */
 /* ============================================ */
 
-/* Mobile Navigation Links */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-height: 500px;
+    overflow-y: auto;
+    z-index: 1000;
+    border: 1px solid #e5e7eb;
+}
+
+.dark .search-results {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.search-result-item {
+    display: flex;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.dark .search-result-item {
+    border-bottom-color: #374151;
+}
+
+.search-result-item:hover {
+    background-color: #f9fafb;
+}
+
+.dark .search-result-item:hover {
+    background-color: #374151;
+}
+
+.search-result-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: #f3f4f6;
+}
+
+.search-result-content {
+    flex: 1;
+    margin-left: 0.75rem;
+}
+
+.search-result-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #111827;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.dark .search-result-title {
+    color: #f9fafb;
+}
+
+.search-result-badge {
+    font-size: 0.625rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+.badge-course { background-color: #dbeafe; color: #1e40af; }
+.badge-blog { background-color: #f3e8ff; color: #6b21a8; }
+.badge-page { background-color: #dcfce7; color: #166534; }
+.badge-service { background-color: #fed7aa; color: #92400e; }
+
+.dark .badge-course { background-color: #1e3a8a; color: #93c5fd; }
+.dark .badge-blog { background-color: #4c1d95; color: #d8b4fe; }
+.dark .badge-page { background-color: #064e3b; color: #6ee7b7; }
+.dark .badge-service { background-color: #78350f; color: #fcd34d; }
+
+.search-result-description {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.125rem;
+    line-height: 1.4;
+}
+
+.dark .search-result-description {
+    color: #9ca3af;
+}
+
+.search-result-price {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #059669;
+    margin-top: 0.125rem;
+}
+
+.search-result-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.search-empty {
+    padding: 2rem;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.dark .search-empty {
+    color: #9ca3af;
+}
+
+.search-loading {
+    padding: 1rem;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Mobile Search Results */
+.mobile-search-results {
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+}
+
+.dark .mobile-search-results {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+/* Scrollbar Styling */
+.search-results::-webkit-scrollbar,
+.mobile-search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track,
+.mobile-search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb,
+.mobile-search-results::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover,
+.mobile-search-results::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Mobile Menu Styles (keep your existing mobile menu styles) */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: block !important;
+}
+
+.dark .mobile-menu {
+    background-color: #111827;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
 .mobile-nav-link {
     display: flex;
     align-items: center;
@@ -552,88 +750,15 @@
     background-color: #1f2937;
 }
 
-/* Mobile Menu Container - FIXED */
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: white;
-    z-index: 9999;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    display: block !important;
-}
-
-.dark .mobile-menu {
-    background-color: #111827;
-}
-
-.mobile-menu.open {
-    transform: translateX(0);
-}
-
-
-/* Mobile Menu Content Container */
-.mobile-menu .flex-col {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-}
-
-
-/* Scrollable Content - FIXED */
-.mobile-menu .overflow-y-auto {
-    flex: 1;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding-bottom: 40px !important;
-    max-height: none !important;
-    min-height: 0;
-}
-.mobile-menu .space-y-1,
-.mobile-menu .mt-6,
-.mobile-menu .pt-4,
-.mobile-menu .px-4 {
-    display: block !important;
-}
-
-
-
-.mobile-menu.open .mobile-nav-link {
-    display: flex !important;
-}
-
-/* Mobile Dropdown Styles */
-.mobile-dropdown {
-    width: 100%;
-    display: block;
-}
-
 .mobile-dropdown-btn {
     width: 100%;
     justify-content: space-between;
     background: none;
     cursor: pointer;
-    display: flex !important;
-    align-items: center;
-}
-
-.mobile-dropdown-btn i:last-child {
-    transition: transform 0.2s ease;
-}
-
-.mobile-dropdown-btn.open i:last-child {
-    transform: rotate(180deg);
 }
 
 .mobile-dropdown-menu {
     display: none;
-    overflow: hidden;
-    transition: all 0.3s ease;
 }
 
 .mobile-dropdown-menu.show {
@@ -648,44 +773,13 @@
     font-weight: 500;
     font-size: 0.875rem;
     color: #4b5563;
-    transition: all 0.2s;
 }
 
 .dark .mobile-dropdown-item {
     color: #d1d5db;
 }
 
-.mobile-dropdown-item:hover {
-    background-color: #f3f4f6;
-}
-
-.dark .mobile-dropdown-item:hover {
-    background-color: #1f2937;
-}
-
-/* Header Section in Mobile Menu */
-.mobile-menu .border-b {
-    flex-shrink: 0;
-}
-
-/* Ensure proper z-index stacking */
-.mobile-menu {
-    z-index: 9999;
-}
-
-.mobile-menu.open + * {
-    pointer-events: none;
-}
-
-/* Body scroll lock class */
-body.menu-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-}
-
-/* Animation for mobile menu items */
+/* Animation */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -701,28 +795,200 @@ body.menu-open {
     animation: slideIn 0.3s ease forwards;
     opacity: 0;
 }
-
-.mobile-menu.open .mobile-nav-link:nth-child(1) { animation-delay: 0.05s; }
-.mobile-menu.open .mobile-nav-link:nth-child(2) { animation-delay: 0.1s; }
-.mobile-menu.open .mobile-nav-link:nth-child(3) { animation-delay: 0.15s; }
-.mobile-menu.open .mobile-nav-link:nth-child(4) { animation-delay: 0.2s; }
-.mobile-menu.open .mobile-nav-link:nth-child(5) { animation-delay: 0.25s; }
-
-/* Responsive fixes */
-@media (max-width: 768px) {
-    .mobile-menu {
-        display: block !important;
-    }
-}
-
-
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
     // ============================================
-    // MOBILE MENU TOGGLE - COMPLETELY FIXED
+    // SEARCH FUNCTIONALITY WITH DEBOUNCING
+    // ============================================
+    
+    const searchInput = document.getElementById('searchInput');
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    const searchResults = document.getElementById('searchResults');
+    const mobileSearchResults = document.getElementById('mobileSearchResults');
+    
+    let debounceTimer;
+    let currentSearchQuery = '';
+    
+    // Debounce function
+    function debounce(func, delay) {
+        return function(...args) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+    
+    // Function to perform search
+    async function performSearch(query, isMobile = false) {
+        if (!query || query.length < 2) {
+            if (isMobile && mobileSearchResults) {
+                mobileSearchResults.classList.add('hidden');
+                mobileSearchResults.innerHTML = '';
+            } else if (searchResults) {
+                searchResults.classList.add('hidden');
+                searchResults.innerHTML = '';
+            }
+            return;
+        }
+        
+        currentSearchQuery = query;
+        
+        const resultsContainer = isMobile ? mobileSearchResults : searchResults;
+        if (!resultsContainer) return;
+        
+        // Show loading state
+        resultsContainer.innerHTML = `
+            <div class="search-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Searching...</span>
+            </div>
+        `;
+        resultsContainer.classList.remove('hidden');
+        
+        try {
+            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            
+            if (data.results && data.results.length > 0) {
+                displaySearchResults(data.results, resultsContainer, isMobile);
+            } else {
+                resultsContainer.innerHTML = `
+                    <div class="search-empty">
+                        <i class="fas fa-search text-gray-400 mb-2 block text-2xl"></i>
+                        <p>No results found for "${escapeHtml(query)}"</p>
+                        <p class="text-xs mt-1">Try searching for courses, services, or pages</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            resultsContainer.innerHTML = `
+                <div class="search-empty">
+                    <i class="fas fa-exclamation-triangle text-red-400 mb-2 block text-2xl"></i>
+                    <p>Search failed. Please try again.</p>
+                </div>
+            `;
+        }
+    }
+    
+    // Function to display search results
+    function displaySearchResults(results, container, isMobile) {
+        const getColorClass = (color) => {
+            const colors = {
+                blue: 'text-blue-600',
+                cyan: 'text-cyan-600',
+                green: 'text-green-600',
+                purple: 'text-purple-600',
+                red: 'text-red-600',
+                indigo: 'text-indigo-600',
+                gray: 'text-gray-600'
+            };
+            return colors[color] || 'text-blue-600';
+        };
+        
+        const getBadgeClass = (type) => {
+            switch(type) {
+                case 'course': return 'badge-course';
+                case 'blog': return 'badge-blog';
+                case 'service': return 'badge-service';
+                default: return 'badge-page';
+            }
+        };
+        
+        const getBadgeText = (type) => {
+            switch(type) {
+                case 'course': return 'COURSE';
+                case 'blog': return 'BLOG';
+                case 'service': return 'SERVICE';
+                default: return 'PAGE';
+            }
+        };
+        
+        const html = results.map(result => `
+            <div class="search-result-item" onclick="window.location.href='${result.url}'">
+                ${result.image ? `
+                    <img src="${result.image}" alt="${escapeHtml(result.title)}" class="search-result-image">
+                ` : `
+                    <div class="search-result-icon bg-gray-100 dark:bg-gray-800 ${getColorClass(result.color)}">
+                        <i class="${result.icon}"></i>
+                    </div>
+                `}
+                <div class="search-result-content">
+                    <div class="search-result-title">
+                        ${escapeHtml(result.title)}
+                        <span class="search-result-badge ${getBadgeClass(result.type)}">${getBadgeText(result.type)}</span>
+                    </div>
+                    ${result.description ? `<div class="search-result-description">${escapeHtml(result.description.substring(0, 100))}${result.description.length > 100 ? '...' : ''}</div>` : ''}
+                    ${result.price ? `<div class="search-result-price">₹${result.price}</div>` : ''}
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = html;
+        container.classList.remove('hidden');
+    }
+    
+    // Helper function to escape HTML
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // Close search results when clicking outside
+    function closeSearchOnClickOutside(event, container, inputElement) {
+        if (container && !container.contains(event.target) && event.target !== inputElement) {
+            container.classList.add('hidden');
+        }
+    }
+    
+    // Desktop search handler with debouncing
+    if (searchInput && searchResults) {
+        const debouncedSearch = debounce((query) => performSearch(query, false), 300);
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim();
+            debouncedSearch(query);
+        });
+        
+        searchInput.addEventListener('focus', () => {
+            if (currentSearchQuery && currentSearchQuery.length >= 2 && searchResults.innerHTML && !searchResults.classList.contains('hidden')) {
+                // Keep visible if already has results
+            } else if (currentSearchQuery && currentSearchQuery.length >= 2) {
+                performSearch(currentSearchQuery, false);
+            }
+        });
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (searchResults && !searchResults.contains(e.target) && e.target !== searchInput) {
+                searchResults.classList.add('hidden');
+            }
+        });
+    }
+    
+    // Mobile search handler
+    if (mobileSearchInput && mobileSearchResults) {
+        const debouncedMobileSearch = debounce((query) => performSearch(query, true), 300);
+        
+        mobileSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim();
+            debouncedMobileSearch(query);
+        });
+        
+        // Close mobile search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileSearchResults && !mobileSearchResults.contains(e.target) && e.target !== mobileSearchInput) {
+                mobileSearchResults.classList.add('hidden');
+            }
+        });
+    }
+    
+    // ============================================
+    // MOBILE MENU TOGGLE
     // ============================================
     
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -730,84 +996,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeMobileMenu = document.getElementById('closeMobileMenu');
     
     if (mobileMenuBtn && mobileMenu) {
-        
-        // Open menu function
         function openMobileMenu() {
-            // Save current scroll position
             const scrollY = window.scrollY;
-            
-            // Add open class to menu
             mobileMenu.classList.add('open');
-            
-            // Lock body scroll
             document.body.style.position = 'fixed';
             document.body.style.top = `-${scrollY}px`;
             document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
-            
-            // Store scroll position for restoration
             document.body.dataset.scrollY = scrollY;
         }
         
-        // Close menu function
         function closeMobileMenuFunc() {
-            // Get stored scroll position
             const scrollY = document.body.dataset.scrollY;
-            
-            // Remove open class from menu
             mobileMenu.classList.remove('open');
-            
-            // Unlock body scroll
             document.body.style.position = '';
             document.body.style.top = '';
             document.body.style.width = '';
             document.body.style.overflow = '';
-            
-            // Restore scroll position
             if (scrollY) {
                 window.scrollTo(0, parseInt(scrollY));
             }
-            
-            // Clear stored scroll position
             delete document.body.dataset.scrollY;
         }
         
-        // Open menu on button click
-        mobileMenuBtn.addEventListener('click', function(e) {
+        mobileMenuBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             openMobileMenu();
         });
         
-        // Close menu on close button click
         if (closeMobileMenu) {
-            closeMobileMenu.addEventListener('click', function(e) {
+            closeMobileMenu.addEventListener('click', (e) => {
                 e.preventDefault();
                 closeMobileMenuFunc();
             });
         }
         
-        // Close menu when clicking on overlay (background)
-        mobileMenu.addEventListener('click', function(e) {
+        mobileMenu.addEventListener('click', (e) => {
             if (e.target === mobileMenu) {
                 closeMobileMenuFunc();
             }
         });
         
-        // Close menu on ESC key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
                 closeMobileMenuFunc();
             }
         });
-        
-        // Prevent menu from closing when clicking inside menu content
-        const menuContent = mobileMenu.querySelector('.flex-col');
-        if (menuContent) {
-            menuContent.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-        }
     }
     
     // ============================================
@@ -825,7 +1060,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const dropdownMenu = parent.querySelector('.mobile-dropdown-menu');
             const icon = this.querySelector('i:last-child');
             
-            // Close other dropdowns
             mobileDropdownBtns.forEach(otherBtn => {
                 if (otherBtn !== btn) {
                     const otherParent = otherBtn.closest('.mobile-dropdown');
@@ -833,21 +1067,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     const otherIcon = otherBtn.querySelector('i:last-child');
                     if (otherMenu) {
                         otherMenu.classList.remove('show');
-                        otherIcon.classList.remove('rotate-180');
-                        otherIcon.style.transform = 'rotate(0deg)';
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
                     }
                 }
             });
             
-            // Toggle current dropdown
             if (dropdownMenu) {
                 dropdownMenu.classList.toggle('show');
                 if (dropdownMenu.classList.contains('show')) {
-                    icon.style.transform = 'rotate(180deg)';
-                    icon.classList.add('rotate-180');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
                 } else {
-                    icon.style.transform = 'rotate(0deg)';
-                    icon.classList.remove('rotate-180');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
                 }
             }
         });
@@ -861,7 +1091,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const darkModeIcon = document.getElementById('darkModeIcon');
     
     if (darkModeToggle) {
-        // Check saved preference
         const savedMode = localStorage.getItem('darkMode');
         if (savedMode === 'true') {
             document.documentElement.classList.add('dark');
@@ -876,7 +1105,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 darkModeIcon.classList.add('fa-moon');
             }
         } else {
-            // Check system preference
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.documentElement.classList.add('dark');
                 if (darkModeIcon) {
@@ -886,7 +1114,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Toggle dark mode on button click
         darkModeToggle.addEventListener('click', function() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('darkMode', isDark);
@@ -901,7 +1128,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Optional: Send to server
             fetch('/toggle-darkmode', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -939,114 +1165,26 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
         if (href && href !== '#') {
-            // Exact match
-            if (href === currentPath) {
+            if (href === currentPath || (href === '/' && currentPath === '/')) {
                 link.classList.add('active');
-            }
-            // Home page special case
-            else if (href === '/' && currentPath === '/') {
-                link.classList.add('active');
-            }
-            // Remove active class from others
-            else {
+            } else {
                 link.classList.remove('active');
             }
         }
     });
-    
-    // ============================================
-    // SEARCH FUNCTIONALITY (Optional)
-    // ============================================
-    
-    const searchInput = document.getElementById('searchInput');
-    const mobileSearchInput = document.getElementById('mobileSearchInput');
-    
-    function handleSearch(query) {
-        if (query && query.length > 2) {
-            // Redirect to search page or filter results
-            console.log('Searching for:', query);
-            // window.location.href = `/search?q=${encodeURIComponent(query)}`;
-        }
-    }
-    
-    if (searchInput) {
-        let searchTimeout;
-        searchInput.addEventListener('input', function(e) {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                handleSearch(e.target.value);
-            }, 500);
-        });
-    }
-    
-    if (mobileSearchInput) {
-        let mobileSearchTimeout;
-        mobileSearchInput.addEventListener('input', function(e) {
-            clearTimeout(mobileSearchTimeout);
-            mobileSearchTimeout = setTimeout(() => {
-                handleSearch(e.target.value);
-            }, 500);
-        });
-    }
-    
-    // ============================================
-    // FIX FOR TOUCH DEVICES
-    // ============================================
-    
-    // Ensure dropdowns work on touch devices
-    const dropdownTriggers = document.querySelectorAll('.group');
-    dropdownTriggers.forEach(trigger => {
-        trigger.addEventListener('touchstart', function(e) {
-            // For touch devices, allow hover state to work
-            this.classList.add('touch-hover');
-        });
-        
-        trigger.addEventListener('touchend', function(e) {
-            setTimeout(() => {
-                this.classList.remove('touch-hover');
-            }, 300);
-        });
-    });
-    
-    // ============================================
-    // PREVENT BODY SCROLL WHEN MOBILE MENU IS OPEN
-    // ============================================
-    
-    // Add this to ensure no scrolling when menu is open
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.attributeName === 'class') {
-                if (mobileMenu && mobileMenu.classList.contains('open')) {
-                    document.body.classList.add('menu-open');
-                } else {
-                    document.body.classList.remove('menu-open');
-                }
-            }
-        });
-    });
-    
-    if (mobileMenu) {
-        observer.observe(mobileMenu, { attributes: true });
-    }
 });
 
-// ============================================
-// HANDLE WINDOW RESIZE
-// ============================================
-
+// Handle window resize
 window.addEventListener('resize', function() {
     const mobileMenu = document.getElementById('mobileMenu');
     const isDesktop = window.innerWidth >= 768;
     
-    // If resizing to desktop while menu is open, close it
     if (isDesktop && mobileMenu && mobileMenu.classList.contains('open')) {
-        // Close menu
         mobileMenu.classList.remove('open');
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
         document.body.style.overflow = '';
-        document.body.classList.remove('menu-open');
     }
 });
 </script>

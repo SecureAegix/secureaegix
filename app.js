@@ -26,6 +26,7 @@ const User = require("./models/user.js");
 const homeRouter = require("./routes/home.js");
 const userRouter = require("./routes/user.js");
 const resetRout = require("./routes/authRoutes.js");
+const searchRoutes = require("./routes/search");
 const user = require("./models/user.js");
 const adminRouter = require("./routes/admin.js");
 const othersRouter = require("./routes/others.js");
@@ -238,6 +239,7 @@ app.get(
 
 app.use("/", userRouter);
 app.use("/", homeRouter);
+app.use("/", searchRoutes);
 app.use("/", resetRout);
 app.use("/", othersRouter);
 app.use("/", sitemapRouter);

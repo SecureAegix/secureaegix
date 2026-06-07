@@ -248,17 +248,17 @@
     <div class="font-bold text-white mb-1"><%= popularCourse.title %> Certification Track</div>
     <div class="text-xs text-gray-400 mb-4">
       <%= popularCourse.lounchedDate ? new Date(popularCourse.lounchedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Next' %> batch · 
-      Limited to <%= popularCourse.students?.length ? 50 - popularCourse.students.length : 30 %> seats
+      Limited to <%= popularCourse.students?.length ? 10 - popularCourse.students.length : 30 %> seats
     </div>
     
     <!-- Dynamic Enrollment Progress for Popular Course -->
     <div class="mb-3">
       <div class="flex justify-between text-xs text-gray-400 mb-1">
         <span><%= popularCourse.title %></span>
-        <span class="text-red-400"><%= popularCourse.students?.length ? Math.round((popularCourse.students.length / 50) * 100) : 85 %>% filled</span>
+        <span class="text-red-400"><%= popularCourse.students?.length ? Math.round((popularCourse.students.length / 10) * 100) : 85 %>% filled</span>
       </div>
       <div class="progress-bar">
-        <div class="progress-fill" style="width: <%= popularCourse.students?.length ? (popularCourse.students.length / 50) * 100 : 85 %>%"></div>
+        <div class="progress-fill" style="width: <%= popularCourse.students?.length ? (popularCourse.students.length / 10) * 100 : 85 %>%"></div>
       </div>
     </div>
   
@@ -404,7 +404,7 @@
             
             <div class="p-6">
               <!-- Rating -->
-              <div class="flex items-center gap-1 mb-3">
+              <!-- <div class="flex items-center gap-1 mb-3">
                 <% for (let i = 1; i <= 5; i++) { %>
                   <% if (i <= (course.rating || 4.5)) { %>
                     <i class="fas fa-star text-yellow-400 text-xs"></i>
@@ -415,7 +415,7 @@
                   <% } %>
                 <% } %>
                 <span class="text-xs text-gray-500 ml-2"><%= course.rating || 4.8 %> (<%= course.reviewCount || 0 %> reviews)</span>
-              </div>
+              </div> -->
               
               <!-- Course Stats -->
               <div class="flex gap-4 mb-4 text-xs text-gray-500">
@@ -511,7 +511,7 @@
 <!-- SERVICES SECTION -->
 <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900" id="services">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-left mb-12">
+    <div class="text-center mb-12">
       <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase font-mono">Enterprise Services</span>
       <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
         Security Solutions <span class="text-gradient">For Your Organization</span>
@@ -524,6 +524,7 @@
     <div class="grid lg:grid-cols-2 gap-6">
       <!-- Large Service Card -->
       <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover-lift">
+        <a href="/services/penetration-testing" class="block no-underline text-inherit">
         <div class="text-xs text-gray-500 font-mono mb-8">01 / OFFENSIVE</div>
         <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center mb-6">
           <i class="fas fa-shield-virus text-red-600 text-2xl"></i>
@@ -536,12 +537,15 @@
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Web Apps</span>
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Mobile</span>
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">API Security</span>
+        </a>
         </div>
       </div>
       
       <!-- Right Column -->
       <div class="space-y-6">
         <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover-lift">
+          <a href="/services/vulnerability-assessment" class="block no-underline text-inherit">
+
           <div class="text-xs text-gray-500 font-mono mb-4">02 / ASSESSMENT</div>
           <div class="w-10 h-10 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-3">
             <i class="fas fa-search text-cyan-600"></i>
@@ -553,9 +557,11 @@
             <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Manual</span>
             <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Continuous</span>
           </div>
+          </a>
         </div>
         
         <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover-lift">
+          <a href="/services/incident-response" class="block no-underline text-inherit">
           <div class="text-xs text-gray-500 font-mono mb-4">03 / RESPONSE</div>
           <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-3">
             <i class="fas fa-bell text-purple-600"></i>
@@ -567,6 +573,7 @@
             <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Forensics</span>
             <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">Recovery</span>
           </div>
+          </a>
         </div>
       </div>
     </div>
@@ -611,6 +618,63 @@
       </div>
     </div>
   </div>
+</section>
+
+<!-- latest blogs -->
+<section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900" id="blogs">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase font-mono">Insights</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
+        Latest <span class="text-gradient">Blog Posts</span>
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
+        Stay updated with the latest trends, tips, and insights in cybersecurity
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <% if (latestBlogs && latestBlogs.length > 0) { %>
+        <% latestBlogs.forEach(blog => { %>
+          <a href="/blogs/<%= blog._id %>" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift transition-all flex flex-col">
+            <img src="<%= blog.image.url || '/images/blog-placeholder.jpg' %>" alt="<%= blog.title %>" class="w-full h-48 object-cover">
+            <div class="p-6 flex flex-col flex-grow">
+              <div class="text-xs text-gray-500 font-mono mb-2"><%= new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) %></div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                <%= blog.title.split(' ').slice(0, 10).join(' ') %>
+                <%= blog.title.split(' ').length > 10 ? '...' : '' %>
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-auto line-clamp-3">
+                <%= blog.shortdescription.split(' ').slice(0, 20).join(' ') %>
+                <%= blog.shortdescription.split(' ').length > 20 ? '...' : '' %>
+              </p>
+              <div class="mt-4 text-sm text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-800 hover:dark:text-blue-600">Read More →</div>
+            </div>
+          </a>
+        <% }) %>
+      <% } else { %>
+        <!-- Fallback Static Blogs -->
+        <a href="/blogs/1" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift transition-all flex flex-col">
+          <img src="/images/blog-placeholder.png" alt="Blog Title" class="w-full h-48 object-cover">
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="text-xs text-gray-500 font-mono mb-2">Jan 2025</div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">5 Essential Tools for OSCP Preparation</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-auto line-clamp-3">Discover the must-have tools that every OSCP candidate should master to succeed in the exam.</p>
+            <div class="mt-4 text-sm text-blue-600 dark:text-blue-400 font-semibold">Read More →</div>
+          </div>  
+          </a>
+          <!-- Add more static blogs as needed -->
+      <% } %>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="/blogs" class="inline-flex items-center px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all">
+        View All Blogs →
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </div>  
+
 </section>
 
 <!-- TESTIMONIALS SECTION -->

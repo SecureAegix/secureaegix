@@ -55,7 +55,8 @@
   <meta name="msapplication-TileColor" content="#1ecbe1" />
   <meta name="theme-color" content="#1bb9cd" />
 
-  
+  <link rel="canonical" href="<%= meta.canonical || requestUrl %>">
+
   <!-- custom css -->
   <link rel="stylesheet" href="/css/style.css" />
   <!-- Tailwind CSS -->
@@ -100,8 +101,6 @@
     navigator.serviceWorker.register("/service-worker.js");
   }
 </script>
-
-<script src="https://cdn.tailwindcss.com"></script>
 
 
 <!-- Google tag (gtag.js) -->
@@ -160,6 +159,21 @@
 
   <!-- App Script -->
   <script src="/js/script.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("img").forEach(img => {
+
+    if (!img.hasAttribute("loading")) {
+      img.setAttribute("loading", "lazy");
+    }
+
+    if (!img.hasAttribute("decoding")) {
+      img.setAttribute("decoding", "async");
+    }
+
+  });
+});
+</script>
 
 </body>
 </html>

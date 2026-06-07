@@ -40,6 +40,23 @@
                     </div>
                 </div>
 
+                <!-- prestudents -->
+                <div class="space-y-8">
+                    <div class="border-l-4 border-cyan-500 pl-4">
+                        <h2 class="text-xl font-bold text-white">Pre-Registered Students</h2>
+                        <p class="text-gray-400 text-sm">Manage students who have pre-registered for this course</p>
+                    </div>
+                    <label for="preStudents" class="block mb-3 font-semibold text-gray-200">
+                        Add Number of Pre-Registered Students
+                    </label>
+                    <input type="number" id="preStudents" name="preStudents" value="<%= course.preStudents || 0 %>" min="0"
+                        class="w-[180px] px-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
+                               placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 
+                               focus:ring-cyan-500/20 transition-all duration-300">
+                               
+                </div>
+
+
                 <!-- Basic Information Section -->
                 <div class="space-y-6">
                     <div class="border-l-4 border-cyan-500 pl-4">
@@ -109,7 +126,7 @@
                             </label>
                             <div class="relative">
                                 <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                                <input type="number" id="price" name="price" value="<%= course.price %>" required min="0" step="0.01"
+                                <input type="number" id="price" name="price" value="<%= course.price %>" min="0" step="0.01"
                                     class="w-full pl-10 pr-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
                                            placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 
                                            focus:ring-cyan-500/20 transition-all duration-300">
@@ -123,7 +140,7 @@
                             </label>
                             <div class="relative">
                                 <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                                <input type="number" id="actualPrice" name="actualPrice" value="<%= course.actualPrice %>" required min="0" step="0.01"
+                                <input type="number" id="actualPrice" name="actualPrice" value="<%= course.actualPrice %>" min="0" step="0.01"
                                     class="w-full pl-10 pr-5 py-3.5 rounded-xl bg-gray-800/70 border border-gray-700 text-white 
                                            placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 
                                            focus:ring-cyan-500/20 transition-all duration-300">

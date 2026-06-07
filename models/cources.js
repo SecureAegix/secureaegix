@@ -157,6 +157,12 @@ const courcesSchema = new Schema({
   includes: [{
     type: String,
   }],
+
+  //add pre student
+  preStudents: {
+    type: Number,
+    default: 0,
+  },
   
   // SEO fields
   metaTitle: String,

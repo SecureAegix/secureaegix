@@ -160,7 +160,7 @@
                                     <span class="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-bold rounded-full shadow-lg animate-pulse">
                                         ₹<%= course.actualPrice %>
                                 </span>
-                                <% } else { %>
+                                <% } else if (course.price > 0) { %>
                                     <!-- Single Price (No discount) -->
                                     <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-sm font-bold rounded-full">
                                         ₹<%= course.price %>
@@ -192,12 +192,12 @@
                             <div class="flex items-center justify-between mb-4 text-sm">
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-user-graduate text-gray-400"></i>
-                                    <span class="text-gray-600 dark:text-gray-400"><%= course.students?.length || 0 %> students</span>
+                                    <span class="text-gray-600 dark:text-gray-400"><%= ((course.preStudents || 0) + (course.students?.length || 0)) || 120 %> students</span>
                                 </div>
-                                <div class="flex items-center gap-1">
+                                <!-- <div class="flex items-center gap-1">
                                     <i class="fas fa-star text-yellow-400 text-xs"></i>
                                     <span class="text-gray-600 dark:text-gray-400"><%= course.rating || 4.5 %></span>
-                                </div>
+                                </div> -->
                                 <div class="flex items-center gap-1">
                                     <i class="far fa-clock text-gray-400"></i>
                                     <span class="text-gray-600 dark:text-gray-400"><%= course.duration || 8 %> days</span>
@@ -205,14 +205,14 @@
                             </div>
                             
                             <!-- Instructor -->
-                            <div class="flex items-center gap-2 pt-3 border-t border-gray-100 dark:border-gray-700">
+                            <!-- <div class="flex items-center gap-2 pt-3 border-t border-gray-100 dark:border-gray-700">
                                 <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
                                     <%= course.teacher?.name?.charAt(0).toUpperCase() || 'A' %>
                                 </div>
                                 <span class="text-sm text-gray-600 dark:text-gray-400">
                                     By <%= course.teacher?.name || 'SecureAaegix' %>
                                 </span>
-                            </div>
+                            </div> -->
                             
                             <!-- Admin Actions -->
                             <% if (currUser && currUser.role === 'admin') { %>

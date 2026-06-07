@@ -25,7 +25,7 @@ module.exports.homePage = async (req, res, next) => {
       isActive: true,
     }).populate("teacher");
 
-    const blogs = await Blog.find()
+    const latestBlogs = await Blog.find()
       .populate("author")
       .sort({ createdAt: -1 })
       .limit(6);
@@ -36,7 +36,7 @@ module.exports.homePage = async (req, res, next) => {
       totalCources,
       homepageCourses, // Pass to template
       popularCourse,
-      blogs,
+      latestBlogs,
     });
   } catch (error) {
     console.log(error);
@@ -621,15 +621,39 @@ module.exports.viewCourse = async (req, res) => {
     }
 
     // Get related courses (same category, excluding current course)
-    const relatedCourses = await Course.find({
-      courceType: course.courceType,
-      _id: { $ne: course._id },
-      isActive: true,
-    })
-      .limit(4)
-      .select("title image price shortDescription courceType")
-      .populate("teacher", "name")
-      .lean();
+    // First get newer courses
+const newerCourses = await Course.find({
+  courceType: course.courceType,
+  _id: { $ne: course._id },
+  isActive: true,
+  lounchedDate: { $gt: course.lounchedDate }
+})
+  .sort({ lounchedDate: 1 }) // nearest newer first
+  .limit(4)
+  .select("title image price shortDescription courceType")
+  .populate("teacher", "name")
+  .lean();
+
+let relatedCourses = [...newerCourses];
+
+// If less than 4, get older courses
+if (relatedCourses.length < 4) {
+  const remaining = 4 - relatedCourses.length;
+
+  const olderCourses = await Course.find({
+    courceType: course.courceType,
+    _id: { $ne: course._id },
+    isActive: true,
+    lounchedDate: { $lt: course.lounchedDate }
+  })
+    .sort({ lounchedDate: -1 }) // nearest older first
+    .limit(remaining)
+    .select("title image price shortDescription courceType")
+    .populate("teacher", "name")
+    .lean();
+
+  relatedCourses = [...relatedCourses, ...olderCourses];
+}
 
     // Check if current user is enrolled (if user is logged in)
     let isEnrolled = false;

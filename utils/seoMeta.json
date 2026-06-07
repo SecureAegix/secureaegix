@@ -23,29 +23,6 @@
     "keywords": "cybersecurity courses, OSCP certification training, OSWE web security, CRTO red team course, eJPT beginner pentesting, OSED exploit development, CRTP active directory, online security certifications, best cybersecurity courses india"
   },
 
-  "/courses/oscp": {
-    "title": "OSCP Certification Training | Offensive Security | SecureAegix",
-    "description": "Prepare for OSCP certification with our comprehensive training. 8-week program with 24/7 lab access, expert instructors, and 95% pass rate.",
-    "keywords": "OSCP training, Offensive Security Certified Professional, penetration testing certification, ethical hacking course, OSCP exam preparation, kali linux training"
-  },
-
-  "/courses/oswe": {
-    "title": "OSWE Certification | Web Security Expert Training | Secureaegix",
-    "description": "Master web application security with OSWE certification. Advanced white-box testing, source code analysis, and exploitation techniques.",
-    "keywords": "OSWE certification, web application security, offensive security web expert, white-box testing course, source code analysis training"
-  },
-
-  "/courses/crto": {
-    "title": "CRTO Certification | Red Team Operator Training | SecureAegix",
-    "description": "Become a certified red team operator. Master Cobalt Strike, adversary simulation, and advanced red teaming techniques.",
-    "keywords": "CRTO certification, red team operator training, Cobalt Strike course, adversary simulation, red teaming techniques, advanced penetration testing"
-  },
-
-  "/courses/ejpt": {
-    "title": "eJPT Certification | Junior Penetration Tester | SecureAegix",
-    "description": "Start your cybersecurity career with eJPT certification. Beginner-friendly course with hands-on labs and practical exam.",
-    "keywords": "eJPT certification, junior penetration tester, beginner cybersecurity course, ethical hacking fundamentals, entry level security training"
-  },
 
   "/services": {
     "title": "Cybersecurity Services | Penetration Testing & Red Teaming | SecureAegix",

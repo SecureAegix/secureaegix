@@ -47,16 +47,40 @@
       
       <!-- Courses Column -->
       <div>
-        <h3 class="text-white font-semibold mb-4">Courses</h3>
-        <ul class="space-y-2">
-          <% if (navbarCourses && navbarCourses.length > 0) { %>
-            <% navbarCourses.forEach(course => { %>
-            <li><a href="<%= course.url %>" class="text-gray-400 hover:text-blue-400 text-sm transition-colors"><%= course.name %></a></li>
-            <% }); %>
-          <% } %>
-          <li><a href="/courses" class="text-gray-400 hover:text-blue-400 text-sm transition-colors">All Courses →</a></li>
-        </ul>
-      </div>
+  <h3 class="text-white font-semibold mb-4">Courses</h3>
+
+  <ul class="space-y-2">
+    
+    <% if (navbarCourses && navbarCourses.length > 0) { %>
+
+      <% navbarCourses.forEach((course, index) => { %>
+
+        <!-- Mobile: Show All -->
+        <!-- md+: Show Only First 4 -->
+        <li class="<%= index >= 4 ? 'md:hidden lg:hidden' : '' %>">
+          <a
+            href="<%= course.url %>"
+            class="text-gray-400 hover:text-blue-400 text-sm transition-colors"
+          >
+            <%= course.name %>
+          </a>
+        </li>
+
+      <% }) %>
+
+    <% } %>
+
+    <li>
+      <a
+        href="/courses"
+        class="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+      >
+        View All Courses →
+      </a>
+    </li>
+
+  </ul>
+</div>
       
       <!-- Services Column -->
       <div>

@@ -1,459 +1,543 @@
 <% layout("/layouts/boilerplate") -%>
 
-<!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-800 dark:from-blue-900 dark:via-blue-900 dark:to-cyan-900 text-white overflow-hidden">
-    
+<!-- ===================== STYLES ===================== -->
+<style>
+    .text-gradient {
+        background: linear-gradient(135deg, #2563eb, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* Team flip card */
+    .team-card-wrapper { perspective: 1100px; }
+    .team-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-style: preserve-3d; }
+    .team-card-wrapper:hover .team-card-inner,
+    .team-card-wrapper:focus-within .team-card-inner { transform: rotateY(180deg); }
+    .team-card-front, .team-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1.25rem; overflow: hidden; }
+    .team-card-back { transform: rotateY(180deg); }
+
+    /* Marquee */
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* Cert badge */
+    .cert-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 9999px; }
+
+    /* Glow hover */
+    .glow-card:hover { box-shadow: 0 0 0 2px #3b82f6, 0 20px 50px rgba(37,99,235,0.12); }
+
+    /* FAQ */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+    .faq-body.open { max-height: 400px; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-icon.open { transform: rotate(45deg); }
+
+    /* Float */
+    @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .animate-float { animation: floatY 5s ease-in-out infinite; }
+
+    /* Section padding */
+    .section-pad { padding-top: 5rem; padding-bottom: 5rem; }
+    @media(max-width:640px){ .section-pad { padding-top: 3rem; padding-bottom: 3rem; } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal, .team-card-inner, .marquee-track, .animate-float { transition: none !important; animation: none !important; }
+    }
+</style>
+
+<!-- ===================== HERO ===================== -->
+<section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-800 dark:from-gray-950 dark:via-blue-950 dark:to-cyan-950 text-white overflow-hidden min-h-[480px] flex items-center">
     <div class="absolute inset-0 opacity-40 pointer-events-none">
         <canvas id="particleCanvas" class="block w-full h-full"></canvas>
     </div>
-    
-    <div class="relative max-w-7xl mb-20 mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-28 text-center">
-        <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm mb-6">
+    <div class="absolute top-[-80px] right-[-80px] w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-[-60px] left-[-60px] w-56 h-56 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center w-full">
+        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm mb-6 reveal">
             <span class="relative flex h-2 w-2 mr-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            <span class="text-sm">Who We Are</span>
+            <span class="text-sm font-medium tracking-wide">Who We Are</span>
         </div>
-        
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            About <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">SecureAegix</span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight reveal reveal-delay-1">
+            About <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">SecureAegix</span>
         </h1>
-        
-        <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">
+        <p class="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto mb-10 reveal reveal-delay-2">
             Empowering cybersecurity professionals worldwide with industry-leading training, certifications, and security solutions.
         </p>
+        <div class="flex flex-wrap justify-center gap-4 reveal reveal-delay-3">
+            <a href="/courses" class="inline-flex items-center gap-2 px-7 py-3 bg-white text-blue-700 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300">
+                Explore Courses <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="#team" class="inline-flex items-center gap-2 px-7 py-3 border-2 border-white/50 text-white rounded-xl font-semibold hover:bg-white/10 transition-all duration-300">
+                Meet the Team <i class="fas fa-users"></i>
+            </a>
+        </div>
     </div>
-    
-    <!-- Wave Bottom -->
-    
 </section>
 
-<!-- Our Story Section -->
-<section class="py-5 bg-white dark:bg-gray-900">
+
+
+<!-- ===================== OUR STORY ===================== -->
+<section class="section-pad bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Story</span>
+        <div class="grid md:grid-cols-2 gap-14 items-center">
+            <div class="space-y-6 reveal">
+                <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Our Story</span>
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
                     Leading the Way in <span class="text-gradient">Cybersecurity Education</span>
                 </h2>
-                <div class="space-y-4 text-gray-600 dark:text-gray-400">
-                    <p>
-                        Founded in 2026, SecureAegix emerged from a simple yet powerful vision: to make world-class cybersecurity education accessible to aspiring professionals worldwide.
-                    </p>
-                    <p>
-                        What started as a small community of security enthusiasts is now growing into a platform trusted by students across India. Our mission remains unchanged - to provide practical, hands-on training that prepares you for real-world challenges.
-                    </p>
-                    <p>
-                        We believe in learning by doing. That's why every course includes extensive lab exercises, real-world scenarios, and continuous assessment to ensure you're truly ready for certification exams and professional roles.
-                    </p>
+                <div class="space-y-4 text-gray-600 dark:text-gray-400 text-[15px] leading-relaxed">
+                    <p>Founded in 2026, SecureAegix emerged from a simple yet powerful vision: to make world-class cybersecurity education accessible to aspiring professionals across India.</p>
+                    <p>What started as a small community of security enthusiasts is now growing into a platform trusted by students nationwide. Our mission remains unchanged — provide practical, hands-on training for real-world challenges.</p>
+                    <p>We believe in learning by doing. Every course includes extensive lab exercises, real-world scenarios, and continuous assessment so you're truly ready for certification exams and professional roles.</p>
                 </div>
-                
-                <div class="flex items-center space-x-4 pt-4">
+                <div class="flex items-center gap-4 pt-2">
                     <div class="flex -space-x-2">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-sm font-bold border-2 border-white dark:border-gray-900">AK</div>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-600 to-blue-500 flex items-center justify-center text-white text-sm font-bold border-2 border-white dark:border-gray-900">GK</div>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center text-white text-sm font-bold border-2 border-white dark:border-gray-900">AK</div>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">AK</div>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">RK</div>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">JS</div>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">+</div>
                     </div>
                     <div>
-                        <div class="font-semibold text-gray-900 dark:text-white">Building a Community</div>
-                        <div class="text-sm text-gray-500">Join us on this journey</div>
+                        <div class="font-semibold text-gray-900 dark:text-white text-sm">Building a Community</div>
+                        <div class="text-xs text-gray-500">Join us on this journey</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur-2xl opacity-30"></div>
-                <div class="relative bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl">
-                    <img src="/images/about.png" alt="Our Team" class="w-full h-auto">
+            <div class="relative reveal reveal-delay-2">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-3xl blur-2xl opacity-20 scale-95"></div>
+                <div class="relative bg-gray-100 dark:bg-gray-800 rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="/images/about.png" alt="Our Team" class="w-full h-auto object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                        <p class="text-white text-sm font-medium">Securing India's Digital Future, One Professional at a Time</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Mission & Vision -->
-<section class="py-5 bg-gray-50 dark:bg-gray-800">
+<!-- ===================== MISSION & VISION ===================== -->
+<section class="section-pad bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-8">
-            <!-- Mission Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 group glow-card reveal">
                 <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <i class="fas fa-bullseye text-3xl text-blue-600 dark:text-blue-400"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Mission</h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    To democratize cybersecurity education by providing affordable, high-quality training that bridges the gap between theory and practice, preparing students for successful careers in information security.
-                </p>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">To democratize cybersecurity education by providing affordable, high-quality training that bridges the gap between theory and practice, preparing students for successful careers in information security.</p>
             </div>
-            
-            <!-- Vision Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 group glow-card reveal reveal-delay-2">
                 <div class="w-16 h-16 bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <i class="fas fa-eye text-3xl text-cyan-600 dark:text-cyan-400"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Vision</h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                    To become India's most trusted cybersecurity training platform, creating a growing community of skilled security professionals who protect the digital future.
-                </p>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">To become India's most trusted cybersecurity training platform, creating a growing community of skilled security professionals who protect the digital future.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Core Values -->
-<section class="py-5 bg-white dark:bg-gray-900">
+<!-- ===================== CORE VALUES ===================== -->
+<section class="section-pad bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Core Values</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                What Drives <span class="text-gradient">Us</span>
-            </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Our principles guide everything we do
-            </p>
+        <div class="text-center mb-12 reveal">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Core Values</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">What Drives <span class="text-gradient">Us</span></h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Our principles guide every decision we make</p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="text-center group">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="text-center group p-6 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all reveal">
                 <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 transition-all duration-300">
                     <i class="fas fa-graduation-cap text-3xl text-blue-600 group-hover:text-white transition-colors"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Excellence</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Striving for the highest quality in everything we do</p>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Excellence</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Highest quality in everything</p>
             </div>
-            
-            <div class="text-center group">
+            <div class="text-center group p-6 rounded-2xl hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-all reveal reveal-delay-1">
                 <div class="w-20 h-20 bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cyan-600 transition-all duration-300">
                     <i class="fas fa-handshake text-3xl text-cyan-600 group-hover:text-white transition-colors"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Integrity</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Honest, transparent, and ethical practices</p>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Integrity</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Honest and transparent</p>
             </div>
-            
-            <div class="text-center group">
+            <div class="text-center group p-6 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all reveal reveal-delay-2">
                 <div class="w-20 h-20 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 transition-all duration-300">
                     <i class="fas fa-lightbulb text-3xl text-purple-600 group-hover:text-white transition-colors"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Innovation</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Continuously evolving with industry trends</p>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Innovation</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Evolving with industry trends</p>
             </div>
-            
-            <div class="text-center group">
+            <div class="text-center group p-6 rounded-2xl hover:bg-green-50 dark:hover:bg-green-900/20 transition-all reveal reveal-delay-3">
                 <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 transition-all duration-300">
                     <i class="fas fa-users text-3xl text-green-600 group-hover:text-white transition-colors"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Community</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Building a supportive learning ecosystem</p>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Student First</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Every decision for student success</p>
             </div>
         </div>
     </div>
 </section>
 
-
-<!-- Leadership Team Section - Premium Director Showcase -->
-<!-- Leadership Team Section - Horizontal Layout -->
-<section class="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden">
-    
+<!-- ===================== LEADERSHIP TEAM ===================== -->
+<section id="team" class="section-pad bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full inline-block">Leadership</span>
-            <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mt-4 mb-4">
-                Meet Our <span class="text-gradient">Leadership Team</span>
-            </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Passionate leaders driving cybersecurity excellence and innovation
-            </p>
+        <div class="text-center mb-14 reveal">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full inline-block">Leadership</span>
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mt-4 mb-3">Meet Our <span class="text-gradient">Team</span></h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Hover over a card to learn more about each member</p>
         </div>
-        
-        <!-- Two Column Horizontal Layout -->
-        <div class="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            
-            <!-- CEO Card - Horizontal -->
-            <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
-                <div class="flex flex-col sm:flex-row">
-                    <!-- Image Section - 40% width -->
-                    <div class="sm:w-2/5 relative overflow-hidden bg-gradient-to-br from-pink-500 to-rose-500">
-                        <div class="h-64 sm:h-full">
-                            <img src="images/ceo.jpg" alt="Aditi Kumari" class="w-full h-full object-cover object-top">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent sm:bg-gradient-to-r"></div>
-                        <div class="absolute bottom-4 left-4 sm:bottom-auto sm:top-4 sm:left-4">
-                            <div class="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1">
-                                <i class="fas fa-crown text-yellow-500 text-xs"></i>
-                                <span class="text-xs font-semibold text-gray-800">CEO</span>
+
+        <!-- Team Cards: all three use the same centered flip-card design -->
+        <div class="flex flex-wrap justify-center gap-8">
+            <!-- CEO Card -->
+            <div class="team-card-wrapper w-full max-w-sm reveal" tabindex="0" style="height: 380px;">
+                <div class="team-card-inner">
+                    <!-- Front -->
+                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+                        <div class="relative mb-4">
+                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-pink-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                                <img src="/images/team-members/ceo.png" alt="Aditi Kumari" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                <div class="inline-flex items-center gap-1 bg-pink-500 rounded-full px-2.5 py-0.5">
+                                    <i class="fas fa-crown text-white text-[10px]"></i>
+                                    <span class="text-[10px] font-semibold text-white">CEO & Founder</span>
+                                </div>
                             </div>
                         </div>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-3">Aditi Kumari</h3>
+                        <p class="text-pink-600 dark:text-pink-400 text-sm mb-3">Founder & CEO</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                            <span class="cert-badge bg-pink-100 dark:bg-pink-900/30 text-pink-700">Visionary Leader</span>
+                            <span class="cert-badge bg-rose-100 dark:bg-rose-900/30 text-rose-700">Women in Tech</span>
+                        </div>
+                        <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
                     </div>
-                    
-                    <!-- Content Section - 60% width -->
-                    <div class="sm:w-3/5 p-6">
-                        <div class="mb-2">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Aditi Kumari</h3>
-                            <p class="text-pink-600 dark:text-pink-400 text-sm">Founder & CEO</p>
+                    <!-- Back -->
+                    <div class="team-card-back bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-crown text-pink-200 text-2xl"></i>
                         </div>
-                        
-                        <div class="mb-3">
-                            <p class="text-gray-600 dark:text-gray-400 text-sm italic">
-                                "Empowering minds, securing futures — cybersecurity for everyone, everywhere."
-                            </p>
-                        </div>
-                        
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-2 py-0.5 bg-pink-100 dark:bg-pink-900/30 text-pink-700 text-xs rounded-full">Visionary Leader</span>
-                            <span class="px-2 py-0.5 bg-rose-100 dark:bg-rose-900/30 text-rose-700 text-xs rounded-full">Women in Tech</span>
-                        </div>
-                        
-                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            Passionate entrepreneur dedicated to making cybersecurity education accessible to all aspiring professionals.
-                        </p>
-                        
-                        <a href="/contact" class="inline-flex items-center gap-2 mt-4 text-pink-600 hover:gap-3 transition-all text-sm">
-                            Connect <i class="fas fa-arrow-right text-xs"></i>
+                        <h3 class="text-xl font-bold mb-1">Aditi Kumari</h3>
+                        <p class="text-pink-200 text-sm mb-3">Founder & CEO</p>
+                        <p class="text-white/90 text-sm leading-relaxed mb-4">Passionate entrepreneur making cybersecurity education accessible to all. Leads SecureAegix's vision and strategy with a community-first approach.</p>
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-pink-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                            Connect <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Director Card - Horizontal -->
-            <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
-                <div class="flex flex-col sm:flex-row">
-                    <!-- Image Section - 40% width -->
-                    <div class="sm:w-2/5 relative overflow-hidden bg-gradient-to-br from-blue-600 to-cyan-600">
-                        <div class="h-64 sm:h-full">
-                            <img src="images/Mr_Rahul_Kumar.jpeg" alt="Rahul Kumar" class="w-full h-full object-cover object-top">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent sm:bg-gradient-to-r"></div>
-                        <div class="absolute bottom-4 left-4 sm:bottom-auto sm:top-4 sm:left-4">
-                            <div class="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1">
-                                <i class="fas fa-user-shield text-blue-600 text-xs"></i>
-                                <span class="text-xs font-semibold text-gray-800">Director</span>
+
+            <!-- Director Card -->
+            <div class="team-card-wrapper w-full max-w-sm reveal reveal-delay-1" tabindex="0" style="height: 380px;">
+                <div class="team-card-inner">
+                    <!-- Front -->
+                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+                        <div class="relative mb-4">
+                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-cyan-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                                <img src="/images/team-members/director.png" alt="Rahul Kumar" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                <div class="inline-flex items-center gap-1 bg-cyan-500 rounded-full px-2.5 py-0.5">
+                                    <i class="fas fa-user-shield text-white text-[10px]"></i>
+                                    <span class="text-[10px] font-semibold text-white">Director</span>
+                                </div>
                             </div>
                         </div>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-3">Rahul Kumar</h3>
+                        <p class="text-cyan-600 dark:text-cyan-400 text-sm mb-3">Director of Training</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                            <span class="cert-badge bg-red-100 dark:bg-red-900/30 text-red-700">OSCP</span>
+                            <span class="cert-badge bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700">CRTO</span>
+                            <span class="cert-badge bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700">CRTP</span>
+                        </div>
+                        <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
                     </div>
-                    
-                    <!-- Content Section - 60% width -->
-                    <div class="sm:w-3/5 p-6">
-                        <div class="mb-2">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Rahul Kumar</h3>
-                            <p class="text-cyan-600 dark:text-cyan-400 text-sm">Director of Training</p>
+                    <!-- Back -->
+                    <div class="team-card-back bg-gradient-to-br from-cyan-700 to-blue-700 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-user-shield text-cyan-200 text-2xl"></i>
                         </div>
-                        
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded-full">OSCP</span>
-                            <span class="px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs rounded-full">CRTO</span>
-                            <span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full">CRTP</span>
+                        <h3 class="text-xl font-bold mb-1">Rahul Kumar</h3>
+                        <p class="text-cyan-200 text-sm mb-3">Director of Training</p>
+                        <p class="text-white/90 text-sm leading-relaxed mb-3">8+ years in offensive security, designing curriculum that bridges real-world attack techniques with exam readiness for 500+ students.</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-5">
+                            <span class="cert-badge bg-white/20 text-white">OSCP</span>
+                            <span class="cert-badge bg-white/20 text-white">CRTO</span>
+                            <span class="cert-badge bg-white/20 text-white">CRTP</span>
                         </div>
-                        
-                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                            8+ years of red teaming experience, mentoring 500+ cybersecurity professionals across India.
-                        </p>
-                        
-                        <a href="/contact" class="inline-flex items-center gap-2 mt-4 text-cyan-600 hover:gap-3 transition-all text-sm">
-                            Connect <i class="fas fa-arrow-right text-xs"></i>
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-cyan-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                            Connect <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Jeetu Singh (Security Expert) Card -->
+            <div class="team-card-wrapper w-full max-w-sm reveal reveal-delay-2" tabindex="0" style="height: 380px;">
+                <div class="team-card-inner">
+                    <!-- Front -->
+                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+                        <div class="relative mb-4">
+                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-emerald-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                                <img src="/images/team-members/jeetu-team-member2.png" alt="Shailendra Pratap Singh" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                <div class="inline-flex items-center gap-1 bg-emerald-500 rounded-full px-2.5 py-0.5">
+                                    <i class="fas fa-shield-halved text-white text-[10px]"></i>
+                                    <span class="text-[10px] font-semibold text-white">Security Expert</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-3">Shailendra Pratap Singh</h3>
+                        <p class="text-emerald-600 dark:text-emerald-400 text-sm mb-3">Team Member</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                            <span class="cert-badge bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700">CPTS</span>
+                            <span class="cert-badge bg-teal-100 dark:bg-teal-900/30 text-teal-700">CPENT</span>
+                            <span class="cert-badge bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700">CEH</span>
+                        </div>
+                        <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
+                    </div>
+                    <!-- Back -->
+                    <div class="team-card-back bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-shield-halved text-emerald-200 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Shailendra Pratap Singh</h3>
+                        <p class="text-emerald-200 text-sm mb-3">Security Expert & Team Member</p>
+                        <p class="text-white/90 text-sm leading-relaxed mb-4">A certified penetration testing specialist holding CPTS, CPENT, and CEH credentials — bringing hands-on offensive security expertise to the SecureAegix team.</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-5">
+                            <span class="cert-badge bg-white/20 text-white">CPTS</span>
+                            <span class="cert-badge bg-white/20 text-white">CPENT</span>
+                            <span class="cert-badge bg-white/20 text-white">CEH</span>
+                        </div>
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-emerald-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                            Connect <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <!-- Join Message -->
-        <div class="text-center mt-12">
+
+        <div class="text-center mt-12 reveal">
             <div class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-full border border-blue-200 dark:border-blue-800">
                 <i class="fas fa-hand-peace text-blue-600"></i>
                 <span class="text-sm text-gray-700 dark:text-gray-300">Together, we're building the future of cybersecurity education</span>
             </div>
         </div>
-        
     </div>
 </section>
 
-<!-- Additional Styles -->
-<style>
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-    }
-    .animate-float {
-        animation: float 6s ease-in-out infinite;
-    }
-    
-    /* Custom shadow on hover */
-    .group:hover .shadow-3xl {
-        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Smooth gradient border animation */
-    .group .absolute {
-        transition: opacity 0.5s ease;
-    }
-    
-    /* Image zoom effect */
-    .group img {
-        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-</style>
-
-<!-- Our Team Culture Section -->
-<section class="py-5 bg-white dark:bg-gray-900">
+<!-- ===================== MILESTONES ===================== -->
+<section class="section-pad bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Culture</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                What Makes Our <span class="text-gradient">Team Special</span>
-            </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                We believe in creating an environment where innovation thrives
-            </p>
+        <div class="text-center mb-12 reveal">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Our Journey</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">Our <span class="text-gradient">Milestones</span></h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">As a growing startup, proud of what we've achieved so far</p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center group">
-                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 transform group-hover:rotate-12 transition-all duration-300 shadow-lg">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-users text-blue-600 group-hover:text-white text-lg transition-all"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Growing Student Community</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Building a community of passionate cybersecurity learners across India</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal reveal-delay-1">
+                <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-600 transition-all">
+                    <i class="fas fa-certificate text-cyan-600 group-hover:text-white text-lg transition-all"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Industry Certifications</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Offering industry-recognized certification programs from beginner to expert level</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal reveal-delay-2">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600 transition-all">
+                    <i class="fas fa-trophy text-purple-600 group-hover:text-white text-lg transition-all"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Quality Training</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Committed to providing high-quality, hands-on cybersecurity training</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal reveal-delay-3">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-green-600 transition-all">
+                    <i class="fas fa-globe text-green-600 group-hover:text-white text-lg transition-all"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Pan India Presence</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Reaching cybersecurity enthusiasts across all 28 states with online training</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== WHY CHOOSE US ===================== -->
+<section class="section-pad bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Why Choose Us</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">Why <span class="text-gradient">SecureAegix</span></h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">What makes us different from other training platforms</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="text-center p-7 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-lg transition-all group reveal">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-chalkboard-user text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">Expert Instructors</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Learn from certified professionals with real red-team experience</p>
+            </div>
+            <div class="text-center p-7 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-cyan-200 dark:hover:border-cyan-800 hover:shadow-lg transition-all group reveal reveal-delay-1">
+                <div class="w-16 h-16 bg-cyan-100 dark:bg-cyan-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-flask text-2xl text-cyan-600"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">Hands-on Labs</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Practice in real-world virtual environments designed to challenge you</p>
+            </div>
+            <div class="text-center p-7 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-green-200 dark:hover:border-green-800 hover:shadow-lg transition-all group reveal reveal-delay-2">
+                <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-headset text-2xl text-green-600"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">Student Support</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Dedicated 1:1 support so no question goes unanswered</p>
+            </div>
+            <div class="text-center p-7 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-purple-200 dark:hover:border-purple-800 hover:shadow-lg transition-all group reveal">
+                <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-indian-rupee-sign text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">Affordable Pricing</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">World-class cybersecurity education at India-friendly prices</p>
+            </div>
+            <div class="text-center p-7 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-rose-200 dark:hover:border-rose-800 hover:shadow-lg transition-all group reveal reveal-delay-1">
+                <div class="w-16 h-16 bg-rose-100 dark:bg-rose-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-certificate text-2xl text-rose-600"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">Recognized Certs</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Globally recognized certifications that open doors worldwide</p>
+            </div>
+            <div class="text-center p-7 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-orange-200 dark:hover:border-orange-800 hover:shadow-lg transition-all group reveal reveal-delay-2">
+                <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-rocket text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">Career Placement</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Job-readiness sessions and placement support for all students</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== TEAM CULTURE ===================== -->
+<section class="section-pad bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Our Culture</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">What Makes Our <span class="text-gradient">Team Special</span></h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">We believe in creating an environment where innovation thrives</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <div class="text-center group reveal">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                     <i class="fas fa-heart text-3xl text-white"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Passion for Security</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Driven by a genuine passion for protecting digital assets</p>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Driven by a genuine passion for protecting digital assets</p>
             </div>
-            
-            <div class="text-center group">
-                <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 transform group-hover:rotate-12 transition-all duration-300 shadow-lg">
+            <div class="text-center group reveal reveal-delay-2">
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                     <i class="fas fa-lightbulb text-3xl text-white"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Continuous Learning</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Always staying ahead of emerging threats and technologies</p>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Always staying ahead of emerging threats and technologies</p>
             </div>
-            
-            <div class="text-center group">
-                <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 transform group-hover:rotate-12 transition-all duration-300 shadow-lg">
+            <div class="text-center group reveal reveal-delay-3">
+                <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-all duration-300 shadow-lg">
                     <i class="fas fa-handshake text-3xl text-white"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Student First</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Every decision is made with our students' success in mind</p>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Collaboration First</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Stronger together — teamwork is how we deliver excellence</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Achievements Section - Realistic Startup Stats -->
-<section class="py-5 bg-gray-50 dark:bg-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Our Journey</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                Our <span class="text-gradient">Milestones</span>
-            </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                As a growing startup, we're proud of what we've achieved so far
-            </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="flex items-start space-x-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group">
-                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-all">
-                    <i class="fas fa-users text-blue-600 group-hover:text-white text-xl transition-all"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Growing Student Community</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Building a community of passionate cybersecurity learners across India</p>
-                </div>
-            </div>
-            
-            <div class="flex items-start space-x-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group">
-                <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-600 transition-all">
-                    <i class="fas fa-certificate text-cyan-600 group-hover:text-white text-xl transition-all"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Industry Certifications</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Offering industry-recognized certification programs from beginner to expert level</p>
-                </div>
-            </div>
-            
-            <div class="flex items-start space-x-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group">
-                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600 transition-all">
-                    <i class="fas fa-trophy text-purple-600 group-hover:text-white text-xl transition-all"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Quality Training</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Committed to providing high-quality, hands-on cybersecurity training</p>
-                </div>
-            </div>
-            
-            <div class="flex items-start space-x-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group">
-                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-green-600 transition-all">
-                    <i class="fas fa-globe text-green-600 group-hover:text-white text-xl transition-all"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Pan India Presence</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Reaching cybersecurity enthusiasts across India with online training</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Why Choose Us Section -->
-<section class="py-5 bg-white dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase">Why Choose Us</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                Why <span class="text-gradient">SecureAegix</span>
-            </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                What makes us different from other training platforms
-            </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center p-6">
-                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-chalkboard-user text-2xl text-blue-600"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Expert Instructors</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Learn from industry professionals with real-world experience</p>
-            </div>
-            <div class="text-center p-6">
-                <div class="w-16 h-16 bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-flask text-2xl text-cyan-600"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Hands-on Labs</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Practice in real-world virtual environments</p>
-            </div>
-            <div class="text-center p-6">
-                <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-headset text-2xl text-green-600"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Student Support</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">Dedicated support for all your learning needs</p>
-            </div>
-        </div>
+<!-- ===================== CTA ===================== -->
+<section class="py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-[-60px] right-[-60px] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-40px] left-[-40px] w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
     </div>
-</section>
-
-<!-- CTA Section -->
-<section class="py-5 bg-gradient-to-r from-blue-600 to-cyan-600">
-    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Start Your Journey?
-        </h2>
-        <p class="text-lg text-white/90 mb-8">
-            Join our growing community of cybersecurity professionals
-        </p>
+    <div class="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 reveal">
+        <h2 class="text-3xl   text-white mb-4"><b>Ready to Start Your Journey?</b></h2>
+        <p class="text-lg text-white/90 mb-10">Join our growing community of cybersecurity professionals across India</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/courses" class="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-                Explore Courses
-                <i class="fas fa-arrow-right ml-2"></i>
+            <a href="/courses" class="inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-white text-blue-700 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                Explore Courses <i class="fas fa-arrow-right"></i>
             </a>
-            <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all duration-300">
-                Contact Us
-                <i class="fas fa-envelope ml-2"></i>
+            <a href="/contact" class="inline-flex items-center justify-center gap-2 px-9 py-3.5 border-2 border-white text-white rounded-xl font-bold hover:bg-white/10 transition-all duration-300">
+                Contact Us <i class="fas fa-envelope"></i>
             </a>
         </div>
     </div>
 </section>
 
-<!-- Particle Animation Script -->
+<!-- ===================== SCRIPTS ===================== -->
+<script>
+
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if(e.isIntersecting) {
+            const el = e.target;
+            const target = parseInt(el.dataset.target);
+            const suffix = el.dataset.suffix || '';
+            let current = 0;
+            const step = Math.ceil(target/60);
+            const timer = setInterval(() => {
+                current = Math.min(current+step, target);
+                el.textContent = current + suffix;
+                if(current>=target) clearInterval(timer);
+            }, 25);
+            counterObserver.unobserve(el);
+        }
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+
+// FAQ accordion
+function toggleFaq(btn) {
+    const body = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.faq-body.open').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.faq-icon.open').forEach(i => i.classList.remove('open'));
+    if(!isOpen){ body.classList.add('open'); icon.classList.add('open'); }
+}
+</script>

@@ -211,7 +211,7 @@
         <!-- Stats -->
         <div class="grid grid-cols-3 gap-6 fade-up delay-4">
           <div>
-  <div class="text-3xl font-bold text-white counter" data-target="<%= totalUsers*20 %>">0</div>
+  <div class="text-3xl font-bold text-white counter" data-target="<%= 250 + totalUsers %>">0</div>
   <div class="flex text-sm sm:text-[0.7rem] text-gray-400 whitespace-nowrap">Students Trained</div>
 </div>
 
@@ -433,7 +433,7 @@
               
               <!-- Course Stats -->
               <div class="flex gap-4 mb-4 text-xs text-gray-500">
-                <span><i class="far fa-clock mr-1"></i> <%= course.duration || 6 %> weeks</span>
+                <!-- <span><i class="far fa-clock mr-1"></i> <%= course.duration || 6 %> weeks</span> -->
                 <span><i class="fas fa-flask mr-1"></i> <%= course.courceType === 'CYBERSECURITY' ? '24/7 labs' : 'Hands-on projects' %></span>
                 <span><i class="fas fa-signal mr-1"></i> 
                   <%= course.courseLevel === 'beginner' ? 'Beginner' : 

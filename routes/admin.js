@@ -68,5 +68,12 @@ router.delete(
   adminController.deleteSubscriber,
 );
 
+// ==================== DIPLOMA MANAGEMENT ====================
+router.get("/diploma", isLoggedIn, isAdmin, adminController.diplomaList);
+router.get("/diploma/export", isLoggedIn, isAdmin, adminController.exportCSV);
+router.get("/diploma/:id", isLoggedIn, isAdmin, adminController.diplomaView);
+router.post("/diploma/:id/status", isLoggedIn, isAdmin, adminController.updateStatus);
+router.delete("/diploma/:id", isLoggedIn, isAdmin, adminController.deleteApplication);
+
 
 module.exports = router;

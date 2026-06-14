@@ -4,6 +4,7 @@ const Contact = require("../models/contact");
 const Course = require("../models/cources");
 const Subscriber = require("../models/subscriber");
 const cources = require("../models/cources");
+const Diploma = require("../models/diploma");
 const Certificate = require("../models/certification.js");
 
 module.exports.adminDashboard = async (req, res) => {
@@ -452,4 +453,165 @@ module.exports.userDetails = async (req, res) => {
     req.flash("error", "Failed to load user details");
     res.redirect("/admin/users");
   }
+};
+
+
+/**
+ * List All Diploma Applications
+ * Route: GET /admin/diploma
+ */
+module.exports.diplomaList = async (req, res) => {
+    try {
+        const { status, search, page = 1 } = req.query;
+        const limit = 20;
+        const skip = (page - 1) * limit;
+        
+        let filter = {};
+        if (status && status !== 'all') filter.status = status;
+        if (search) {
+            filter.$or = [
+                { fullName: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } },
+                { phone: { $regex: search, $options: 'i' } }
+            ];
+        }
+        
+        const [applications, total] = await Promise.all([
+            Diploma.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+            Diploma.countDocuments(filter)
+        ]);
+        
+        const totalPages = Math.ceil(total / limit);
+        
+        res.render("admin/diploma/index", {
+            title: "Diploma Applications",
+            pageTitle: "Diploma Applications",
+            currentPage: "diploma",
+            layout: "layouts/admin",
+            applications,
+            currentStatus: status || 'all',
+            searchQuery: search || '',
+            currentPageNum: parseInt(page),
+            totalPages,
+            total
+        });
+    } catch (error) {
+        console.error("Diploma list error:", error);
+        req.flash("error", "Failed to load applications");
+        res.redirect("/admin/dashboard");
+    }
+};
+
+/**
+ * View Single Diploma Application
+ * Route: GET /admin/diploma/:id
+ */
+module.exports.diplomaView = async (req, res) => {
+    try {
+        const application = await Diploma.findById(req.params.id).lean();
+        if (!application) {
+            req.flash("error", "Application not found");
+            return res.redirect("/admin/diploma");
+        }
+        
+        res.render("admin/diploma/view", {
+            title: "View Application",
+            pageTitle: `Application: ${application.fullName}`,
+            currentPage: "diploma",
+            layout: "layouts/admin",
+            application
+        });
+    } catch (error) {
+        console.error("Diploma view error:", error);
+        req.flash("error", "Failed to load application");
+        res.redirect("/admin/diploma");
+    }
+};
+
+/**
+ * Update Application Status (via POST form)
+ * Route: POST /admin/diploma/:id/status
+ */
+module.exports.updateStatus = async (req, res) => {
+    try {
+        const { status, adminNotes } = req.body;
+        const application = await Diploma.findById(req.params.id);
+        
+        if (!application) {
+            req.flash("error", "Application not found");
+            return res.redirect("/admin/diploma");
+        }
+        
+        await application.updateStatus(status, req.user.name);
+        
+        if (adminNotes) {
+            application.adminNotes = adminNotes;
+            await application.save();
+        }
+        
+        req.flash("success", `Application status updated to ${status}`);
+        res.redirect(`/admin/diploma/${req.params.id}`);
+    } catch (error) {
+        console.error("Update status error:", error);
+        req.flash("error", "Failed to update status");
+        res.redirect(`/admin/diploma/${req.params.id}`);
+    }
+};
+
+/**
+ * Delete Application
+ * Route: DELETE /admin/diploma/:id
+ */
+module.exports.deleteApplication = async (req, res) => {
+    try {
+        const application = await Diploma.findByIdAndDelete(req.params.id);
+        if (!application) {
+            return res.status(404).json({ success: false, message: "Application not found" });
+        }
+        res.json({ success: true, message: "Application deleted successfully" });
+    } catch (error) {
+        console.error("Delete error:", error);
+        res.status(500).json({ success: false, message: "Failed to delete application" });
+    }
+};
+
+/**
+ * Export Applications to CSV
+ * Route: GET /admin/diploma/export
+ */
+module.exports.exportCSV = async (req, res) => {
+    try {
+        const { status } = req.query;
+        let filter = {};
+        if (status && status !== 'all') filter.status = status;
+        
+        const applications = await Diploma.find(filter).sort({ createdAt: -1 }).lean();
+        
+        // CSV Header
+        const headers = ['Full Name', 'Email', 'Phone', 'City', 'Qualification', 'Preferred Mode', 'Preferred Batch', 'Status', 'Applied Date', 'Admin Notes'];
+        
+        // CSV Rows
+        const rows = applications.map(app => [
+            app.fullName,
+            app.email,
+            app.phone,
+            app.city,
+            app.qualification,
+            app.preferredMode,
+            app.preferredBatch,
+            app.status,
+            new Date(app.createdAt).toLocaleDateString(),
+            app.adminNotes || ''
+        ]);
+        
+        const csvContent = [headers, ...rows].map(row => row.join(',')).join('\n');
+        
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename=diploma-applications-${new Date().toISOString().split('T')[0]}.csv`);
+        res.send(csvContent);
+    } catch (error) {
+        console.error("Export error:", error);
+        req.flash("error", "Failed to export data");
+        res.redirect("/admin/diploma");
+    }
 };

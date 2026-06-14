@@ -1,0 +1,140 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="space-y-6">
+    
+    <!-- Header -->
+    <div class="flex flex-wrap justify-between items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Application Details</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">View and manage enrollment application</p>
+        </div>
+        <div class="flex gap-3">
+            <a href="/admin/diploma" class="px-4 py-2 bg-gray-500 text-white rounded-lg text-sm hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i> Back to List
+            </a>
+        </div>
+    </div>
+    
+    <div class="grid lg:grid-cols-3 gap-6">
+        
+        <!-- Main Info -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Personal Information -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-semibold text-gray-800 dark:text-white"><i class="fas fa-user mr-2 text-blue-600"></i> Personal Information</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div><label class="text-xs text-gray-500">Full Name</label><p class="font-medium"><%= application.fullName %></p></div>
+                        <div><label class="text-xs text-gray-500">Email Address</label><p class="font-medium"><%= application.email %></p></div>
+                        <div><label class="text-xs text-gray-500">Phone Number</label><p class="font-medium"><%= application.phone %></p></div>
+                        <div><label class="text-xs text-gray-500">City</label><p class="font-medium"><%= application.city %></p></div>
+                        <div><label class="text-xs text-gray-500">Qualification</label><p class="font-medium"><%= application.qualification %></p></div>
+                        <div><label class="text-xs text-gray-500">Applied On</label><p class="font-medium"><%= new Date(application.createdAt).toLocaleString() %></p></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Program Preferences -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-semibold text-gray-800 dark:text-white"><i class="fas fa-graduation-cap mr-2 text-cyan-600"></i> Program Preferences</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div><label class="text-xs text-gray-500">Program</label><p class="font-medium"><%= application.program %></p></div>
+                        <div><label class="text-xs text-gray-500">Preferred Mode</label><p class="font-medium capitalize"><%= application.preferredMode %></p></div>
+                        <div><label class="text-xs text-gray-500">Preferred Batch</label><p class="font-medium capitalize"><%= application.preferredBatch %></p></div>
+                        <div><label class="text-xs text-gray-500">Status</label><p><span class="px-2 py-1 text-xs rounded-full status-<%= application.status %>"><%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %></span></p></div>
+                    </div>
+                    <% if (application.message) { %>
+                        <div class="mt-4"><label class="text-xs text-gray-500">Message/Questions</label><p class="text-sm bg-gray-50 dark:bg-gray-700 p-3 rounded-lg mt-1"><%= application.message %></p></div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar - Actions -->
+        <div class="space-y-6">
+            <!-- Update Status -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-semibold text-gray-800 dark:text-white"><i class="fas fa-tasks mr-2 text-green-600"></i> Update Status</h3>
+                </div>
+                <div class="p-6">
+                    <form action="/admin/diploma/<%= application._id %>/status" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Change Status</label>
+                            <select name="status" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700">
+                                <option value="pending" <%= application.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                <option value="contacted" <%= application.status === 'contacted' ? 'selected' : '' %>>Contacted</option>
+                                <option value="enrolled" <%= application.status === 'enrolled' ? 'selected' : '' %>>Enrolled</option>
+                                <option value="rejected" <%= application.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Admin Notes</label>
+                            <textarea name="adminNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700" placeholder="Add internal notes..."><%= application.adminNotes || '' %></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition">
+                            <i class="fas fa-save mr-2"></i> Update Status
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-semibold text-gray-800 dark:text-white"><i class="fas fa-bolt mr-2 text-yellow-600"></i> Quick Actions</h3>
+                </div>
+                <div class="p-6 space-y-3">
+                    <a href="mailto:<%= application.email %>" class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-envelope text-blue-600"></i>
+                        <div><p class="font-medium text-sm">Send Email</p><p class="text-xs text-gray-500"><%= application.email %></p></div>
+                    </a>
+                    <a href="tel:<%= application.phone %>" class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-phone text-green-600"></i>
+                        <div><p class="font-medium text-sm">Call Student</p><p class="text-xs text-gray-500"><%= application.phone %></p></div>
+                    </a>
+                    <button onclick="deleteApplication('<%= application._id %>')" class="w-full flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 transition text-red-600">
+                        <i class="fas fa-trash"></i>
+                        <div><p class="font-medium text-sm">Delete Application</p><p class="text-xs text-red-500">Permanently remove</p></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function deleteApplication(id) {
+    if (confirm('Are you sure you want to delete this application? This action cannot be undone.')) {
+        fetch(`/admin/diploma/${id}`, { method: 'DELETE' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/admin/diploma';
+                } else {
+                    alert('Failed to delete application');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Error deleting application');
+            });
+    }
+}
+</script>
+
+<style>
+.status-pending { background: #fef3c7; color: #92400e; }
+.status-contacted { background: #dbeafe; color: #1e40af; }
+.status-enrolled { background: #d1fae5; color: #065f46; }
+.status-rejected { background: #fee2e2; color: #991b1b; }
+.dark .status-pending { background: #78350f; color: #fde68a; }
+.dark .status-contacted { background: #1e3a8a; color: #93c5fd; }
+.dark .status-enrolled { background: #064e3b; color: #6ee7b7; }
+.dark .status-rejected { background: #7f1d1d; color: #fca5a5; }
+</style>

@@ -174,4 +174,7 @@ const courcesSchema = new Schema({
 }
 );
 
+courcesSchema.index({ createdAt: -1 });
+courcesSchema.index({ isActive: 1, createdAt: -1 });
+
 module.exports = mongoose.model("Cources", courcesSchema);

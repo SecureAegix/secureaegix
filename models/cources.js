@@ -168,6 +168,10 @@ const courcesSchema = new Schema({
   metaTitle: String,
   metaDescription: String,
   metaKeywords: String,
-});
+},
+  {
+  timestamps: true 
+}
+);
 
 module.exports = mongoose.model("Cources", courcesSchema);

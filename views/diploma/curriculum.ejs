@@ -1,0 +1,649 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20 overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    <div class="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full filter blur-3xl opacity-20 animate-float"></div>
+    <div class="absolute bottom-20 left-10 w-64 h-64 bg-indigo-500 rounded-full filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 fade-up">
+                <i class="fas fa-book-open text-amber-400 text-sm"></i>
+                <span class="text-xs font-mono text-cyan-300">Complete Syllabus · 2026 Edition</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 fade-up delay-1">
+                Complete <span class="text-gradient">Curriculum</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto fade-up delay-2">
+                12 Specialized Levels | 680+ Hours | Full Stack Cybersecurity
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CURRICULUM ACCORDION SECTION ==================== -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        
+        
+        <div class="space-y-4" id="curriculumContainer">
+            
+            <!-- LEVEL 01 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-600 text-white w-fit">LEVEL 01</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Network Intelligence Foundations</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Network Security</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-blue-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Introduction to Networking & Security Integration</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Network Fundamentals & OSI/TCP-IP Models</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Routing & Switching Protocols</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Access Control & Security Mechanisms</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">IP Services & Network Automation</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Advanced Routing Concepts (BGP, OSPF)</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Network Monitoring & Troubleshooting</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Intelligence-Enhanced Lab Sessions</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Enterprise Network Design Project</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Certification & Career Path Planning</span></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-blue-600"><i class="fas fa-project-diagram mr-1"></i> Industry Project</span>
+                        <span class="text-purple-600"><i class="fas fa-chalkboard-user mr-1"></i> Hands-on Labs</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 02 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-600 text-white w-fit">LEVEL 02</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Linux Operations Mastery</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">40 Hours · Linux Security</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-cyan-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Virtualization Setup (VMware/VirtualBox)</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">RHEL 9.3 Deployment & Configuration</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Command Line Foundation & Navigation</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">File System Management & Permissions</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">User & Group Administration</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Process Monitoring & Service Control</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">SSH Hardening & Secure Remote Access</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Log Analysis & Storage Management</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Network Configuration & Firewall Rules</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Package Management & System Updates</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">File System Access & Disk Management</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Server Troubleshooting & Support Channels</span></div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> <span class="text-gray-700 dark:text-gray-300">Assessment Papers & Practical Evaluation</span></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-cyan-600"><i class="fas fa-terminal mr-1"></i> Command Line Mastery</span>
+                        <span class="text-green-600"><i class="fas fa-shield-alt mr-1"></i> Security Hardening</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 03 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-purple-600 text-white w-fit">LEVEL 03</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Python Security Automation</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Python Programming</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800" ><i class="fas fa-check-circle text-green-500 text-xs"></i> Python Introduction & Language Comparison</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Variables, Data Types & Memory Management</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Operators & Expression Evaluation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Conditional Logic & Decision Making</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Looping Constructs & Iteration Patterns</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Control Flow & Exception Handling</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Type Casting & Data Conversion</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Number Manipulation & Mathematical Operations</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> String Operations & Pattern Matching</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> List Management & Sequence Handling</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Tuple Structures & Immutable Collections</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Dictionary Mapping & Key-Value Operations</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Array Processing & Matrix Operations</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Date/Time Manipulation & Scheduling</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> File I/O Handling & Data Persistence</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Multithreading & Concurrent Execution</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mail Automation & Notification Systems</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Database Connectivity (SQLite/MySQL)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> OOP Concepts & Design Patterns</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Network Programming & Socket Communication</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> GUI Development with Tkinter</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Web Scraping & Data Extraction</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Image Processing & Computer Vision Basics</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Data Science Fundamentals (NumPy/Pandas)</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-purple-600"><i class="fab fa-python mr-1"></i> 24+ Topics</span>
+                        <span class="text-orange-600"><i class="fas fa-robot mr-1"></i> Automation Focus</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 04 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-red-600 text-white w-fit">LEVEL 04</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Offensive Security Essentials</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Ethical Hacking</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-red-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Strike Operations Fundamentals & Legal Framework</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Intelligent Assistants (ShellGPT, TerminalGPT, ChatGPT)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Prompt Engineering for Security Payloads</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Active Footprinting via Automated Scripts</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Passive Footprinting & OSINT Automation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Advanced Nmap with Script Generation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> User Enumeration & Service Discovery</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> System Compromise & Password Bypass Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Assisted Virus & Worm Development</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Trojan Engineering & Backdoor Deployment</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Bot & Botnet Architecture Design</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> MITM Operations with Kali Linux</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> MITM Operations on Windows Platforms</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Social Engineering Theory & Psychology</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> SET Toolkit with Enhancement</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> DoS & DDoS Attack Methodologies</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Web Session Hijacking & Cookie Theft</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Manual SQL Injection with Assistance</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Automated SQL Injection (SQLMap Integration)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Web Application Security Fundamentals</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Web Server Compromise via TerminalGPT</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Wireless Hacking - CLI Based Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Advanced Wireless Network Attacks</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IDS/Firewall Evasion with Camouflage</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Honeypot Deployment & Detection</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Buffer Overflow Fundamentals</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cryptography with Analysis Tools</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Penetration Testing Methodology</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mobile Payload Generation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IoT Device Compromise Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cloud Security & Misconfiguration Exploitation</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-red-600"><i class="fas fa-bug mr-1"></i> 31 Attack Techniques</span>
+                        <span class="text-orange-600"><i class="fab fa-linux mr-1"></i> Kali Linux Focus</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 05 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-orange-600 text-white w-fit">LEVEL 05</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Advanced Penetration Operations</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Red Teaming</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Breach Protocol Introduction & Scope Definition</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Supercharged Scanning with Systems</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Exploitation Tactics & Custom Payloads</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> CLI Adventures with Assistants</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Kali Linux Mastery & Custom Toolsets</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Bash Scripting with Automation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Powered Practical Security Tools</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Active Intelligence Gathering Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Passive Intelligence & Dark Web Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Buffer Overflow Fundamentals</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Advanced Buffer Overflow & Shellcode</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Exploit Engineering & Fix Automation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Public Exploit Hunting & Validation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Antivirus Evasion with Camouflage</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Seamless File Transfer & Exfiltration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Windows Privilege Escalation Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Linux Privilege Escalation Tactics</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Password Cracking with Optimization</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Port Redirection & Tunneling Methods</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Active Directory Attacks & Lateral Movement</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> PowerShell Empire & Post-Exploitation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Real-World Challenge Labs (CTF Style)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Breach Test Breakdown & Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Professional Report Crafting & CVSS Scoring</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-orange-600"><i class="fas fa-trophy mr-1"></i> CTF Labs</span>
+                        <span class="text-red-600"><i class="fas fa-chart-line mr-1"></i> Real-World Simulations</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 06 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-green-600 text-white w-fit">LEVEL 06</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Digital Forensics & Investigation</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Evidence Analysis</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-green-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Forensics in Modern Digital Context</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Investigation Process & Chain of Custody</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Hard Disks & File System Architecture</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Data Acquisition & Bit-Stream Duplication</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Anti-Forensics Countermeasures</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Windows Forensics (Registry, Event Logs, MFT)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Linux & Mac Forensics</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Network Forensics & Packet Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Web Forensics & Browser Artifacts</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Dark Web Investigation Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cloud Forensics (AWS/Azure Logs)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Email Crime Investigation & Header Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Malware Forensics & Behavioral Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mobile Forensics (Android/iOS Extraction)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IoT Forensics & Sensor Data Recovery</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-green-600"><i class="fas fa-search mr-1"></i> 15 Forensic Domains</span>
+                        <span class="text-purple-600"><i class="fas fa-database mr-1"></i> Evidence Recovery</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 07 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-indigo-600 text-white w-fit">LEVEL 07</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Web Application Security Mastery</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">40 Hours · Bug Bounty</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-indigo-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Introduction to Web Security Landscape</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> OWASP Top 10 & Top 25 Deep Dive</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Reconnaissance for Bug Hunting</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Advanced SQL Injection Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Command Injection & OS Command Execution</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Session Management & Broken Authentication</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cross-Site Request Forgery (CSRF)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Server-Side Request Forgery (SSRF)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cross-Site Scripting (XSS) with Detection</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Insecure Direct Object Reference (IDOR)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Sensitive Data Exposure & Information Disclosure</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Server-Side Template Injection (SSTI)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Multi-Factor Authentication Bypass</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> HTTP Request Smuggling</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> External File Path Manipulation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Local & Remote File Inclusion (LFI/RFI)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Directory Path Traversal</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> HTML Injection & Client-Side Attacks</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Host Header Injection & Cache Poisoning</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> File Upload Vulnerabilities & Web Shells</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> JWT Token Attacks & Algorithm Confusion</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Web Application Flooding & Stress Testing</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> API Security Testing (REST/GraphQL)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Professional Report Writing & Disclosure</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-indigo-600"><i class="fab fa-google mr-1"></i> OWASP Compliant</span>
+                        <span class="text-pink-600"><i class="fas fa-bug mr-1"></i> Bug Bounty Ready</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 08 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-pink-600 text-white w-fit">LEVEL 08</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Mobile Application Security</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Android/iOS Security</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-pink-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mobile Penetration Testing Introduction</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Lab Environment Setup & Configuration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Android Architecture & Component Model</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> APK Structure & Manifest Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Reverse Engineering with Apktool</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Reverse Engineering with MobSF</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Static Analysis & SAST Integration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Drozer Vulnerability Scanning</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Improper Platform Usage Detection</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Insecure Data Storage Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Insecure Communication Channels</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Insecure Authentication Mechanisms</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Insufficient Cryptography Implementation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Insecure Authorization Controls</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Client Code Quality Assessment</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Code Tampering & Repackaging</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Advanced Reverse Engineering Techniques</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Extraneous Functionality Detection</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> SSL Pinning Bypass Methods</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Network Traffic Interception (Burp/Frida)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Dynamic Analysis & Runtime Manipulation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Report Preparation with Assistance</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> iOS Penetration Testing Basics</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Professional Report Writing</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-pink-600"><i class="fab fa-android mr-1"></i> Android Security</span>
+                        <span class="text-gray-600"><i class="fab fa-apple mr-1"></i> iOS Basics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 09 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-teal-600 text-white w-fit">LEVEL 09</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">IoT & Embedded Security</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Connected Devices</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-teal-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IoT Landscape & Security Importance</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Tool Automation for IoT Scanning</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IoT Architecture & Communication Models</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Sensor Networks & Data Flow</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Wireless Protocols (Zigbee, Z-Wave, BLE)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Hardware Protocols (SPI, UART, I2C)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Arduino Programming & Security</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Raspberry Pi Deployment & Hardening</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mobile App Platform Integration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Flipper Zero & RF Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Firmware Extraction & Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Hardware Analysis & JTAG Debugging</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> SDR (Software Defined Radio) Basics</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IoT Product Design & Security by Design</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Cloud IoT Integration (IaaS/PaaS/SaaS)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Assisted Anomaly Detection</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-teal-600"><i class="fas fa-microchip mr-1"></i> Hardware Hacking</span>
+                        <span class="text-blue-600"><i class="fas fa-wifi mr-1"></i> Wireless Security</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 10 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-slate-600 text-white w-fit">LEVEL 10</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Endpoint Defense & Monitoring</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · EDR, SIEM</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-slate-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Internet Security Implementation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Multi-Factor Authentication Deployment</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mobile Device Management (MDM)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Data Loss Prevention (DLP) Strategies</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> SIEM with Correlation Engine</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> APT Attack Detection & Response</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> MITRE ATT&CK Framework Mapping</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> EDR & XDR Integration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Unified Threat Management (UTM)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Fortified Firewall Architecture</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> ISO 27001 Compliance & Enhancement</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-slate-600"><i class="fas fa-shield-alt mr-1"></i> Enterprise Defense</span>
+                        <span class="text-blue-600"><i class="fas fa-chart-line mr-1"></i> SOC Operations</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 11 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-600 text-white w-fit">LEVEL 11</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Cloud Infrastructure Security</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · AWS Cloud</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> High Availability & Cost-Effective Design</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Hybrid IT Architectures</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Monitoring & Logging Strategies</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Elasticity & Scalability Patterns</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> EC2 Implementation with Optimization</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> S3 Management & Storage Classes</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> CloudFormation & Infrastructure as Code</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> VPS Understanding & Deployment</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IAM Configuration with Assistance</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> VPC Design & Network Segmentation</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> CloudWatch Log Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Route 53 & DNS Management</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Storage Gateway & Disaster Recovery</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Import/Export & Data Migration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Troubleshooting & Performance Optimization</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-amber-600"><i class="fab fa-aws mr-1"></i> AWS Infrastructure</span>
+                        <span class="text-blue-600"><i class="fas fa-code mr-1"></i> Infrastructure as Code</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEVEL 12 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
+                <button onclick="toggleLevel(this)" class="level-btn w-full flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 dark:hover:from-gray-700 dark:hover:to-gray-700 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-rose-600 text-white w-fit">LEVEL 12</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Advanced AWS Security</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">60 Hours · Cloud Security</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down text-rose-600 transition-transform duration-300"></i>
+                </button>
+                <div class="level-content hidden p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> AWS Security Overview & Shared Responsibility</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> IAM with Log Querying & Analysis</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> VPC Monitoring & Optimization</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Data Security (Encryption at Rest/Transit)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Server Security & Hardening</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Edge Security (WAF, Shield, DDoS)</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Assisted Threat Monitoring</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Logging & Auditing Best Practices</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Compliance Framework Integration</div>
+                        <div class="flex items-center gap-2 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"><i class="fas fa-check-circle text-green-500 text-xs"></i> Security Hub & GuardDuty Configuration</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex gap-4 text-xs">
+                        <span class="text-rose-600"><i class="fas fa-cloud-upload-alt mr-1"></i> Cloud Security Posture</span>
+                        <span class="text-blue-600"><i class="fas fa-chart-bar mr-1"></i> Compliance & Auditing</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Download Syllabus Button -->
+        <div class="text-center mt-10">
+            <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <i class="fas fa-download"></i>
+                Download Complete Syllabus (PDF)
+                <i class="fas fa-arrow-right text-sm"></i>
+            </a>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">
+                *Detailed syllabus with all 12 levels and 680+ hours of content
+            </p>
+        </div>
+        
+    </div>
+</section>
+
+<!-- ==================== CTA SECTION ==================== -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Start Your Journey?</h2>
+            <p class="text-white/90 text-lg mb-8">Join India's most comprehensive cybersecurity program</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/diploma/enroll" class="px-8 py-3 bg-white text-indigo-600 rounded-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-pen-alt"></i>
+                    Apply Now
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="/diploma" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-info-circle"></i>
+                    Back to Program
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+
+// Toggle Level Function with Progress Update
+let openLevels = 0;
+const totalLevels = 12;
+
+function toggleLevel(btn) {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('i:last-child');
+    const isOpening = content.classList.contains('hidden');
+    
+    content.classList.toggle('hidden');
+    icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+    
+    // Update progress
+    if (isOpening) {
+        openLevels++;
+    } else {
+        openLevels--;
+    }
+    
+    const progress = (openLevels / totalLevels) * 100;
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) {
+        progressBar.style.width = progress + '%';
+    }
+}
+
+// Auto-open first level for better UX
+document.addEventListener('DOMContentLoaded', function() {
+    const firstLevel = document.querySelector('.level-content');
+    if (firstLevel && firstLevel.classList.contains('hidden')) {
+        const firstBtn = firstLevel.previousElementSibling;
+        if (firstBtn) {
+            firstLevel.classList.remove('hidden');
+            const icon = firstBtn.querySelector('i:last-child');
+            if (icon) icon.style.transform = 'rotate(180deg)';
+            openLevels = 1;
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = (1 / totalLevels * 100) + '%';
+        }
+    }
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === "#") return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Fade up animation
+const fadeElements = document.querySelectorAll('.fade-up');
+const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            fadeObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+fadeElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    fadeObserver.observe(el);
+});
+</script>
+
+<style>
+/* Additional styles */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+.text-gradient {
+    background: linear-gradient(135deg, #60a5fa, #22d3ee, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.level-content {
+    transition: all 0.3s ease;
+}
+</style>

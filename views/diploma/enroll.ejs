@@ -1,0 +1,532 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-20 overflow-hidden">
+    <div class="absolute inset-0 opacity-40 pointer-events-none">
+            <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <i class="fas fa-certificate text-yellow-400"></i>
+                <span class="text-xs font-mono text-cyan-400">Limited Seats · Batch Starting <%= batchStartDate %></span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                Apply for <span class="text-gradient">Diploma Program</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Fill the form below to reserve your seat. Our team will contact you within 24 hours.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Enrollment Form Section -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Left Column - Program Info -->
+                <div class="space-y-6">
+                    <!-- Program Details Card -->
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 sticky top-24">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-info-circle text-blue-600"></i>
+                            Program Details
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Duration</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">12 Months (680+ Hours)</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Program Fee</span>
+                                <div>
+                                    <span class="font-bold text-2xl text-gray-900 dark:text-white">₹<%= programFee %></span>
+                                    <span class="text-sm line-through text-gray-400 ml-2">₹<%= originalFee %></span>
+                                    <span class="text-xs text-green-600 ml-2">Save ₹<%= originalFee - programFee %></span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Batch Starting</span>
+                                <span class="font-semibold text-gray-900 dark:text-white"><%= batchStartDate %></span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Seats Available</span>
+                                <span class="font-semibold text-orange-600">23 / 30</span>
+                            </div>
+                        </div>
+                        
+                        <!-- What's Included -->
+                        <div class="mt-6 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-3">What's Included:</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <i class="fas fa-check-circle text-green-500 text-xs"></i>
+                                    <span>6-Month Industry Internship</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <i class="fas fa-check-circle text-green-500 text-xs"></i>
+                                    <span>250GB+ Security Toolkit (VMs, Scripts, Tools)</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <i class="fas fa-check-circle text-green-500 text-xs"></i>
+                                    <span>1-Year Premium LMS Access</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <i class="fas fa-check-circle text-green-500 text-xs"></i>
+                                    <span>Global Certification Preparation (OSCP, CEH, CRTO)</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <i class="fas fa-check-circle text-green-500 text-xs"></i>
+                                    <span>100% Placement Assistance</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Options -->
+                        <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                                <i class="fas fa-rupee-sign text-blue-600"></i>
+                                Payment Options
+                            </h4>
+                            <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                                <p>✓ One-time payment: <span class="font-semibold text-green-600">₹<%= programFee %></span></p>
+                                <p>✓ Installment: <span class="font-semibold">₹30,000</span> (Down payment) + 2 installments of <span class="font-semibold">₹27,500</span></p>
+                                <p class="text-xs text-gray-500 mt-2">*No cost EMI available on select cards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Enrollment Form -->
+                <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-4">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-edit"></i>
+                            Application Form
+                        </h3>
+                        <p class="text-white/80 text-sm mt-1">Fill all required fields (*) to apply</p>
+                    </div>
+                    
+                    <form id="enrollmentForm" class="p-6 space-y-5">
+                        <!-- Personal Information Section -->
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-3 pb-2 border-b border-gray-200 dark:border-gray-700 flex items-center gap-2">
+                                <i class="fas fa-user text-blue-600"></i>
+                                Personal Information
+                            </h4>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Full Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           name="fullName" 
+                                           id="fullName"
+                                           value="<%= userData.fullName || '' %>"
+                                           placeholder="Enter your full name"
+                                           required
+                                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 transition">
+                                    <p class="text-xs text-gray-500 mt-1 hidden" id="fullNameError">Name must be at least 3 characters</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Email Address <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="email" 
+                                           name="email" 
+                                           id="email"
+                                           value="<%= userData.email || '' %>"
+                                           placeholder="you@example.com"
+                                           required
+                                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 transition">
+                                    <p class="text-xs text-gray-500 mt-1 hidden" id="emailError">Enter a valid email address</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Phone Number <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="tel" 
+                                           name="phone" 
+                                           id="phone"
+                                           value="<%= userData.phone || '' %>"
+                                           placeholder="10-digit mobile number"
+                                           required
+                                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 transition">
+                                    <p class="text-xs text-gray-500 mt-1 hidden" id="phoneError">Enter a valid 10-digit phone number</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        City <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           name="city" 
+                                           id="city"
+                                           value="<%= userData.city || '' %>"
+                                           placeholder="Your city"
+                                           required
+                                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 transition">
+                                    <p class="text-xs text-gray-500 mt-1 hidden" id="cityError">City name is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Education Section -->
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-3 pb-2 border-b border-gray-200 dark:border-gray-700 flex items-center gap-2">
+                                <i class="fas fa-graduation-cap text-blue-600"></i>
+                                Education & Preferences
+                            </h4>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Highest Qualification <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="qualification" 
+                                            id="qualification"
+                                            required
+                                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700">
+                                        <option value="">Select qualification</option>
+                                        <option value="Graduate">Graduate</option>
+                                        <option value="Post Graduate">Post Graduate</option>
+                                        <option value="Pursuing Graduation">Pursuing Graduation</option>
+                                        <option value="Diploma">Diploma</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <p class="text-xs text-gray-500 mt-1 hidden" id="qualificationError">Please select your qualification</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Preferred Mode <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="mode" 
+                                            id="mode"
+                                            required
+                                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700">
+                                        <option value="">Select mode</option>
+                                        <option value="online">🌐 Online</option>
+                                        <option value="classroom">🏛️ Classroom (New Delhi)</option>
+                                        <option value="hybrid">💻 Hybrid</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Preferred Batch <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="batch" 
+                                            id="batch"
+                                            required
+                                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700">
+                                        <option value="">Select batch</option>
+                                        <option value="weekend">📅 Weekend Batch (Sat-Sun)</option>
+                                        <option value="weekday">📅 Weekday Batch (Mon-Fri)</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        How did you hear about us?
+                                    </label>
+                                    <select name="source" id="source" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700">
+                                        <option value="">Select source</option>
+                                        <option value="google">Google Search</option>
+                                        <option value="social">Social Media</option>
+                                        <option value="friend">Friend/Family Referral</option>
+                                        <option value="advertisement">Advertisement</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Questions or Comments?
+                            </label>
+                            <textarea name="message" 
+                                      id="message"
+                                      rows="4"
+                                      placeholder="Any specific questions about the program or your requirements..."
+                                      class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 resize-none"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Max 500 characters</p>
+                        </div>
+                        
+                        <!-- Terms & Conditions -->
+                        <div class="flex items-start gap-3 pt-2">
+                            <input type="checkbox" 
+                                   id="terms" 
+                                   required
+                                   class="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <label for="terms" class="text-sm text-gray-600 dark:text-gray-400">
+                                I agree to the <a href="/terms" target="_blank" class="text-blue-600 hover:underline">Terms & Conditions</a> and confirm that the information provided is accurate.
+                                <span class="text-red-500">*</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Submit Button & Message -->
+                        <div>
+                            <button type="submit" 
+                                    id="submitBtn"
+                                    class="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i>
+                                Submit Application
+                            </button>
+                            
+                            <div id="formMessage" class="hidden mt-4 p-3 rounded-lg text-center"></div>
+                            
+                            <p class="text-xs text-center text-gray-500 dark:text-gray-400 mt-4">
+                                <i class="fas fa-lock mr-1"></i> 
+                                Your information is secure. We'll contact you within 24 hours.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+// ==================== FORM VALIDATION & SUBMISSION ====================
+
+const form = document.getElementById('enrollmentForm');
+const submitBtn = document.getElementById('submitBtn');
+const messageDiv = document.getElementById('formMessage');
+
+// Real-time validation functions
+function validateFullName() {
+    const input = document.getElementById('fullName');
+    const error = document.getElementById('fullNameError');
+    const value = input.value.trim();
+    
+    if (value.length < 3) {
+        input.classList.add('border-red-500');
+        error.classList.remove('hidden');
+        return false;
+    } else {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-green-500');
+        error.classList.add('hidden');
+        return true;
+    }
+}
+
+function validateEmail() {
+    const input = document.getElementById('email');
+    const error = document.getElementById('emailError');
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    
+    if (!emailRegex.test(input.value.trim())) {
+        input.classList.add('border-red-500');
+        error.classList.remove('hidden');
+        return false;
+    } else {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-green-500');
+        error.classList.add('hidden');
+        return true;
+    }
+}
+
+function validatePhone() {
+    const input = document.getElementById('phone');
+    const error = document.getElementById('phoneError');
+    const phoneRegex = /^[0-9]{10}$/;
+    
+    if (!phoneRegex.test(input.value.trim())) {
+        input.classList.add('border-red-500');
+        error.classList.remove('hidden');
+        return false;
+    } else {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-green-500');
+        error.classList.add('hidden');
+        return true;
+    }
+}
+
+function validateCity() {
+    const input = document.getElementById('city');
+    const error = document.getElementById('cityError');
+    const value = input.value.trim();
+    
+    if (value.length < 2) {
+        input.classList.add('border-red-500');
+        error.classList.remove('hidden');
+        return false;
+    } else {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-green-500');
+        error.classList.add('hidden');
+        return true;
+    }
+}
+
+function validateQualification() {
+    const select = document.getElementById('qualification');
+    const error = document.getElementById('qualificationError');
+    
+    if (!select.value) {
+        select.classList.add('border-red-500');
+        error.classList.remove('hidden');
+        return false;
+    } else {
+        select.classList.remove('border-red-500');
+        select.classList.add('border-green-500');
+        error.classList.add('hidden');
+        return true;
+    }
+}
+
+// Attach real-time validation listeners
+document.getElementById('fullName')?.addEventListener('input', validateFullName);
+document.getElementById('email')?.addEventListener('input', validateEmail);
+document.getElementById('phone')?.addEventListener('input', validatePhone);
+document.getElementById('city')?.addEventListener('input', validateCity);
+document.getElementById('qualification')?.addEventListener('change', validateQualification);
+
+// Form submission
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Validate all fields
+    const isFullNameValid = validateFullName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isCityValid = validateCity();
+    const isQualificationValid = validateQualification();
+    
+    const mode = document.getElementById('mode').value;
+    const batch = document.getElementById('batch').value;
+    const terms = document.getElementById('terms').checked;
+    
+    if (!isFullNameValid || !isEmailValid || !isPhoneValid || !isCityValid || !isQualificationValid) {
+        messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
+        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please fill all required fields correctly';
+        messageDiv.classList.remove('hidden');
+        setTimeout(() => messageDiv.classList.add('hidden'), 5000);
+        return;
+    }
+    
+    if (!mode) {
+        messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
+        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please select preferred mode';
+        messageDiv.classList.remove('hidden');
+        setTimeout(() => messageDiv.classList.add('hidden'), 5000);
+        return;
+    }
+    
+    if (!batch) {
+        messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
+        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please select preferred batch';
+        messageDiv.classList.remove('hidden');
+        setTimeout(() => messageDiv.classList.add('hidden'), 5000);
+        return;
+    }
+    
+    if (!terms) {
+        messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
+        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please agree to the Terms & Conditions';
+        messageDiv.classList.remove('hidden');
+        setTimeout(() => messageDiv.classList.add('hidden'), 5000);
+        return;
+    }
+    
+    // Prepare form data
+    const formData = {
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        qualification: document.getElementById('qualification').value,
+        mode: mode,
+        batch: batch,
+        message: document.getElementById('message').value.trim()
+    };
+    
+    // Disable submit button and show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+    
+    try {
+        const response = await fetch('/api/diploma/enroll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+            messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-green-100 dark:bg-green-900/30 text-green-700';
+            messageDiv.innerHTML = '<i class="fas fa-check-circle mr-2"></i> ' + result.message;
+            messageDiv.classList.remove('hidden');
+            
+            // Reset form
+            form.reset();
+            
+            // Scroll to message
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Optional: Redirect after 3 seconds
+            setTimeout(() => {
+                window.location.href = '/diploma';
+            }, 3000);
+        } else {
+            throw new Error(result.message || 'Submission failed');
+        }
+    } catch (error) {
+        console.error('Submission error:', error);
+        messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
+        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> ' + error.message;
+        messageDiv.classList.remove('hidden');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Submit Application';
+        
+        // Auto-hide message after 5 seconds
+        setTimeout(() => {
+            if (!messageDiv.classList.contains('hidden') && messageDiv.classList.contains('bg-green-100')) {
+                messageDiv.classList.add('hidden');
+            }
+        }, 5000);
+    }
+});
+
+// FAQ Toggle Function
+function toggleFAQ(btn) {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('i:last-child');
+    
+    content.classList.toggle('hidden');
+    icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
+
+<style>
+/* Additional styles for form validation */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+}
+.border-green-500 {
+    border-color: #10b981 !important;
+}
+.faq-content {
+    transition: all 0.3s ease;
+}
+</style>

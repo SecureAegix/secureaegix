@@ -33,6 +33,8 @@ const othersRouter = require("./routes/others.js");
 const blogRouter = require("./routes/blog.js");
 const serviceRouter = require("./routes/service.js");
 const sitemapRouter = require("./routes/sitemap.js");
+const diplomaRouter = require("./routes/diploma.js");
+const Diploma = require("./models/diploma.js");
 const seoMeta = require("./utils/seoMeta.json");
 const Cources = require("./models/cources.js");
 
@@ -242,6 +244,7 @@ app.use("/", homeRouter);
 app.use("/", searchRoutes);
 app.use("/", resetRout);
 app.use("/", othersRouter);
+app.use("/", diplomaRouter);
 app.use("/", sitemapRouter);
 app.use("/blogs", blogRouter);
 app.use("/services", serviceRouter);

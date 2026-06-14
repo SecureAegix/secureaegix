@@ -1,0 +1,453 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="relative bg-gradient-to-r from-blue-900 to-cyan-800 text-white py-5 overflow-hidden">
+    <!-- Animated Background -->
+    <div class="absolute inset-0 opacity-30">
+        <canvas id="particleCanvas" class="block w-full h-full"></canvas>
+    </div>
+    <div class="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full filter blur-3xl opacity-20 animate-float"></div>
+    <div class="absolute bottom-20 left-10 w-64 h-64 bg-indigo-500 rounded-full filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-20">
+        <div class="text-center max-w-3xl mx-auto">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 fade-up">
+                <i class="fas fa-certificate text-amber-400 text-sm"></i>
+                <span class="text-xs font-mono text-cyan-300">Government Recognized · AICTE Approved</span>
+            </div>
+            
+            <!-- Main Heading -->
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 fade-up delay-1">
+                1-Year Advanced Diploma in
+                <span class="bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent block mt-2">
+                    Cybersecurity & Intelligent Defense
+                </span>
+            </h1>
+            
+            <!-- Description -->
+            <p class="text-base md:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-8 fade-up delay-2 leading-relaxed">
+                India's most comprehensive cybersecurity program with <span class="text-cyan-300 font-semibold">680+ hours</span> of hands-on training, 
+                <span class="text-blue-300 font-semibold">80% practical labs</span>, and <span class="text-indigo-300 font-semibold">6-month industry internship</span>.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+                <a href="#curriculum" class="px-6 md:px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg font-semibold text-white hover:shadow-xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-book-open"></i>
+                    View Curriculum
+                    <i class="fas fa-arrow-down text-sm"></i>
+                </a>
+                <a href="/diploma/enroll" class="px-6 md:px-8 py-3 border-2 border-white/30 rounded-lg font-semibold text-white hover:bg-white/10 hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-pen-alt"></i>
+                    Apply Now
+                    <i class="fas fa-arrow-right text-sm"></i>
+                </a>
+            </div>
+            
+            <!-- Trust Badges -->
+            <div class="flex flex-wrap justify-center gap-6 mt-10 pt-4 fade-up delay-4">
+                <div class="flex items-center gap-2 text-white/70 text-sm">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span>1,000+ Students Trained</span>
+                </div>
+                <div class="flex items-center gap-2 text-white/70 text-sm">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span>95% Pass Rate</span>
+                </div>
+                <div class="flex items-center gap-2 text-white/70 text-sm">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span>Industry Recognized</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== PROGRAM OVERVIEW SECTION ==================== -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full">Program Overview</span>
+            <h2 class="text-3xl md:text-3xl font-bold text-gray-900 dark:text-white mt-4 mb-4">
+                Why Choose This <span class="text-gradient">Program?</span>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Designed to transform beginners into industry-ready cybersecurity professionals
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <!-- Left Content -->
+            <div class="space-y-6">
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border-l-4 border-blue-600">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Neural-Assisted Defense Architecture (NADA)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Our proprietary methodology ensures every student masters both traditional security foundations 
+                        and emerging intelligent defense systems. The program builds expertise progressively from network 
+                        fundamentals to advanced red team operations and cloud fortress architecture.
+                    </p>
+                </div>
+                
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-flask text-blue-600 text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white">80% Hands-on</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Practical real-world labs</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-clock text-cyan-600 text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white">680+ Hours</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Comprehensive training</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-briefcase text-indigo-600 text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white">6-Month Internship</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Industry experience</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-certificate text-purple-600 text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white">Global Certifications</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">OSCP, CEH, CRTO prep</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Content - Program Details Table -->
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-5 pb-3 border-b border-gray-200 dark:border-gray-700">Program Details</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-400">Program Duration</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">12 Months (680+ Hours)</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-400">Total Modules</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">12 Specialized Levels</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-400">Practical Ratio</span>
+                        <span class="font-semibold text-green-600">80% Hands-on | 20% Theory</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-400">Class Format</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">Weekend / Weekday | Online / Classroom</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-400">Toolkit Provided</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">250GB+ Security Tools & VMs</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-400">LMS Access</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">1-Year Premium Membership</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-gray-600 dark:text-gray-400">Placement Support</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">Mock Interviews, Resume Building, GD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CURRICULUM PREVIEW SECTION ==================== -->
+<section id="curriculum" class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full">Curriculum</span>
+            <h2 class="text-3xl md:text-3xl font-bold text-gray-900 dark:text-white mt-4 mb-4">
+                What You'll <span class="text-gradient">Learn</span>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                12 comprehensive modules covering everything from fundamentals to advanced security
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Module cards - dynamically generated -->
+            <% const modules = [
+                { num: "01", title: "Network Intelligence Foundations", hours: "60 Hours", focus: "Network Security", icon: "fa-network-wired", color: "blue", topics: "OSI/TCP-IP, routing protocols, access control, BGP/OSPF" },
+                { num: "02", title: "Linux Operations Mastery", hours: "40 Hours", focus: "Linux Security", icon: "fa-terminal", color: "cyan", topics: "RHEL 9.3, command line, SSH hardening, firewall, log analysis" },
+                { num: "03", title: "Python Security Automation", hours: "60 Hours", focus: "Python", icon: "fa-code", color: "purple", topics: "Variables, OOP, networking, web scraping, automation scripts" },
+                { num: "04", title: "Offensive Security Essentials", hours: "60 Hours", focus: "Ethical Hacking", icon: "fa-user-secret", color: "red", topics: "Footprinting, OSINT, Nmap, SQL injection, MITM attacks" },
+                { num: "05", title: "Advanced Penetration Operations", hours: "60 Hours", focus: "Red Teaming", icon: "fa-skull", color: "orange", topics: "Buffer overflow, exploit dev, AV evasion, AD attacks" },
+                { num: "06", title: "Digital Forensics & Investigation", hours: "60 Hours", focus: "Forensics", icon: "fa-search", color: "green", topics: "Chain of custody, Windows/Linux forensics, malware analysis" }
+            ]; %>
+            
+            <% modules.forEach(module => { %>
+                <div class="group bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono font-semibold px-2 py-1 rounded bg-<%= module.color %>-100 dark:bg-<%= module.color %>-900/30 text-<%= module.color %>-600 dark:text-<%= module.color %>-400">Module <%= module.num %></span>
+                        <i class="fas <%= module.icon %> text-gray-400 text-lg group-hover:text-<%= module.color %>-500 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2"><%= module.title %></h3>
+                    <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-3">
+                        <span><i class="far fa-clock mr-1"></i> <%= module.hours %></span>
+                        <span><i class="fas fa-tag mr-1"></i> <%= module.focus %></span>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"><%= module.topics %></p>
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
+                        <span class="text-xs text-green-600 dark:text-green-400"><i class="fas fa-check-circle mr-1"></i> Industry Projects</span>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        
+        <div class="text-center mt-10">
+            <a href="/diploma/curriculum" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <i class="fas fa-book-open"></i>
+                View Complete Syllabus
+                <i class="fas fa-arrow-right text-sm"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PROGRAM HIGHLIGHTS SECTION ==================== -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full">Program Highlights</span>
+            <h2 class="text-3xl md:text-3xl font-bold text-gray-900 dark:text-white mt-4 mb-4">
+                What Makes This <span class="text-gradient">Program Special</span>
+            </h2>
+        </div>
+        
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="text-center p-6 rounded-xl bg-gray-50 dark:bg-gray-800 hover:shadow-lg transition-all duration-300 group">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 transition-colors">
+                    <i class="fas fa-microchip text-2xl text-blue-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Neural-Assisted Defense</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">AI-powered learning with real-time assistance</p>
+            </div>
+            
+            <div class="text-center p-6 rounded-xl bg-gray-50 dark:bg-gray-800 hover:shadow-lg transition-all duration-300 group">
+                <div class="w-16 h-16 bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-cyan-600 transition-colors">
+                    <i class="fas fa-flask text-2xl text-cyan-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Live Cyber Range</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">24/7 access to enterprise-grade labs</p>
+            </div>
+            
+            <div class="text-center p-6 rounded-xl bg-gray-50 dark:bg-gray-800 hover:shadow-lg transition-all duration-300 group">
+                <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 transition-colors">
+                    <i class="fas fa-chalkboard-user text-2xl text-purple-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Industry Experts</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Learn from OSCP, CRTO certified trainers</p>
+            </div>
+            
+            <div class="text-center p-6 rounded-xl bg-gray-50 dark:bg-gray-800 hover:shadow-lg transition-all duration-300 group">
+                <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 transition-colors">
+                    <i class="fas fa-briefcase text-2xl text-green-600 group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-2">Placement Support</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Mock interviews, resume building, job drives</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CAREER PATHS SECTION ==================== -->
+<section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-wide uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full">Career Paths</span>
+            <h2 class="text-3xl md:text-3xl font-bold text-gray-900 dark:text-white mt-4 mb-4">
+                Your <span class="text-gradient">Career Journey</span>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Unlock diverse career opportunities in cybersecurity
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Entry Level -->
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <i class="fas fa-graduation-cap text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Entry Level</h3>
+                <div class="space-y-2 text-gray-600 dark:text-gray-400 mb-5">
+                    <p>🔹 Security Analyst</p>
+                    <p>🔹 SOC Analyst</p>
+                    <p>🔹 Vulnerability Assessor</p>
+                </div>
+                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <span class="text-green-600 font-bold">₹4-8 LPA</span>
+                </div>
+            </div>
+            
+            <!-- Mid Level - Featured -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 transform scale-105 border border-blue-200 dark:border-blue-800">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <i class="fas fa-rocket text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Mid Level</h3>
+                <div class="space-y-2 text-gray-600 dark:text-gray-400 mb-5">
+                    <p>🔹 Penetration Tester</p>
+                    <p>🔹 Forensics Investigator</p>
+                    <p>🔹 Cloud Security Engineer</p>
+                </div>
+                <div class="pt-4 border-t border-blue-200 dark:border-blue-800">
+                    <span class="text-green-600 font-bold">₹8-15 LPA</span>
+                </div>
+            </div>
+            
+            <!-- Senior Level -->
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="w-20 h-20 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <i class="fas fa-crown text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Senior Level</h3>
+                <div class="space-y-2 text-gray-600 dark:text-gray-400 mb-5">
+                    <p>🔹 Red Team Specialist</p>
+                    <p>🔹 Security Consultant</p>
+                    <p>🔹 Threat Intelligence Lead</p>
+                </div>
+                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <span class="text-green-600 font-bold">₹15-25 LPA</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Freelance Path Note -->
+        <div class="text-center mt-8">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                <i class="fas fa-star text-yellow-500 mr-1"></i> 
+                Also: Bug Bounty Hunter | Security Auditor | Independent Consultant
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA SECTION ==================== -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-600">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-3xl font-bold text-white mb-4">Ready to Start Your Cybersecurity Journey?</h2>
+            <p class="text-white/90 text-lg mb-8">Limited seats available for the 2026 batch. Apply now!</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/diploma/enroll" class="px-8 py-3 bg-white text-indigo-600 rounded-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-pen-alt"></i>
+                    Apply Now
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="/contact" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-headset"></i>
+                    Talk to Advisor
+                </a>
+            </div>
+            <p class="text-white/70 text-sm mt-6">
+                <i class="fas fa-lock mr-1"></i> No upfront payment required | EMI options available
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+// FAQ Toggle
+function toggleFaq(btn) {
+    const body = btn.nextElementSibling;
+    const icon = btn.querySelector('.fa-plus, .fa-minus');
+    const isOpen = !body.classList.contains('hidden');
+    
+    // Close all other FAQs
+    document.querySelectorAll('.faq-body').forEach(fb => {
+        if (fb !== body) fb.classList.add('hidden');
+    });
+    document.querySelectorAll('.faq-icon, .fa-plus, .fa-minus').forEach(i => {
+        if (i !== icon) {
+            i.classList.remove('fa-minus');
+            i.classList.add('fa-plus');
+        }
+    });
+    
+    body.classList.toggle('hidden');
+    if (icon.classList.contains('fa-plus')) {
+        icon.classList.remove('fa-plus');
+        icon.classList.add('fa-minus');
+    } else {
+        icon.classList.remove('fa-minus');
+        icon.classList.add('fa-plus');
+    }
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === "#") return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Fade up animation on scroll
+const fadeElements = document.querySelectorAll('.fade-up');
+const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            fadeObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+fadeElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    fadeObserver.observe(el);
+});
+</script>
+
+<style>
+/* Additional styles for animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+}
+.text-gradient {
+    background: linear-gradient(135deg, #60a5fa, #22d3ee, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.faq-body {
+    transition: all 0.3s ease;
+}
+</style>

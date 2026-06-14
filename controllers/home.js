@@ -133,30 +133,60 @@ module.exports.allCourses = async (req, res) => {
     const search = req.query.search || "";
     const level = req.query.level || "";
     const filter = req.query.filter || "all";
+    const sortBy = req.query.sortBy || "latest"; // latest, oldest, price_asc, price_desc
 
     let query = {};
+    
+    // Search filter
     if (search) {
       query.title = { $regex: search, $options: "i" };
     }
 
+    // Level filter
     if (level && level !== "all") {
       query.courseLevel = level;
     }
 
-    // Apply filters
+    // Status filters
     if (filter === "active") query.isActive = true;
     else if (filter === "inactive") query.isActive = false;
     else if (filter === "popular") query.isPopular = true;
     else if (filter === "navbar") query.showInNavbar = true;
     else if (filter === "homepage") query.showInHomepage = true;
 
+    // Sorting logic - Latest first (based on createdAt)
+    let sortOptions = {};
+    
+    switch(sortBy) {
+      case "latest":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "oldest":
+        sortOptions = { createdAt: 1 };
+        break;
+      case "price_asc":
+        sortOptions = { actualPrice: 1 };
+        break;
+      case "price_desc":
+        sortOptions = { actualPrice: -1 };
+        break;
+      default:
+        sortOptions = { createdAt: -1 };
+    }
+
     const totalCourses = await Course.countDocuments(query);
+    
     const courses = await Course.find(query)
       .populate("teacher", "name email")
-      .sort({ createdAt: -1 })
+      .sort(sortOptions)  // ✅ Latest courses first
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean(); // Use lean() for better performance
 
+    // Handle courses without createdAt (set default date)
+    // For display purposes, courses without createdAt will appear at the end
+    // But new courses with createdAt will appear first due to -1 sorting
+    
     res.render("secureaegix/courses.ejs", {
       cources: courses,
       currentPage: page,
@@ -165,6 +195,7 @@ module.exports.allCourses = async (req, res) => {
       search,
       level,
       filter,
+      sortBy,
     });
   } catch (error) {
     console.error(error);

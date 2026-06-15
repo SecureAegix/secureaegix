@@ -4684,6 +4684,11 @@ video {
   color: rgb(113 63 18 / var(--tw-text-opacity, 1));
 }
 
+.hover\:text-red-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1));
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }

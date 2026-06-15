@@ -130,5 +130,22 @@
     "title": "Reset Password | Recover Your SecureAegix Account Access",
     "description": "Reset your password to regain access to your SecureAegix cybersecurity training account and continue your learning journey.",
     "keywords": "reset password, account recovery, forgot password, password reset link, regain account access, secure password change"
-  }
+  },
+  "/diploma": {
+  "title": "1-Year Advanced Diploma in Cybersecurity & Intelligent Defense | SecureAegix",
+  "description": "Join India's most comprehensive 1-year diploma in cybersecurity. 680+ hours of hands-on training, 80% practical labs, 6-month internship, and global certifications. Batch starting Jan 15, 2026.",
+  "keywords": "diploma in cybersecurity, advanced diploma in information security, cybersecurity diploma India, 1 year cybersecurity course, intelligent defense systems, NADA methodology, cybersecurity internship, network security training, ethical hacking diploma, OSCP preparation course, CRTO training, digital forensics course, cloud security training, cyber security institute Delhi, best cybersecurity diploma program, government recognized cybersecurity course"
+},
+
+"/diploma/curriculum": {
+  "title": "Complete Curriculum | 12-Module Cybersecurity Diploma Syllabus | SecureAegix",
+  "description": "Explore complete syllabus of 1-year cybersecurity diploma: Network Intelligence, Linux, Python Security, Offensive Security, Penetration Testing, Forensics, Web Security, Mobile Security, IoT Security, Cloud Security & AWS Advanced.",
+  "keywords": "cybersecurity diploma syllabus, network security training, Linux operations course, Python security automation, offensive security training, penetration testing curriculum, digital forensics syllabus, web application security course, mobile app security training, IoT security course, cloud security training, AWS security course, OSCP syllabus, CRTO training modules"
+},
+
+"/diploma/enroll": {
+  "title": "Enroll Now | 1-Year Cybersecurity Diploma Program | SecureAegix",
+  "description": "Apply for SecureAegix's 1-year advanced diploma in cybersecurity. Limited seats available for January 2026 batch. Get 6-month internship, placement assistance, and global certifications.",
+  "keywords": "enroll in cybersecurity diploma, cybersecurity course admission, diploma application form, cyber security training enrollment, limited seats cybersecurity course, 2026 batch admission, online cybersecurity diploma, classroom training Delhi, internship included cybersecurity, placement assistance cyber security"
+}
 }

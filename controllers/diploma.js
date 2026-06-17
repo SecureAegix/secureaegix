@@ -409,8 +409,8 @@ module.exports.enrollPage = async (req, res) => {
             description: "Apply for our comprehensive cybersecurity diploma program. Limited seats available.",
             userData,
             batchStartDate: "January 15, 2026",
-            programFee: 85000,
-            originalFee: 125000
+            programFee: 60000,
+            originalFee: 90000
         });
     } catch (error) {
         console.error("Enrollment page error:", error);

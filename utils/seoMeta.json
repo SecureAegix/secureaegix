@@ -54,6 +54,18 @@
     "keywords": "red team operations, adversary simulation, APT emulation, security assessment, defense testing, purple team exercises"
   },
 
+  "/services/soc": {
+  "title": "Security Operations Center (SOC) Services | 24/7 Threat Monitoring | SecureAegix",
+  "description": "24/7/365 SOC-as-a-Service for real-time threat monitoring, SIEM correlation, threat hunting, and rapid incident triage to stop attacks before they become breaches.",
+  "keywords": "security operations center, SOC as a service, 24/7 threat monitoring, SIEM monitoring, threat hunting services, log management, threat intelligence, managed detection and response, MDR services, SOC services india"
+},
+
+"/services/grc": {
+  "title": "GRC Advisory Services | Governance, Risk & Compliance | SecureAegix",
+  "description": "Governance, Risk & Compliance advisory covering risk assessments, policy development, and audit readiness for ISO 27001, SOC 2, GDPR, HIPAA, and PCI DSS.",
+  "keywords": "GRC advisory, governance risk and compliance, ISO 27001 consulting, SOC 2 compliance, GDPR compliance services, HIPAA compliance, PCI DSS audit, risk assessment services, compliance audit india, third party risk management"
+},
+
   "/about": {
     "title": "About SecureAegix | Cybersecurity Training Experts Since 2026",
     "description": "Learn about SecureAegix - founded in 2026, we've trained over 1,000 cybersecurity professionals across multiple countries with industry-recognized certifications.",

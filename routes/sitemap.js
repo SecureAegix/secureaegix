@@ -17,6 +17,17 @@ router.get("/sitemap.xml", async (req, res) => {
     <url><loc>${baseUrl}/contact</loc></url>
     <url><loc>${baseUrl}/blogs</loc></url>
     <url><loc>${baseUrl}/courses</loc></url>
+    <url><loc>${baseUrl}/services</loc></url>
+
+    <url><loc>${baseUrl}/services/penetration-testing</loc></url>
+    <url><loc>${baseUrl}/vulnerability-assessment</loc></url>
+    <url><loc>${baseUrl}/services/incident-response</loc></url>
+    <url><loc>${baseUrl}/services/red-team</loc></url>
+    <url><loc>${baseUrl}/services/soc</loc></url>
+    <url><loc>${baseUrl}/services/grc</loc></url>
+    <url><loc>${baseUrl}/diploma</loc></url>
+    <url><loc>${baseUrl}/diploma/curriculum</loc></url>
+    <url><loc>${baseUrl}/diploma/enroll</loc></url>
   `;
 
   // Blogs

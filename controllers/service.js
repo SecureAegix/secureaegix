@@ -16,3 +16,10 @@ module.exports.incidentResponse = async (req, res) => {
 module.exports.redTeamOperations = async (req, res) => {
 	res.render("services/redTeamOperations");
 }	
+
+module.exports.socService = async (req, res) => {
+	res.render("services/soc.ejs");
+}
+module.exports.grcService = async (req, res) => {
+	res.render("services/grc.ejs");
+}

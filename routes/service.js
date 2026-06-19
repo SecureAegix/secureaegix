@@ -7,4 +7,6 @@ router.get("/penetration-testing", serviceController.penetrationTesting);
 router.get("/vulnerability-assessment", serviceController.vulnerabilityAssessment);
 router.get("/incident-response", serviceController.incidentResponse);
 router.get("/red-team", serviceController.redTeamOperations);
+router.get("/soc", serviceController.socService)
+router.get("/grc", serviceController.grcService)
 module.exports = router;

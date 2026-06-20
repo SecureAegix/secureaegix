@@ -467,7 +467,7 @@ module.exports.welComeEmail = async ({ name, email }) => {
           - Account status: Verified & Active
           
           🚀 GET STARTED:
-          Visit your dashboard: ${process.env.DOMAIN || "https://secureaegix.com"}/dashboard
+          Visit your dashboard: ${process.env.DOMAIN || "https://secureaegix.com"}/
           
           📚 OUR OFFERINGS:
           • Cybersecurity Courses (Ethical Hacking, Network Security, etc.)

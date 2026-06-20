@@ -500,7 +500,7 @@ async function sendWelcomeEmail(user) {
         </div>
         
         <div style="text-align: center;">
-          <a href="${domain}/dashboard" class="cta-button">
+          <a href="${domain}/" class="cta-button">
             🎯 Access Your Dashboard
           </a>
         </div>

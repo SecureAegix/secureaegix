@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate") -%>
 
-<!-- ===================== STYLES ===================== -->
+<!-- ===================== STYLES (only what Tailwind can't do) ===================== -->
 <style>
     .text-gradient {
         background: linear-gradient(135deg, #2563eb, #06b6d4);
@@ -16,13 +16,63 @@
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
 
-    /* Team flip card */
-    .team-card-wrapper { perspective: 1100px; }
-    .team-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-style: preserve-3d; }
-    .team-card-wrapper:hover .team-card-inner,
-    .team-card-wrapper:focus-within .team-card-inner { transform: rotateY(180deg); }
-    .team-card-front, .team-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1.25rem; overflow: hidden; }
-    .team-card-back { transform: rotateY(180deg); }
+    /* Team flip card (desktop only) */
+    .team-card-wrapper { perspective: 1200px; height: 390px; }
+    .team-card-inner {
+        position: relative; width: 100%; height: 100%;
+        transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+        transform-style: preserve-3d;
+    }
+    @media (min-width: 768px) {
+        .team-card-wrapper:hover .team-card-inner,
+        .team-card-wrapper:focus-within .team-card-inner { transform: rotateY(180deg); }
+    }
+
+    .team-card-front, .team-card-back {
+        position: absolute; width: 100%; height: 100%;
+        -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        border-radius: 1.5rem; overflow: hidden;
+        box-shadow: 0 15px 35px -8px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.02);
+        transition: box-shadow 0.3s ease;
+    }
+    @media (min-width: 768px) {
+        .team-card-wrapper:hover .team-card-front { box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2); }
+    }
+
+    .team-card-front .avatar-ring { transition: box-shadow 0.3s ease; }
+    @media (min-width: 768px) {
+        .team-card-wrapper:hover .avatar-ring { box-shadow: 0 0 0 6px rgba(59,130,246,0.2), 0 0 25px rgba(59,130,246,0.15); }
+    }
+
+    .team-card-back {
+        transform: rotateY(180deg);
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        text-align: center; padding: 1.5rem;
+    }
+
+    /* On mobile, disable 3D flip; only show mobile card */
+    @media (max-width: 767px) {
+        .team-card-wrapper {
+            perspective: none;
+            height: auto !important;
+            width: 280px !important;
+        }
+        .team-card-inner { transform: none !important; transition: none !important; }
+        .team-card-front,
+        .team-card-back { display: none !important; }
+    }
+
+    /* Team scroll row — snap + hidden scrollbar */
+    .team-scroll-row {
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .team-scroll-row::-webkit-scrollbar { display: none; width: 0; height: 0; }
+    .team-scroll-row::-webkit-scrollbar-corner { display: none; background: transparent; }
+    .team-scroll-row > * { scroll-snap-align: start; flex-shrink: 0; }
 
     /* Marquee */
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -30,10 +80,7 @@
     .marquee-track:hover { animation-play-state: paused; }
 
     /* Cert badge */
-    .cert-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 9999px; }
-
-    /* Glow hover */
-    .glow-card:hover { box-shadow: 0 0 0 2px #3b82f6, 0 20px 50px rgba(37,99,235,0.12); }
+    .cert-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 9999px; white-space: nowrap; }
 
     /* FAQ */
     .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
@@ -45,12 +92,15 @@
     @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     .animate-float { animation: floatY 5s ease-in-out infinite; }
 
-    /* Section padding */
-    .section-pad { padding-top: 5rem; padding-bottom: 5rem; }
-    @media(max-width:640px){ .section-pad { padding-top: 3rem; padding-bottom: 3rem; } }
+    /* Swipe hint nudge */
+    @keyframes swipeNudge {
+        0%, 100% { transform: translateX(0); }
+        50%      { transform: translateX(-8px); }
+    }
+    .swipe-nudge { animation: swipeNudge 1.6s ease-in-out infinite; }
 
     @media (prefers-reduced-motion: reduce) {
-        .reveal, .team-card-inner, .marquee-track, .animate-float { transition: none !important; animation: none !important; }
+        .reveal, .team-card-inner, .marquee-track, .animate-float, .swipe-nudge { transition: none !important; animation: none !important; }
     }
 </style>
 
@@ -87,10 +137,8 @@
     </div>
 </section>
 
-
-
 <!-- ===================== OUR STORY ===================== -->
-<section class="section-pad bg-white dark:bg-gray-900">
+<section class="py-20 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-14 items-center">
             <div class="space-y-6 reveal">
@@ -130,17 +178,17 @@
 </section>
 
 <!-- ===================== MISSION & VISION ===================== -->
-<section class="section-pad bg-gray-50 dark:bg-gray-800">
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 group glow-card reveal">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md hover:shadow-xl hover:ring-2 hover:ring-blue-500 transition-all duration-300 group reveal">
                 <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <i class="fas fa-bullseye text-3xl text-blue-600 dark:text-blue-400"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Mission</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed">To democratize cybersecurity education by providing affordable, high-quality training that bridges the gap between theory and practice, preparing students for successful careers in information security.</p>
             </div>
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 group glow-card reveal reveal-delay-2">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-md hover:shadow-xl hover:ring-2 hover:ring-blue-500 transition-all duration-300 group reveal reveal-delay-2">
                 <div class="w-16 h-16 bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <i class="fas fa-eye text-3xl text-cyan-600 dark:text-cyan-400"></i>
                 </div>
@@ -152,7 +200,7 @@
 </section>
 
 <!-- ===================== CORE VALUES ===================== -->
-<section class="section-pad bg-white dark:bg-gray-900">
+<section class="py-20 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 reveal">
             <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Core Values</span>
@@ -193,27 +241,32 @@
 </section>
 
 <!-- ===================== LEADERSHIP TEAM ===================== -->
-<section id="team" class="section-pad bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800">
+<section id="team" class="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14 reveal">
             <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 rounded-full inline-block">Leadership</span>
             <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mt-4 mb-3">Meet Our <span class="text-gradient">Team</span></h2>
-            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Hover over a card to learn more about each member</p>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+                <span class="hidden md:inline">Hover over a card to learn more · Swipe or use the arrows below</span>
+                <span class="md:hidden">Swipe through the cards to meet everyone</span>
+            </p>
         </div>
 
-        <!-- Team Cards: all three use the same centered flip-card design -->
-        <div class="flex flex-wrap justify-center gap-8">
-            <!-- CEO Card -->
-            <div class="team-card-wrapper w-full max-w-sm reveal" tabindex="0" style="height: 380px;">
+        <!-- ===== 5 CARDS IN A HORIZONTAL SCROLLABLE ROW ===== -->
+        <div class="team-scroll-row flex flex-nowrap gap-6 overflow-x-auto pt-2 pb-6 px-1">
+
+            <!-- 1. CEO Card -->
+            <div class="team-card-wrapper w-[300px] reveal" tabindex="0">
                 <div class="team-card-inner">
-                    <!-- Front -->
-                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+
+                    <!-- DESKTOP FRONT -->
+                    <div class="team-card-front bg-white dark:bg-gray-900 flex-col items-center justify-center text-center p-6 hidden md:flex">
                         <div class="relative mb-4">
-                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-pink-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                            <div class="avatar-ring w-28 h-28 rounded-full overflow-hidden ring-4 ring-pink-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
                                 <img src="/images/team-members/ceo.png" alt="Aditi Kumari" class="w-full h-full object-cover object-top">
                             </div>
                             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                                <div class="inline-flex items-center gap-1 bg-pink-500 rounded-full px-2.5 py-0.5">
+                                <div class="inline-flex items-center gap-1 bg-pink-500 rounded-full px-2.5 py-0.5 shadow-md">
                                     <i class="fas fa-crown text-white text-[10px]"></i>
                                     <span class="text-[10px] font-semibold text-white">CEO & Founder</span>
                                 </div>
@@ -227,32 +280,64 @@
                         </div>
                         <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
                     </div>
-                    <!-- Back -->
-                    <div class="team-card-back bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 flex flex-col items-center justify-center text-center">
+
+                    <!-- MOBILE UNIFIED CARD -->
+                    <div class="md:hidden bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden ring-1 ring-gray-100 dark:ring-gray-800">
+                        <div class="relative h-24 bg-gradient-to-br from-pink-500 to-rose-600">
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2">
+                                <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-white dark:ring-gray-900 shadow-xl bg-white">
+                                    <img src="/images/team-members/ceo.png" alt="Aditi Kumari" class="w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur rounded-full px-2 py-0.5 text-[10px] font-semibold text-pink-700">
+                                    <i class="fas fa-crown text-[9px]"></i> CEO
+                                </span>
+                            </div>
+                        </div>
+                        <div class="pt-14 pb-5 px-5 text-center">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Aditi Kumari</h3>
+                            <p class="text-pink-600 dark:text-pink-400 text-sm mb-3">Founder & CEO</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                                Passionate entrepreneur making cybersecurity education accessible to all. Leads SecureAegix's vision and strategy.
+                            </p>
+                            <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                                <span class="cert-badge bg-pink-100 dark:bg-pink-900/30 text-pink-700">Visionary Leader</span>
+                                <span class="cert-badge bg-rose-100 dark:bg-rose-900/30 text-rose-700">Women in Tech</span>
+                            </div>
+                            <a href="/contact" class="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                                Connect <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- DESKTOP BACK -->
+                    <div class="team-card-back bg-gradient-to-br from-pink-600 to-rose-700 text-white hidden md:flex">
                         <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
                             <i class="fas fa-crown text-pink-200 text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-1">Aditi Kumari</h3>
                         <p class="text-pink-200 text-sm mb-3">Founder & CEO</p>
                         <p class="text-white/90 text-sm leading-relaxed mb-4">Passionate entrepreneur making cybersecurity education accessible to all. Leads SecureAegix's vision and strategy with a community-first approach.</p>
-                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-pink-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-pink-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all shadow-lg">
                             Connect <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Director Card -->
-            <div class="team-card-wrapper w-full max-w-sm reveal reveal-delay-1" tabindex="0" style="height: 380px;">
+            <!-- 2. Director Card -->
+            <div class="team-card-wrapper w-[300px] reveal reveal-delay-1" tabindex="0">
                 <div class="team-card-inner">
-                    <!-- Front -->
-                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+
+                    <div class="team-card-front bg-white dark:bg-gray-900 flex-col items-center justify-center text-center p-6 hidden md:flex">
                         <div class="relative mb-4">
-                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-cyan-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                            <div class="avatar-ring w-28 h-28 rounded-full overflow-hidden ring-4 ring-cyan-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
                                 <img src="/images/team-members/director.png" alt="Rahul Kumar" class="w-full h-full object-cover object-top">
                             </div>
                             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                                <div class="inline-flex items-center gap-1 bg-cyan-500 rounded-full px-2.5 py-0.5">
+                                <div class="inline-flex items-center gap-1 bg-cyan-500 rounded-full px-2.5 py-0.5 shadow-md">
                                     <i class="fas fa-user-shield text-white text-[10px]"></i>
                                     <span class="text-[10px] font-semibold text-white">Director</span>
                                 </div>
@@ -267,8 +352,38 @@
                         </div>
                         <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
                     </div>
-                    <!-- Back -->
-                    <div class="team-card-back bg-gradient-to-br from-cyan-700 to-blue-700 text-white p-6 flex flex-col items-center justify-center text-center">
+
+                    <div class="md:hidden bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden ring-1 ring-gray-100 dark:ring-gray-800">
+                        <div class="relative h-24 bg-gradient-to-br from-cyan-500 to-blue-600">
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2">
+                                <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-white dark:ring-gray-900 shadow-xl bg-white">
+                                    <img src="/images/team-members/director.png" alt="Rahul Kumar" class="w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur rounded-full px-2 py-0.5 text-[10px] font-semibold text-cyan-700">
+                                    <i class="fas fa-user-shield text-[9px]"></i> Director
+                                </span>
+                            </div>
+                        </div>
+                        <div class="pt-14 pb-5 px-5 text-center">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Rahul Kumar</h3>
+                            <p class="text-cyan-600 dark:text-cyan-400 text-sm mb-3">Director of Training</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                                8+ years in offensive security, designing curriculum that bridges real-world attack techniques with exam readiness.
+                            </p>
+                            <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                                <span class="cert-badge bg-red-100 dark:bg-red-900/30 text-red-700">OSCP</span>
+                                <span class="cert-badge bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700">CRTO</span>
+                                <span class="cert-badge bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700">CRTP</span>
+                            </div>
+                            <a href="/contact" class="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                                Connect <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team-card-back bg-gradient-to-br from-cyan-700 to-blue-700 text-white hidden md:flex">
                         <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
                             <i class="fas fa-user-shield text-cyan-200 text-2xl"></i>
                         </div>
@@ -280,24 +395,25 @@
                             <span class="cert-badge bg-white/20 text-white">CRTO</span>
                             <span class="cert-badge bg-white/20 text-white">CRTP</span>
                         </div>
-                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-cyan-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-cyan-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all shadow-lg">
                             Connect <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Jeetu Singh (Security Expert) Card -->
-            <div class="team-card-wrapper w-full max-w-sm reveal reveal-delay-2" tabindex="0" style="height: 380px;">
+            <!-- 3. Shailendra -->
+            <div class="team-card-wrapper w-[300px] reveal reveal-delay-2" tabindex="0">
                 <div class="team-card-inner">
-                    <!-- Front -->
-                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+
+                    <div class="team-card-front bg-white dark:bg-gray-900 flex-col items-center justify-center text-center p-6 hidden md:flex">
                         <div class="relative mb-4">
-                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-emerald-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                            <div class="avatar-ring w-28 h-28 rounded-full overflow-hidden ring-4 ring-emerald-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
                                 <img src="/images/team-members/jeetu-team-member2.png" alt="Shailendra Pratap Singh" class="w-full h-full object-cover object-top">
                             </div>
                             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                                <div class="inline-flex items-center gap-1 bg-emerald-500 rounded-full px-2.5 py-0.5">
+                                <div class="inline-flex items-center gap-1 bg-emerald-500 rounded-full px-2.5 py-0.5 shadow-md">
                                     <i class="fas fa-shield-halved text-white text-[10px]"></i>
                                     <span class="text-[10px] font-semibold text-white">Security Analyst</span>
                                 </div>
@@ -312,37 +428,68 @@
                         </div>
                         <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
                     </div>
-                    <!-- Back -->
-                    <div class="team-card-back bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-6 flex flex-col items-center justify-center text-center">
+
+                    <div class="md:hidden bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden ring-1 ring-gray-100 dark:ring-gray-800">
+                        <div class="relative h-24 bg-gradient-to-br from-emerald-500 to-teal-600">
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2">
+                                <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-white dark:ring-gray-900 shadow-xl bg-white">
+                                    <img src="/images/team-members/jeetu-team-member2.png" alt="Shailendra Pratap Singh" class="w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur rounded-full px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                                    <i class="fas fa-shield-halved text-[9px]"></i> Analyst
+                                </span>
+                            </div>
+                        </div>
+                        <div class="pt-14 pb-5 px-5 text-center">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Shailendra Pratap Singh</h3>
+                            <p class="text-emerald-600 dark:text-emerald-400 text-sm mb-3">Security Expert</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                                Certified penetration testing specialist holding CPTS, CPENT, and CEH credentials with hands-on offensive security expertise.
+                            </p>
+                            <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                                <span class="cert-badge bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700">CPTS</span>
+                                <span class="cert-badge bg-teal-100 dark:bg-teal-900/30 text-teal-700">CPENT</span>
+                                <span class="cert-badge bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700">CEH</span>
+                            </div>
+                            <a href="/contact" class="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                                Connect <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team-card-back bg-gradient-to-br from-emerald-600 to-teal-700 text-white hidden md:flex">
                         <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
                             <i class="fas fa-shield-halved text-emerald-200 text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-1">Shailendra Pratap Singh</h3>
-                        <p class="text-emerald-200 text-sm mb-3">Security Expert & Team Member</p>
+                        <p class="text-emerald-200 text-sm mb-3">Security Expert</p>
                         <p class="text-white/90 text-sm leading-relaxed mb-4">A certified penetration testing specialist holding CPTS, CPENT, and CEH credentials — bringing hands-on offensive security expertise to the SecureAegix team.</p>
                         <div class="flex flex-wrap justify-center gap-1.5 mb-5">
                             <span class="cert-badge bg-white/20 text-white">CPTS</span>
                             <span class="cert-badge bg-white/20 text-white">CPENT</span>
                             <span class="cert-badge bg-white/20 text-white">CEH</span>
                         </div>
-                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-emerald-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-emerald-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all shadow-lg">
                             Connect <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Roshan Choudhary (Extertise in Web pentesting.) -->
-             <div class="team-card-wrapper w-full max-w-sm reveal reveal-delay-3" tabindex="0" style="height: 380px;">
+            <!-- 4. Roshan -->
+            <div class="team-card-wrapper w-[300px] reveal reveal-delay-3" tabindex="0">
                 <div class="team-card-inner">
-                    <!-- Front -->
-                    <div class="team-card-front bg-white dark:bg-gray-900 shadow-lg flex flex-col items-center justify-center text-center p-6">
+
+                    <div class="team-card-front bg-white dark:bg-gray-900 flex-col items-center justify-center text-center p-6 hidden md:flex">
                         <div class="relative mb-4">
-                            <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-yellow-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                            <div class="avatar-ring w-28 h-28 rounded-full overflow-hidden ring-4 ring-yellow-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
                                 <img src="/images/team-members/roshan-team-member1.png" alt="Roshan Choudhary" class="w-full h-full object-cover object-top">
                             </div>
                             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                                <div class="inline-flex items-center gap-1 bg-yellow-500 rounded-full px-2.5 py-0.5">
+                                <div class="inline-flex items-center gap-1 bg-yellow-500 rounded-full px-2.5 py-0.5 shadow-md">
                                     <i class="fas fa-code text-white text-[10px]"></i>
                                     <span class="text-[10px] font-semibold text-white">Web Pentester</span>
                                 </div>
@@ -350,36 +497,150 @@
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-3">Roshan Choudhary</h3>
                         <p class="text-yellow-600 dark:text-yellow-400 text-sm mb-3">Team Member</p>
-                        <!-- <div class="flex flex-wrap justify-center gap-1.5 mb-4">
-                            <span class="cert-badge bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700">OSWE</span>
-                            <span class="cert-badge bg-orange-100 dark:bg-orange-900/30 text-orange-700">eWPTX</span>
-                            <span class="cert-badge bg-red-100 dark:bg-red-900/30 text-red-700">eWPT</span>
-                        </div> -->
                         <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
                     </div>
-                    <!-- Back -->
-                    <div class="team-card-back bg-gradient-to-br from-yellow-600 to-orange-700 text-white p-6 flex flex-col items-center justify-center text-center">
+
+                    <div class="md:hidden bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden ring-1 ring-gray-100 dark:ring-gray-800">
+                        <div class="relative h-24 bg-gradient-to-br from-yellow-500 to-orange-600">
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2">
+                                <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-white dark:ring-gray-900 shadow-xl bg-white">
+                                    <img src="/images/team-members/roshan-team-member1.png" alt="Roshan Choudhary" class="w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur rounded-full px-2 py-0.5 text-[10px] font-semibold text-yellow-700">
+                                    <i class="fas fa-code text-[9px]"></i> Web Pentester
+                                </span>
+                            </div>
+                        </div>
+                        <div class="pt-14 pb-5 px-5 text-center">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Roshan Choudhary</h3>
+                            <p class="text-yellow-600 dark:text-yellow-400 text-sm mb-3">Web Pentester</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                                Offensive security specialist with expertise in web application penetration testing and deep technical research.
+                            </p>
+                            <a href="/contact" class="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-gradient-to-r from-yellow-600 to-orange-600 text-white rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                                Connect <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team-card-back bg-gradient-to-br from-yellow-600 to-orange-700 text-white hidden md:flex">
                         <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
                             <i class="fas fa-code text-yellow-200 text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-1">Roshan Choudhary</h3>
-                        <p class="text-yellow-200 text-sm mb-3">Web Pentester & Team Member</p>
+                        <p class="text-yellow-200 text-sm mb-3">Web Pentester</p>
                         <p class="text-white/90 text-sm leading-relaxed mb-4">An offensive security specialist with expertise in web application penetration testing — contributing deep technical knowledge to our training programs.</p>
-                        <!-- <div class="flex flex-wrap justify-center gap-1.5 mb-5">    
-                            <span class="cert-badge bg-white/20 text-white">OSWE</span>
-                            <span class="cert-badge bg-white/20 text-white">eWPTX</span>
-                            <span class="cert-badge bg-white/20 text-white">eWPT</span>
-                        </div>   -->
-                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-yellow-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all">
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-yellow-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all shadow-lg">
                             Connect <i class="fas fa-arrow-right"></i>
-                        </a>    
+                        </a>
                     </div>
+
                 </div>
             </div>
-            
+
+            <!-- 5. Aman Prasad -->
+            <div class="team-card-wrapper w-[300px] reveal reveal-delay-3" tabindex="0">
+                <div class="team-card-inner">
+
+                    <div class="team-card-front bg-white dark:bg-gray-900 flex-col items-center justify-center text-center p-6 hidden md:flex">
+                        <div class="relative mb-4">
+                            <div class="avatar-ring w-28 h-28 rounded-full overflow-hidden ring-4 ring-indigo-400 ring-offset-4 ring-offset-white dark:ring-offset-gray-900 shadow-xl">
+                                <img src="/images/team-members/aman-prasad-team-member-3.png" alt="Aman Prasad" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                <div class="inline-flex items-center gap-1 bg-indigo-500 rounded-full px-2.5 py-0.5 shadow-md">
+                                    <i class="fas fa-user-secret text-white text-[10px]"></i>
+                                    <span class="text-[10px] font-semibold text-white">Security Analyst</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-3">Aman Prasad</h3>
+                        <p class="text-indigo-600 dark:text-indigo-400 text-sm mb-3">Team Member</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                            <span class="cert-badge bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700">eJPT</span>
+                            <span class="cert-badge bg-blue-100 dark:bg-blue-900/30 text-blue-700">CRTO</span>
+                        </div>
+                        <p class="text-xs text-blue-500 dark:text-blue-400">Hover to see more →</p>
+                    </div>
+
+                    <div class="md:hidden bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden ring-1 ring-gray-100 dark:ring-gray-800">
+                        <div class="relative h-24 bg-gradient-to-br from-indigo-500 to-purple-600">
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2">
+                                <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-white dark:ring-gray-900 shadow-xl bg-white">
+                                    <img src="/images/team-members/aman-prasad-team-member-3.png" alt="Aman Prasad" class="w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur rounded-full px-2 py-0.5 text-[10px] font-semibold text-indigo-700">
+                                    <i class="fas fa-user-secret text-[9px]"></i> Analyst
+                                </span>
+                            </div>
+                        </div>
+                        <div class="pt-14 pb-5 px-5 text-center">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Aman Prasad</h3>
+                            <p class="text-indigo-600 dark:text-indigo-400 text-sm mb-3">Security Analyst</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                                Certified in eJPT and CRTO, bringing strong practical skills in red team operations and vulnerability assessment.
+                            </p>
+                            <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                                <span class="cert-badge bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700">eJPT</span>
+                                <span class="cert-badge bg-blue-100 dark:bg-blue-900/30 text-blue-700">CRTO</span>
+                            </div>
+                            <a href="/contact" class="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                                Connect <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team-card-back bg-gradient-to-br from-indigo-600 to-purple-700 text-white hidden md:flex">
+                        <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-user-secret text-indigo-200 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Aman Prasad</h3>
+                        <p class="text-indigo-200 text-sm mb-3">Security Analyst</p>
+                        <p class="text-white/90 text-sm leading-relaxed mb-3">Certified in eJPT and CRTO, Aman brings strong practical skills in red team operations and vulnerability assessment to the SecureAegix team.</p>
+                        <div class="flex flex-wrap justify-center gap-1.5 mb-5">
+                            <span class="cert-badge bg-white/20 text-white">eJPT</span>
+                            <span class="cert-badge bg-white/20 text-white">CRTO</span>
+                        </div>
+                        <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2 bg-white text-indigo-700 rounded-xl text-sm font-semibold hover:scale-105 transition-all shadow-lg">
+                            Connect <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /team-scroll-row -->
+
+        <!-- ===== SCROLL CONTROLS (Tailwind only) ===== -->
+        <div class="flex items-center justify-center gap-3 mt-2">
+            <button type="button"
+                    id="teamScrollLeft"
+                    aria-label="Scroll team cards left"
+                    class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-300 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all duration-200 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-white dark:disabled:hover:bg-gray-800 disabled:hover:text-blue-600 dark:disabled:hover:text-blue-300">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div id="teamScrollDots" class="flex items-center gap-2"></div>
+
+            <button type="button"
+                    id="teamScrollRight"
+                    aria-label="Scroll team cards right"
+                    class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-300 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all duration-200 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-white dark:disabled:hover:bg-gray-800 disabled:hover:text-blue-600 dark:disabled:hover:text-blue-300">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
 
-        <div class="text-center mt-12 reveal">
+        <!-- Swipe hint (mobile only) -->
+        <div id="teamSwipeHint" class="flex md:hidden items-center justify-center gap-2 mt-4 text-xs text-gray-500 dark:text-gray-400">
+            <i class="fas fa-hand-point-right swipe-nudge"></i>
+            <span>Swipe to see more team members</span>
+        </div>
+
+        <div class="text-center mt-10 reveal">
             <div class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-full border border-blue-200 dark:border-blue-800">
                 <i class="fas fa-hand-peace text-blue-600"></i>
                 <span class="text-sm text-gray-700 dark:text-gray-300">Together, we're building the future of cybersecurity education</span>
@@ -389,7 +650,7 @@
 </section>
 
 <!-- ===================== MILESTONES ===================== -->
-<section class="section-pad bg-gray-50 dark:bg-gray-800">
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 reveal">
             <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Our Journey</span>
@@ -397,7 +658,7 @@
             <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">As a growing startup, proud of what we've achieved so far</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal">
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group reveal">
                 <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-all">
                     <i class="fas fa-users text-blue-600 group-hover:text-white text-lg transition-all"></i>
                 </div>
@@ -406,7 +667,7 @@
                     <p class="text-gray-500 dark:text-gray-400 text-sm">Building a community of passionate cybersecurity learners across India</p>
                 </div>
             </div>
-            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal reveal-delay-1">
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group reveal reveal-delay-1">
                 <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-600 transition-all">
                     <i class="fas fa-certificate text-cyan-600 group-hover:text-white text-lg transition-all"></i>
                 </div>
@@ -415,7 +676,7 @@
                     <p class="text-gray-500 dark:text-gray-400 text-sm">Offering industry-recognized certification programs from beginner to expert level</p>
                 </div>
             </div>
-            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal reveal-delay-2">
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group reveal reveal-delay-2">
                 <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600 transition-all">
                     <i class="fas fa-trophy text-purple-600 group-hover:text-white text-lg transition-all"></i>
                 </div>
@@ -424,7 +685,7 @@
                     <p class="text-gray-500 dark:text-gray-400 text-sm">Committed to providing high-quality, hands-on cybersecurity training</p>
                 </div>
             </div>
-            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group glow-card reveal reveal-delay-3">
+            <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl hover:shadow-xl transition-all group reveal reveal-delay-3">
                 <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-green-600 transition-all">
                     <i class="fas fa-globe text-green-600 group-hover:text-white text-lg transition-all"></i>
                 </div>
@@ -438,7 +699,7 @@
 </section>
 
 <!-- ===================== WHY CHOOSE US ===================== -->
-<section class="section-pad bg-white dark:bg-gray-900">
+<section class="py-20 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 reveal">
             <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Why Choose Us</span>
@@ -493,7 +754,7 @@
 </section>
 
 <!-- ===================== TEAM CULTURE ===================== -->
-<section class="section-pad bg-gray-50 dark:bg-gray-800">
+<section class="py-20 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 reveal">
             <span class="text-sm text-blue-600 dark:text-blue-400 font-semibold tracking-widest uppercase">Our Culture</span>
@@ -526,7 +787,6 @@
     </div>
 </section>
 
-
 <!-- ===================== CTA ===================== -->
 <section class="py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none">
@@ -534,7 +794,7 @@
         <div class="absolute bottom-[-40px] left-[-40px] w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
     </div>
     <div class="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 reveal">
-        <h2 class="text-3xl   text-white mb-4"><b>Ready to Start Your Journey?</b></h2>
+        <h2 class="text-3xl text-white mb-4"><b>Ready to Start Your Journey?</b></h2>
         <p class="text-lg text-white/90 mb-10">Join our growing community of cybersecurity professionals across India</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/courses" class="inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-white text-blue-700 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300">
@@ -549,8 +809,6 @@
 
 <!-- ===================== SCRIPTS ===================== -->
 <script>
-
-
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
@@ -586,4 +844,69 @@ function toggleFaq(btn) {
     document.querySelectorAll('.faq-icon.open').forEach(i => i.classList.remove('open'));
     if(!isOpen){ body.classList.add('open'); icon.classList.add('open'); }
 }
+
+// ===================== TEAM SCROLL CONTROLS =====================
+(function () {
+    const scroller  = document.querySelector('.team-scroll-row');
+    if (!scroller) return;
+
+    const leftBtn   = document.getElementById('teamScrollLeft');
+    const rightBtn  = document.getElementById('teamScrollRight');
+    const dotsWrap  = document.getElementById('teamScrollDots');
+    const hint      = document.getElementById('teamSwipeHint');
+    const cards     = scroller.querySelectorAll('.team-card-wrapper');
+    const GAP       = 24; // matches gap-6 (1.5rem)
+
+    // Build dots
+    cards.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'team-dot w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all duration-300';
+        dot.setAttribute('aria-label', `Go to team member ${i + 1}`);
+        dot.addEventListener('click', () => {
+            cards[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        });
+        dotsWrap.appendChild(dot);
+    });
+
+    function scrollByCard(dir) {
+        const card = cards[0];
+        if (!card) return;
+        const amount = card.offsetWidth + GAP;
+        scroller.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+
+    leftBtn.addEventListener('click',  () => scrollByCard(-1));
+    rightBtn.addEventListener('click', () => scrollByCard(1));
+
+    function updateUI() {
+        const { scrollLeft, scrollWidth, clientWidth } = scroller;
+
+        leftBtn.disabled  = scrollLeft <= 2;
+        rightBtn.disabled = scrollLeft + clientWidth >= scrollWidth - 2;
+
+        const cardW = (cards[0]?.offsetWidth || 0) + GAP;
+        const activeIndex = Math.round(scrollLeft / cardW);
+
+        dotsWrap.querySelectorAll('.team-dot').forEach((d, i) => {
+            const active = i === activeIndex;
+            d.classList.toggle('bg-blue-600',   active);
+            d.classList.toggle('dark:bg-blue-400', active);
+            d.classList.toggle('scale-125',     active);
+            d.classList.toggle('bg-gray-300',   !active);
+            d.classList.toggle('dark:bg-gray-600', !active);
+        });
+    }
+
+    scroller.addEventListener('scroll', updateUI, { passive: true });
+    window.addEventListener('resize', updateUI);
+    updateUI();
+
+    // Hide swipe hint after first interaction (mobile)
+    if (hint) {
+        const hideHint = () => { hint.style.display = 'none'; };
+        scroller.addEventListener('scroll', hideHint, { once: true, passive: true });
+        scroller.addEventListener('touchstart', hideHint, { once: true, passive: true });
+    }
+})();
 </script>

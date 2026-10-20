@@ -1,5 +1,5 @@
 (() => {
-  const csrfToken =
+  let csrfToken =
     document.querySelector('meta[name="csrf-token"]')?.content || "";
   const siteKey =
     document.querySelector('meta[name="captcha-site-key"]')?.content || "";
@@ -9,19 +9,30 @@
 
   const spinnerStyles = document.createElement("style");
   spinnerStyles.textContent = `
+    button.secureaegix-button-loading {
+      position: relative;
+      color: transparent !important;
+    }
+    button.secureaegix-button-loading > * {
+      visibility: hidden !important;
+    }
     .secureaegix-button-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       display: inline-block;
       width: 0.9em;
       height: 0.9em;
-      margin-left: 0.5em;
-      vertical-align: -0.1em;
-      border: 2px solid currentColor;
+      margin: 0 !important;
+      transform: translate(-50%, -50%);
+      border: 2px solid;
       border-right-color: transparent;
       border-radius: 50%;
       animation: secureaegix-spin 0.7s linear infinite;
+      visibility: visible !important;
     }
     @keyframes secureaegix-spin {
-      to { transform: rotate(360deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
     }
   `;
   document.head.appendChild(spinnerStyles);
@@ -31,19 +42,30 @@
     let spinner = button.querySelector(":scope > .secureaegix-button-spinner");
     if (loading) {
       if (!spinner) {
+        const buttonColor = window.getComputedStyle(button).color;
         spinner = document.createElement("span");
         spinner.className = "secureaegix-button-spinner";
         spinner.setAttribute("aria-hidden", "true");
+        spinner.style.borderColor = buttonColor;
+        spinner.style.borderRightColor = "transparent";
         button.appendChild(spinner);
       }
+      button.classList.add("secureaegix-button-loading");
       button.setAttribute("aria-busy", "true");
     } else {
       spinner?.remove();
+      button.classList.remove("secureaegix-button-loading");
       button.removeAttribute("aria-busy");
     }
   };
 
   window.setSecureButtonLoading = setButtonLoading;
+  window.updateCsrfToken = (token) => {
+    if (typeof token !== "string" || !token) return;
+    csrfToken = token;
+    const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+    if (csrfMeta) csrfMeta.content = token;
+  };
 
   window.showSecureFlash = (message, kind = "success") => {
     let root = document.getElementById("secureaegix-client-flash");

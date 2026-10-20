@@ -27,6 +27,11 @@ const publicPages = [
   { title: "GRC Advisory", url: "/services/grc", description: "Learn about governance, risk, and compliance advisory.", terms: ["service", "grc", "governance", "risk", "compliance"] },
 ];
 
+router.get("/api/csrf-token", (req, res) => {
+  res.set("Cache-Control", "no-store");
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 const stopWords = new Set([
   "a", "about", "an", "and", "are", "can", "do", "for", "from", "give", "how", "i",
   "in", "is", "it", "me", "of", "on", "our", "please", "show", "the", "to", "we",

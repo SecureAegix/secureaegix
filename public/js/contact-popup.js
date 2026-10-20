@@ -233,18 +233,35 @@ document.addEventListener("DOMContentLoaded", () => {
     chatSend.disabled = true;
 
     try {
-      const response = await fetch("/api/chat", {
+      const payload = JSON.stringify({ message, history: history.slice(-8) });
+      const sendChatMessage = (csrfToken) => fetch("/api/chat", {
         method: "POST",
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "X-CSRF-Token":
-            document.querySelector('meta[name="csrf-token"]')?.content || ""
+          "X-CSRF-Token": csrfToken
         },
-        body: JSON.stringify({ message, history: history.slice(-8) })
+        body: payload
       });
-      const result = await response.json();
+      let response = await sendChatMessage(
+        document.querySelector('meta[name="csrf-token"]')?.content || "",
+      );
+      let result = await response.json();
+      if (response.status === 403 && result.code === "CSRF_TOKEN_INVALID") {
+        const tokenResponse = await fetch("/api/csrf-token", {
+          credentials: "same-origin",
+          headers: { "Accept": "application/json" },
+          cache: "no-store",
+        });
+        const tokenResult = await tokenResponse.json();
+        if (!tokenResponse.ok || !tokenResult.csrfToken) {
+          throw new Error("Your session could not be refreshed. Please reload the page and try again.");
+        }
+        window.updateCsrfToken?.(tokenResult.csrfToken);
+        response = await sendChatMessage(tokenResult.csrfToken);
+        result = await response.json();
+      }
       if (!response.ok) throw new Error(result.message || "The assistant is temporarily unavailable.");
       addMessage(result.reply, "assistant");
       addRecommendations(result.recommendations);

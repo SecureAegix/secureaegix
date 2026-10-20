@@ -326,7 +326,11 @@ app.use((err, req, res, next) => {
       req.is("application/json") ||
       req.xhr
     ) {
-      return res.status(403).json({ success: false, message });
+      return res.status(403).json({
+        success: false,
+        code: "CSRF_TOKEN_INVALID",
+        message,
+      });
     }
     req.flash("error", message);
     const referer = req.get("referer");

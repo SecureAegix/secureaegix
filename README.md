@@ -41,3 +41,18 @@ A comprehensive cybersecurity training and certification platform offering indus
   topology; set it to `0` when the app is directly exposed.
 - Rate limits use an in-process store; deployments with multiple app instances
   should use a shared rate-limit store to enforce limits across all instances.
+
+## Chatbot model configuration
+
+- Set `GOOGLE_AI_API_KEY` for the Gemini API. The chatbot uses the Gemini Live
+  API over a server-side WebSocket and returns the model's text transcription
+  in the existing chat interface; the key is not sent to the browser.
+- By default, it tries `gemini-3.8-live`, then
+  `gemini-3.1-flash-live-preview` and
+  `gemini-2.5-flash-native-audio-preview-12-2025` if a model is unavailable
+  (`404`), reports a rate/quota (`429`), or temporary capacity (`503`) error.
+- Set `GOOGLE_AI_LIVE_MODELS` to a comma-separated list of Live API model IDs
+  enabled for your Google AI project to choose a different order or fallback.
+  Quota and billing limits still apply; switching models cannot bypass
+  project-wide limits. An "Unlimited" RPM display does not remove token,
+  throughput, or service availability limits.

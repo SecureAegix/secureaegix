@@ -292,7 +292,7 @@
     // Enter key submission
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && !loginButton.disabled) {
-            loginForm.dispatchEvent(new Event('submit'));
+            loginForm.requestSubmit();
         }
     });
 </script>

@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       status.className = "hidden rounded-lg px-3 py-2 text-sm";
       submitButton.disabled = true;
+      window.setSecureButtonLoading?.(submitButton, true);
 
       try {
         const response = await fetch(form.action, {
@@ -95,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         status.textContent = result.message;
         status.className = "rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200";
+        window.showSecureFlash?.(result.message, "success");
         try {
           nextShow = Date.now() + submissionDelay;
           localStorage.setItem(nextShowKey, String(nextShow));
@@ -108,8 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Contact popup submission failed:", error);
         status.textContent = error.message || "We couldn't send your details. Please try again.";
         status.className = "rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800 dark:bg-red-900/30 dark:text-red-200";
+        window.showSecureFlash?.(status.textContent, "error");
       } finally {
         submitButton.disabled = false;
+        window.setSecureButtonLoading?.(submitButton, false);
       }
     });
   }

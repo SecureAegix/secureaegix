@@ -43,6 +43,12 @@ function getSearchTerms(message) {
     .slice(0, 8);
 }
 
+function getCatalogIntent(message) {
+  const wantsCourses = /\b(courses?|training|certifications?|classes|enroll(?:ment)?|register)\b/i.test(message);
+  const wantsBlogs = /\b(blogs?|articles?|learning resources?)\b/i.test(message);
+  return { wantsCourses, wantsBlogs };
+}
+
 function toPublicRecommendations(courses, blogs, pages) {
   const courseLinks = courses.map((course) => ({
     type: "course",
@@ -77,39 +83,59 @@ router.post("/api/chat", chatLimiter, async (req, res) => {
   }
 
   try {
-    const terms = getSearchTerms(message.trim());
+    const normalizedMessage = message.trim().toLowerCase();
+    const { wantsCourses, wantsBlogs } = getCatalogIntent(normalizedMessage);
+    const terms = getSearchTerms(normalizedMessage).filter(
+      (term) =>
+        !/^(courses?|training|certifications?|classes|enroll(?:ment)?|register|blogs?|articles?|learning|resources?|show|find|search|recommend|suggest|give|me|some|any)$/i.test(
+          term,
+        ),
+    );
     const matcher = terms.length
       ? new RegExp(terms.map(escapeRegex).join("|"), "i")
       : null;
-    const [courses, blogs] = matcher
-      ? await Promise.all([
-        Course.find({
+    const [courses, blogs] = await Promise.all([
+      wantsCourses
+        ? Course.find({
           isActive: true,
-          $or: [
-            { title: matcher },
-            { shortDescription: matcher },
-            { courceType: matcher },
-            { courseLevel: matcher },
-          ],
-        }).select("title shortDescription courceType courseLevel price").limit(3).lean(),
-        Blog.find({
+          ...(matcher && {
+            $or: [
+              { title: matcher },
+              { shortDescription: matcher },
+              { courceType: matcher },
+              { courseLevel: matcher },
+            ],
+          }),
+        }).select("title shortDescription courceType courseLevel price").limit(3).lean()
+        : [],
+      wantsBlogs
+        ? Blog.find({
           blocked: false,
           isvalid: true,
-          $or: [
-            { title: matcher },
-            { shortdescription: matcher },
-            { category: matcher },
-            { Keywords: matcher },
-          ],
-        }).select("title id shortdescription category").limit(3).lean(),
-      ])
-      : [[], []];
+          ...(matcher && {
+            $or: [
+              { title: matcher },
+              { shortdescription: matcher },
+              { category: matcher },
+              { Keywords: matcher },
+            ],
+          }),
+        }).select("title id shortdescription category").limit(3).lean()
+        : [],
+    ]);
 
-    const normalizedMessage = message.trim().toLowerCase();
     const pages = publicPages.filter((page) =>
       page.terms.some((term) => normalizedMessage.includes(term)),
     );
-    const recommendations = toPublicRecommendations(courses, blogs, pages);
+    const recommendations = toPublicRecommendations(
+      courses,
+      blogs,
+      pages.filter(({ url }) => {
+        if (url === "/courses") return wantsCourses;
+        if (url === "/blogs") return wantsBlogs;
+        return true;
+      }),
+    );
     const quickAnswers = [
       {
         matches: /\b(contact|email|phone|call|whatsapp|support|help)\b/i,

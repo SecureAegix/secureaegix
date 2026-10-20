@@ -4,6 +4,101 @@
   const siteKey =
     document.querySelector('meta[name="captcha-site-key"]')?.content || "";
   const unsafeMethods = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+  let lastClickedButton;
+  let lastClickedAt = 0;
+
+  const spinnerStyles = document.createElement("style");
+  spinnerStyles.textContent = `
+    .secureaegix-button-spinner {
+      display: inline-block;
+      width: 0.9em;
+      height: 0.9em;
+      margin-left: 0.5em;
+      vertical-align: -0.1em;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: secureaegix-spin 0.7s linear infinite;
+    }
+    @keyframes secureaegix-spin {
+      to { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(spinnerStyles);
+
+  const setButtonLoading = (button, loading) => {
+    if (!(button instanceof HTMLButtonElement)) return;
+    let spinner = button.querySelector(":scope > .secureaegix-button-spinner");
+    if (loading) {
+      if (!spinner) {
+        spinner = document.createElement("span");
+        spinner.className = "secureaegix-button-spinner";
+        spinner.setAttribute("aria-hidden", "true");
+        button.appendChild(spinner);
+      }
+      button.setAttribute("aria-busy", "true");
+    } else {
+      spinner?.remove();
+      button.removeAttribute("aria-busy");
+    }
+  };
+
+  window.setSecureButtonLoading = setButtonLoading;
+
+  window.showSecureFlash = (message, kind = "success") => {
+    let root = document.getElementById("secureaegix-client-flash");
+    if (!root) {
+      root = document.createElement("div");
+      root.id = "secureaegix-client-flash";
+      root.className =
+        "pointer-events-none fixed inset-x-0 top-6 z-[10000] flex justify-center px-4";
+      root.setAttribute("aria-live", "polite");
+      root.setAttribute("aria-atomic", "true");
+      document.body.appendChild(root);
+    }
+    root.replaceChildren();
+
+    const toast = document.createElement("div");
+    const success = kind === "success";
+    toast.className = success
+      ? "pointer-events-auto flex max-w-lg items-start gap-3 rounded-xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500 to-green-600 px-5 py-4 text-white shadow-xl"
+      : "pointer-events-auto flex max-w-lg items-start gap-3 rounded-xl border border-rose-400/40 bg-gradient-to-r from-rose-500 to-red-600 px-5 py-4 text-white shadow-xl";
+
+    const icon = document.createElement("i");
+    icon.className = success
+      ? "fas fa-circle-check mt-0.5"
+      : "fas fa-circle-xmark mt-0.5";
+    icon.setAttribute("aria-hidden", "true");
+    const text = document.createElement("p");
+    text.className = "text-sm font-medium";
+    text.textContent = message;
+    toast.append(icon, text);
+    root.appendChild(toast);
+    window.setTimeout(() => toast.remove(), 8000);
+  };
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      const button =
+        event.target instanceof Element
+          ? event.target.closest("button")
+          : null;
+      if (!button || button.disabled) return;
+      lastClickedButton = button;
+      lastClickedAt = Date.now();
+      setButtonLoading(button, true);
+      window.setTimeout(() => {
+        if (
+          !button.dataset.secureRequestPending &&
+          !button.form?.dataset.secureCaptchaPending
+        ) {
+          setButtonLoading(button, false);
+        }
+      }, 900);
+    },
+    true,
+  );
 
   const addCsrfToken = (form) => {
     let input = form.querySelector('input[name="_csrf"]');
@@ -23,8 +118,17 @@
       if (!(form instanceof HTMLFormElement)) return;
 
       addCsrfToken(form);
+      const submitter =
+        event.submitter ||
+        form.querySelector('button[type="submit"], button:not([type])');
+      if (submitter) {
+        lastClickedButton = submitter;
+        lastClickedAt = Date.now();
+        setButtonLoading(submitter, true);
+      }
       const action = form.dataset.captchaAction;
       if (!action || form.dataset.captchaReady === "true") {
+        delete form.dataset.secureCaptchaPending;
         delete form.dataset.captchaReady;
         return;
       }
@@ -33,11 +137,13 @@
       event.stopImmediatePropagation();
       if (form.dataset.captchaBusy === "true") return;
 
-      const submitter = event.submitter;
       form.dataset.captchaBusy = "true";
+      form.dataset.secureCaptchaPending = "true";
 
       const fail = (message) => {
         delete form.dataset.captchaBusy;
+        delete form.dataset.secureCaptchaPending;
+        setButtonLoading(submitter, false);
         window.alert(message);
       };
 
@@ -105,6 +211,7 @@
                 }
                 tokenInput.value = token;
                 delete form.dataset.captchaBusy;
+                delete form.dataset.secureCaptchaPending;
                 form.dataset.captchaReady = "true";
                 form.requestSubmit(submitter || undefined);
               },
@@ -145,6 +252,20 @@
         );
         headers.set("X-CSRF-Token", csrfToken);
         init = { ...init, headers };
+
+        const pendingButton =
+          Date.now() - lastClickedAt < 10000 ? lastClickedButton : null;
+        if (pendingButton) {
+          pendingButton.dataset.secureRequestPending = "true";
+          return nativeFetch(input, init).finally(() => {
+            delete pendingButton.dataset.secureRequestPending;
+            setButtonLoading(pendingButton, false);
+            if (lastClickedButton === pendingButton) {
+              lastClickedButton = null;
+              lastClickedAt = 0;
+            }
+          });
+        }
       }
     } catch (error) {
       console.error("Unable to attach the CSRF token to the request:", error);

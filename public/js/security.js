@@ -13,7 +13,7 @@
       position: relative;
       color: transparent !important;
     }
-    button.secureaegix-button-loading > * {
+    button.secureaegix-button-loading > :not(.secureaegix-button-spinner) {
       visibility: hidden !important;
     }
     .secureaegix-button-spinner {

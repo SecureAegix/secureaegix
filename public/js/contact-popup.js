@@ -231,7 +231,13 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-CSRF-Token":
+            document.querySelector('meta[name="csrf-token"]')?.content || ""
+        },
         body: JSON.stringify({ message, history: history.slice(-8) })
       });
       const result = await response.json();

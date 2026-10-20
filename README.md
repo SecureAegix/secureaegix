@@ -35,8 +35,9 @@ A comprehensive cybersecurity training and certification platform offering indus
 - Configure `CAPTCHA_SITE_KEY` and `CAPTCHA_SECRET_KEY` with the public and
   secret keys from the same Cloudflare Turnstile site. CAPTCHA is verified on
   the server for public account, contact, newsletter, and diploma submissions.
-- If the app runs behind a trusted reverse proxy, set `TRUST_PROXY_HOPS` to the
-  exact number of trusted proxy hops (commonly `1`). Leave it unset when the
-  app is directly exposed so client-supplied forwarding headers are not trusted.
+- In production, the app trusts one reverse-proxy hop by default so secure
+  session cookies work behind a TLS-terminating proxy. Set `TRUST_PROXY_HOPS`
+  to the exact number of trusted proxy hops if your deployment uses a different
+  topology; set it to `0` when the app is directly exposed.
 - Rate limits use an in-process store; deployments with multiple app instances
   should use a shared rate-limit store to enforce limits across all instances.

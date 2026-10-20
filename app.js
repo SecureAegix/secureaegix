@@ -62,10 +62,16 @@ app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.disable("x-powered-by");
 
-const trustedProxyHops = Number(process.env.TRUST_PROXY_HOPS || 0);
-if (Number.isInteger(trustedProxyHops) && trustedProxyHops > 0) {
-  app.set("trust proxy", trustedProxyHops);
+const trustProxyHops =
+  process.env.TRUST_PROXY_HOPS === undefined
+    ? process.env.NODE_ENV === "production"
+      ? 1
+      : 0
+    : Number(process.env.TRUST_PROXY_HOPS);
+if (!Number.isInteger(trustProxyHops) || trustProxyHops < 0) {
+  throw new Error("TRUST_PROXY_HOPS must be a non-negative integer.");
 }
+app.set("trust proxy", trustProxyHops);
 
 app.use(
   helmet({

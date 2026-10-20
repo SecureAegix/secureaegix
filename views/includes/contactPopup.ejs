@@ -1,0 +1,38 @@
+<div id="contactPopup" class="fixed inset-0 z-[100] hidden items-center justify-center bg-cyber-ink/70 p-4 backdrop-blur-sm dark:bg-black/80" aria-hidden="true">
+  <section role="dialog" aria-modal="true" aria-labelledby="contactPopupTitle" aria-describedby="contactPopupDescription" class="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-cyan-700/20 bg-white p-5 text-gray-900 shadow-2xl dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
+    <button id="contactPopupClose" type="button" aria-label="Close contact form" class="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-cyan-600 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white">
+      <i class="fas fa-xmark" aria-hidden="true"></i>
+    </button>
+    <div class="mb-4 flex items-center gap-3 pr-9">
+      <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-700/10 text-cyan-800 dark:bg-cyber-cyan/10 dark:text-cyber-cyan">
+        <i class="fas fa-shield-halved" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2 id="contactPopupTitle" class="text-lg font-bold leading-tight text-gray-900 dark:text-white">Get a call from our team</h2>
+        <p id="contactPopupDescription" class="mt-1 text-xs leading-relaxed text-gray-600 dark:text-gray-300">Leave your contact details and sales will reach out.</p>
+      </div>
+    </div>
+
+    <form id="contactPopupForm" action="/contact" method="POST" class="grid gap-3 sm:grid-cols-2" data-captcha-action="contact">
+      <input type="hidden" name="subject" value="General Inquiry">
+      <div>
+        <label for="contactPopupName" class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-200">Name <span class="text-red-500">*</span></label>
+        <input id="contactPopupName" name="name" type="text" autocomplete="name" maxlength="100" required class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20" placeholder="Your name">
+      </div>
+      <div>
+        <label for="contactPopupEmail" class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-200">Email <span class="text-red-500">*</span></label>
+        <input id="contactPopupEmail" name="email" type="email" autocomplete="email" maxlength="254" required class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20" placeholder="you@example.com">
+      </div>
+      <div>
+        <label for="contactPopupMobile" class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-200">Mobile number <span class="text-red-500">*</span></label>
+        <input id="contactPopupMobile" name="mobile" type="tel" autocomplete="tel" maxlength="30" required class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20" placeholder="+91 98765 43210">
+      </div>
+      <button id="contactPopupSubmit" type="submit" class="inline-flex min-h-[38px] items-center justify-center gap-2 self-end rounded-lg bg-cyan-800 px-3 py-2 text-xs font-semibold text-white transition hover:bg-cyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 disabled:cursor-wait disabled:opacity-60 dark:bg-cyan-400 dark:text-gray-950 dark:hover:bg-cyan-300 dark:focus-visible:outline-cyan-300">
+        <span>Request a call back</span>
+        <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i>
+      </button>
+      <p id="contactPopupStatus" class="hidden rounded-lg px-3 py-2 text-sm sm:col-span-2" role="status" aria-live="polite"></p>
+      <p class="text-center text-[10px] text-gray-500 dark:text-gray-400 sm:col-span-2"><i class="fas fa-lock mr-1" aria-hidden="true"></i>Your details are only used to respond to your inquiry.</p>
+    </form>
+  </section>
+</div>

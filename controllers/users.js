@@ -9,6 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const { createCanvas } = require("canvas");
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 // Load environment variables
 if (process.env.NODE_ENV !== "production") {
@@ -31,13 +32,14 @@ emailApi.setApiKey(
 // Constants
 const OTP_EXPIRY_MINUTES = 10;
 const OTP_EXPIRY_MS = OTP_EXPIRY_MINUTES * 60 * 1000;
+const OTP_RESEND_COOLDOWN_MS = 60 * 1000;
 const RESET_TOKEN_EXPIRY_MS = 60 * 60 * 1000;
 
 // ==================== REDESIGNED EMAIL TEMPLATES ====================
 
 // Professional OTP Email Template - Clean White Background
 async function sendVerificationOTP(user) {
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const otp = crypto.randomInt(100000, 1000000).toString();
 
   user.otp = otp;
   user.otpExpires = Date.now() + OTP_EXPIRY_MS;
@@ -589,8 +591,20 @@ module.exports.signup = async (req, res, next) => {
     const newUser = new User({ name, email, username });
     const registeredUser = await User.register(newUser, password);
 
+    try {
+      await sendVerificationOTP(registeredUser);
+    } catch {
+      req.flash(
+        "warning",
+        "Your account was created, but we couldn't send the verification email. Please try resending the code shortly.",
+      );
+      return res.redirect(
+        `/verify-email?email=${encodeURIComponent(registeredUser.email)}`,
+      );
+    }
+
     req.flash("success", "OTP sent to your email. Please verify your email.");
-    res.redirect(`/verify-email?email=${email}`);
+    res.redirect(`/verify-email?email=${encodeURIComponent(registeredUser.email)}`);
   } catch (err) {
     console.error("Signup error:", err.message);
     req.flash("error", err.message);
@@ -630,8 +644,12 @@ module.exports.logout = (req, res, next) => {
 module.exports.renderVerifyEmailForm = async (req, res) => {
   const { email } = req.query;
   if (!email) return res.redirect("/login");
-  const user = await User.findOne({ email: email });
-  await sendVerificationOTP(user);
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const user = await User.findOne({ email: normalizedEmail, isVerified: false });
+  if (!user) {
+    req.flash("info", "No pending verification was found. Please sign in or create an account.");
+    return res.redirect("/login");
+  }
   res.render("emailer/otp.ejs", { user });
 };
 
@@ -642,7 +660,9 @@ module.exports.verifyEmail = async (req, res) => {
 
     if (!otp || otp.length !== 6) {
       req.flash("warning", "Please enter a valid 6-digit OTP.");
-      return res.redirect(`/verify-email?email=${req.body.email || ""}`);
+      return res.redirect(
+        `/verify-email?email=${encodeURIComponent(req.body.email || "")}`,
+      );
     }
 
     const user = await User.findById(id);
@@ -691,7 +711,9 @@ module.exports.verifyEmail = async (req, res) => {
   } catch (err) {
     console.error("❌ Email verification error:", err);
     req.flash("error", "We encountered an issue verifying your email. Please try again.");
-    res.redirect(`/verify-email?email=${req.body.email || ""}`);
+    res.redirect(
+      `/verify-email?email=${encodeURIComponent(req.body.email || "")}`,
+    );
   }
 };
 
@@ -710,19 +732,26 @@ module.exports.resendOtp = async (req, res) => {
       return res.redirect("/login");
     }
 
-    if (user.otpExpires && user.otpExpires > Date.now() - 60000) {
+    const otpSentAt = user.otpExpires
+      ? new Date(user.otpExpires).getTime() - OTP_EXPIRY_MS
+      : 0;
+    if (otpSentAt > Date.now() - OTP_RESEND_COOLDOWN_MS) {
       req.flash("primary", "Please wait at least 1 minute before requesting a new OTP.");
-      return res.redirect(`/verify-email?email=${user.email}`);
+      return res.redirect(
+        `/verify-email?email=${encodeURIComponent(user.email)}`,
+      );
     }
 
     await sendVerificationOTP(user);
 
     req.flash("success", "A new verification code has been sent to your email.");
-    res.redirect(`/verify-email?email=${user.email}`);
+    res.redirect(`/verify-email?email=${encodeURIComponent(user.email)}`);
   } catch (err) {
     console.error("❌ OTP resend error:", err);
     req.flash("error", "Unable to send verification code. Please try again.");
-    res.redirect(`/verify-email?email=${req.query.email || ""}`);
+    res.redirect(
+      `/verify-email?email=${encodeURIComponent(req.body.email || "")}`,
+    );
   }
 };
 
@@ -734,7 +763,7 @@ module.exports.profile = async (req, res) => {
     const enrolledCourses = await Cources.find({
       "students.user": id,
     })
-      .populate("teacher", "name email")
+      .populate("teacher", "name email profileImage")
       .sort({ "students.enrolledAt": -1 })
       .limit(6);
 
@@ -918,7 +947,7 @@ module.exports.myCourses = async (req, res) => {
     const userId = req.user._id;
     const enrolledCourses = await Cources.find({
       "students.user": userId,
-    }).populate("teacher", "name email");
+    }).populate("teacher", "name email profileImage");
     res.render("users/myCources.ejs", { enrolledCourses });
   } catch (err) {
     console.log(err);

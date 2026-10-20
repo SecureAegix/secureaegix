@@ -168,10 +168,14 @@
                             <!-- Teacher Info -->
                             <div class="flex items-center mb-3">
                                 <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
-                                        <span class="text-white text-sm font-medium">
-                                            <%= course.teacher?.name?.charAt(0) || 'T' %>
-                                        </span>
+                                    <div class="w-8 h-8 overflow-hidden bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                                        <% if (course.teacher?.profileImage) { %>
+                                            <img src="<%= course.teacher.profileImage %>" alt="<%= course.teacher.name || 'Instructor' %>" referrerpolicy="no-referrer" class="h-full w-full object-cover">
+                                        <% } else { %>
+                                            <span class="text-white text-sm font-medium">
+                                                <%= (course.teacher?.name || 'T').trim().charAt(0).toUpperCase() %>
+                                            </span>
+                                        <% } %>
                                     </div>
                                 </div>
                                 <div class="ml-3">

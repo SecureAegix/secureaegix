@@ -59,11 +59,12 @@
           <h6 class="font-semibold text-gray-700 dark:text-gray-200">Profile Information</h6>
         </div>
         <div class="p-6">
-          <div class="text-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
-            <!-- <img src="<%= user.profileImage || '/images/default-avatar.png' %>" 
-                 class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-gray-200 dark:border-gray-700" 
-                 alt="Profile Picture"> -->
-                 <%= currUser.name ? currUser.name.charAt(0).toUpperCase() : 'A' %>
+          <div class="mb-4 mx-auto overflow-hidden w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+            <% if (user.profileImage) { %>
+              <img src="<%= user.profileImage %>" alt="<%= user.name || 'User' %>" referrerpolicy="no-referrer" class="h-full w-full object-cover">
+            <% } else { %>
+              <%= (user.name || user.username || user.email || 'U').trim().charAt(0).toUpperCase() %>
+            <% } %>
           </div>
           
           <div class="space-y-3">

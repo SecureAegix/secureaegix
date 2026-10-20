@@ -7,23 +7,26 @@ const { all } = require("axios");
 
 module.exports.homePage = async (req, res, next) => {
   try {
-    const totalUsers = (await User.find()).length;
-    const totalInstructors = (await User.find({ role: "admin" })).length;
-    const totalCources = (await Course.find()).length;
+    const [totalUsers, totalInstructors, totalCources, latestUsers] = await Promise.all([
+      User.countDocuments(),
+      User.countDocuments({ role: "admin" }),
+      Course.countDocuments(),
+      User.find().select("name profileImage").sort({ createdAt: -1 }).limit(5).lean(),
+    ]);
 
     // Fetch courses for homepage (addInHomePage = true)
     const homepageCourses = await Course.find({
       addInHomePage: true,
       isActive: true,
     })
-      .populate("teacher", "name")
+      .populate("teacher", "name profileImage")
       .sort({ homepageOrder: 1, createdAt: -1 })
       .limit(6);
 
     const popularCourse = await Course.findOne({
       isPopular: true,
       isActive: true,
-    }).populate("teacher");
+    }).populate("teacher", "name profileImage");
 
     const latestBlogs = await Blog.find()
       .populate("author")
@@ -34,6 +37,7 @@ module.exports.homePage = async (req, res, next) => {
       totalUsers,
       totalInstructors,
       totalCources,
+      latestUsers,
       homepageCourses, // Pass to template
       popularCourse,
       latestBlogs,
@@ -111,8 +115,16 @@ module.exports.profile = async (req, res) => {
   }
 };
 
-module.exports.about = (req, res) => {
-  res.render("others/about.ejs");
+module.exports.about = async (req, res) => {
+  const aboutTeamMembers = await User.find({
+    role: { $in: ["admin", "teacher"] },
+  })
+    .select("name username role")
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .lean();
+
+  res.render("others/about.ejs", { aboutTeamMembers });
 };
 module.exports.privacy = (req, res) => {
   res.render("others/privacy.ejs");
@@ -177,7 +189,7 @@ module.exports.allCourses = async (req, res) => {
     const totalCourses = await Course.countDocuments(query);
     
     const courses = await Course.find(query)
-      .populate("teacher", "name email")
+      .populate("teacher", "name email profileImage")
       .sort(sortOptions)  // ✅ Latest courses first
       .skip(skip)
       .limit(limit)

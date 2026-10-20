@@ -20,6 +20,8 @@ const diplomaController = require("../controllers/diploma");
 
 // Import middleware
 const { isLoggedIn, isAdmin, saveRedirectUrl } = require("../middleware");
+const verifyCaptcha = require("../middleware/captcha.js");
+const { diplomaEnrollmentLimiter } = require("../middleware/rateLimits.js");
 
 // ==================== PAGE ROUTES (GET) ====================
 
@@ -52,7 +54,12 @@ router.get("/diploma/enroll", diplomaController.enrollPage);
  * Body Parameters: fullName, email, phone, city, qualification, mode, batch, message
  * Returns: JSON response with success/failure status
  */
-router.post("/api/diploma/enroll", diplomaController.submitEnrollment);
+router.post(
+  "/api/diploma/enroll",
+  diplomaEnrollmentLimiter,
+  verifyCaptcha("diploma_enrollment"),
+  diplomaController.submitEnrollment,
+);
 
 /**
  * Get Enrollment Statistics (Admin Only)

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const { isLoggedIn, isAdmin, validateBlog } = require("../middleware.js");
+const csrfProtection = require("../middleware/csrf.js");
 const blogsController = require("../controllers/blog.js");
 
 const multer = require("multer");
@@ -17,6 +18,7 @@ router
     isLoggedIn,
     isAdmin,
     upload.single("image"),
+    csrfProtection,
     validateBlog,
     wrapAsync(blogsController.createBlog),
   );
@@ -39,6 +41,7 @@ router
     isLoggedIn,
     isAdmin,
     upload.single("image"),
+    csrfProtection,
     validateBlog,
     wrapAsync(blogsController.updateBlog),
   )

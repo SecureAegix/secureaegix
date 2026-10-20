@@ -1,123 +1,287 @@
-<% if (success && success.length) { %>
-<div class="pointer-events-none fixed inset-0 z-[9999] flex items-start justify-center">
-  <div 
-    class="pointer-events-auto mt-20 
-           !fixed !left-1/2 !-translate-x-1/2 !right-auto !transform
-           w-[90%] max-w-md p-4 rounded-lg
+<%
+  /* ------------------------------------------------------------
+   * Only EJS work here: serialize messages into a JSON array.
+   * All rendering, animation, and lifecycle live in the JS below.
+   * ------------------------------------------------------------ */
+  const _flashMessages = [
+    { kind: 'success', text: typeof success !== 'undefined' && success ? String(success) : null },
+    { kind: 'error',   text: typeof error   !== 'undefined' && error   ? String(error)   : null },
+    { kind: 'info',    text: typeof info    !== 'undefined' && info    ? String(info)    : null },
+    { kind: 'warning', text: typeof warning !== 'undefined' && warning ? String(warning) : null },
+    { kind: 'primary', text: typeof primary !== 'undefined' && primary ? String(primary) : null },
+  ].filter(m => m.text);
+%>
 
-           bg-green-600 text-white 
-           shadow-xl border border-green-700
+<% if (_flashMessages.length) { %>
+  <div id="flash-root" aria-live="polite" aria-atomic="false"></div>
 
-           dark:bg-green-700 dark:border-green-500 dark:text-white
+  <script type="application/json" id="flash-data">
+    <%- JSON.stringify(_flashMessages).replace(/</g, '\\u003c') %>
+  </script>
 
-           animate-fadeIn flex items-center justify-between space-x-4"
-    role="alert"
-  >
-    <span class="flex-1 text-sm font-medium"><%= success %></span>
+  <script>
+    (function () {
+      'use strict';
 
-    <button 
-      type="button"
-      class="text-white hover:text-gray-200 dark:hover:text-gray-300 
-             font-bold text-lg transition"
-      onclick="this.parentElement.remove()"
-      aria-label="Close"
-    >
-      &times;
-    </button>
-  </div>
-</div>
+      /* ── 1. Parse messages emitted by EJS ─────────────────── */
+      const dataEl = document.getElementById('flash-data');
+      if (!dataEl) return;
+
+      let messages = [];
+      try {
+        messages = JSON.parse(dataEl.textContent || '[]');
+      } catch (err) {
+        console.error('[flash] Failed to parse messages:', err);
+        return;
+      }
+      if (!Array.isArray(messages) || messages.length === 0) return;
+
+      /* ── 2. Type style map ─────────────────────────────────── */
+      const STYLES = {
+        success: {
+          grad:  'from-emerald-500 to-green-600',
+          ring:  'border-emerald-400/40 dark:border-emerald-400/30',
+          glow:  'shadow-emerald-500/30',
+          badge: 'from-emerald-500 to-green-600',
+          bar:   'bg-emerald-400',
+          icon:  'fa-circle-check',
+          label: 'Success'
+        },
+        error: {
+          grad:  'from-rose-500 to-red-600',
+          ring:  'border-rose-400/40 dark:border-rose-400/30',
+          glow:  'shadow-rose-500/30',
+          badge: 'from-rose-500 to-red-600',
+          bar:   'bg-rose-400',
+          icon:  'fa-circle-xmark',
+          label: 'Error'
+        },
+        info: {
+          grad:  'from-blue-500 to-sky-600',
+          ring:  'border-blue-400/40 dark:border-blue-400/30',
+          glow:  'shadow-blue-500/30',
+          badge: 'from-blue-500 to-sky-600',
+          bar:   'bg-blue-400',
+          icon:  'fa-circle-info',
+          label: 'Info'
+        },
+        warning: {
+          grad:  'from-amber-500 to-orange-600',
+          ring:  'border-amber-400/40 dark:border-amber-400/30',
+          glow:  'shadow-amber-500/30',
+          badge: 'from-amber-500 to-orange-600',
+          bar:   'bg-amber-300',
+          icon:  'fa-triangle-exclamation',
+          label: 'Warning'
+        },
+        primary: {
+          grad:  'from-cyan-500 to-blue-600',
+          ring:  'border-cyan-400/40 dark:border-cyan-400/30',
+          glow:  'shadow-cyan-500/30',
+          badge: 'from-cyan-500 to-blue-600',
+          bar:   'bg-cyan-300',
+          icon:  'fa-bolt',
+          label: 'Notice'
+        }
+      };
+
+      /* ── 3. Build the toast container ──────────────────────── */
+      const root = document.getElementById('flash-root');
+      root.className =
+        'pointer-events-none fixed inset-x-0 top-6 z-[9999] flex flex-col items-center gap-3 px-4';
+
+      /* ── 4. Safe HTML escape ───────────────────────────────── */
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      /* ── 5. Dismiss-after-N-ms logic factory ───────────────── */
+      const DISMISS_MS = 30000;
+
+      function attachLifecycle(toast) {
+        const progress = toast.querySelector('.flash-progress');
+        const closeBtn = toast.querySelector('.flash-close');
+
+        let timer      = null;
+        let remaining  = DISMISS_MS;
+        let startedAt  = 0;
+        let isPaused   = false;
+        let isLeaving  = false;
+
+        function startTimer() {
+          startedAt = Date.now();
+          timer = setTimeout(dismiss, remaining);
+        }
+
+        function pauseTimer() {
+          if (isPaused || isLeaving) return;
+          isPaused = true;
+          clearTimeout(timer);
+          remaining -= (Date.now() - startedAt);
+          if (remaining < 0) remaining = 0;
+        }
+
+        function resumeTimer() {
+          if (!isPaused || isLeaving) return;
+          isPaused = false;
+          startTimer();
+        }
+
+        function dismiss() {
+          if (isLeaving) return;
+          isLeaving = true;
+          clearTimeout(timer);
+          toast.classList.add('is-leaving');
+          const cleanup = () => { if (toast.parentNode) toast.remove(); };
+          toast.addEventListener('animationend', cleanup, { once: true });
+          setTimeout(cleanup, 500);
+        }
+
+        toast.addEventListener('mouseenter', pauseTimer);
+        toast.addEventListener('mouseleave', resumeTimer);
+        toast.addEventListener('focusin',  pauseTimer);
+        toast.addEventListener('focusout', resumeTimer);
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dismiss();
+          });
+        }
+
+        if (progress) {
+          progress.addEventListener('animationend', dismiss, { once: true });
+        }
+
+        startTimer();
+      }
+
+      /* ── 6. Render one toast ───────────────────────────────── */
+      function renderToast(msg, index) {
+        const s = STYLES[msg.kind] || STYLES.info;
+        const safeText = escapeHtml(msg.text);
+
+        const wrap = document.createElement('div');
+        wrap.innerHTML = `
+          <div class="flash-toast group pointer-events-auto relative w-[92vw] max-w-md overflow-hidden
+                      rounded-xl border ${s.ring}
+                      bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl
+                      shadow-2xl ${s.glow}
+                      flex items-start gap-3 p-4 pl-5
+                      transition-all duration-300 ease-out
+                      hover:scale-[1.01] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.35)]"
+               data-flash
+               role="alert"
+               aria-live="polite"
+               style="animation-delay:${index * 0.08}s; --duration:${DISMISS_MS}ms;">
+
+            <div class="pointer-events-none absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${s.grad}"></div>
+
+            <div class="relative shrink-0 mt-0.5">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full
+                          bg-gradient-to-br ${s.badge} text-white
+                          shadow-lg ${s.glow}">
+                <i class="fas ${s.icon} text-sm"></i>
+              </div>
+              <span class="absolute inset-0 rounded-full
+                           bg-gradient-to-br ${s.grad} opacity-40 blur-md -z-10
+                           animate-pulse"></span>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="text-[10px] font-mono uppercase tracking-[0.15em] font-semibold
+                             text-gray-500 dark:text-gray-400">
+                  ${s.label}
+                </span>
+                <span class="text-[10px] text-gray-400 dark:text-gray-500">·</span>
+                <span class="text-[10px] text-gray-400 dark:text-gray-500">Just now</span>
+              </div>
+              <p class="text-sm font-medium leading-snug text-gray-800 dark:text-gray-100 break-words">
+                ${safeText}
+              </p>
+            </div>
+
+            <button type="button"
+                    class="flash-close shrink-0 -m-1 p-1.5 rounded-md text-gray-400
+                           hover:text-gray-700 dark:hover:text-white
+                           hover:bg-gray-100 dark:hover:bg-white/10
+                           transition-all duration-200 hover:rotate-90"
+                    aria-label="Dismiss notification">
+              <i class="fas fa-xmark text-sm"></i>
+            </button>
+
+            <div class="absolute bottom-0 left-0 right-0 h-[3px]
+                        bg-gray-100 dark:bg-white/5 overflow-hidden">
+              <div class="flash-progress h-full ${s.bar} origin-left"
+                   style="--duration:${DISMISS_MS}ms;"></div>
+            </div>
+          </div>
+        `.trim();
+
+        const toast = wrap.firstElementChild;
+        root.appendChild(toast);
+        attachLifecycle(toast);
+      }
+
+      /* ── 7. Kick off ───────────────────────────────────────── */
+      messages.forEach(renderToast);
+    })();
+  </script>
+
+  <style>
+    /* ── Enter animation ─────────────────────────────────────── */
+    @keyframes flashIn {
+      0%   { opacity: 0; transform: translateY(-16px) scale(0.94); }
+      100% { opacity: 1; transform: translateY(0)     scale(1); }
+    }
+
+    /* ── Exit animation ──────────────────────────────────────── */
+    @keyframes flashOut {
+      0%   { opacity: 1; transform: translateY(0)     scale(1);    max-height: 200px; margin-bottom: 0; }
+      100% { opacity: 0; transform: translateY(-16px) scale(0.94); max-height: 0;     margin-bottom: -12px; }
+    }
+
+    /* ── Progress drain ──────────────────────────────────────── */
+    @keyframes flashProgress {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
+
+    .flash-toast {
+      animation: flashIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .flash-toast.is-leaving {
+      animation: flashOut 0.35s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    .flash-progress {
+      animation: flashProgress var(--duration, 30000ms) linear forwards;
+      animation-play-state: running;
+    }
+
+    .flash-toast:hover .flash-progress {
+      animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .flash-toast,
+      .flash-toast.is-leaving {
+        animation: none !important;
+        transition: none !important;
+      }
+      .flash-toast .animate-pulse {
+        animation: none !important;
+      }
+      .flash-progress {
+        animation-duration: 30s;
+      }
+    }
+  </style>
 <% } %>
-
-
-<% if (error && error.length) { %>
-<div class="pointer-events-none fixed inset-0 z-[9999] flex items-start justify-center">
-  <div 
-    class="pointer-events-auto mt-20 
-           !fixed !left-1/2 !-translate-x-1/2 !right-auto !transform
-           w-[90%] max-w-md p-4 rounded-lg
-
-           bg-red-600 text-white 
-           shadow-xl border border-red-700
-
-           dark:bg-red-700 dark:border-red-500 dark:text-white
-
-           animate-fadeIn flex items-center justify-between space-x-4"
-    role="alert"
-  >
-    <span class="flex-1 text-sm font-medium"><%= error %></span>
-
-    <button 
-      type="button"
-      class="text-white hover:text-gray-200 dark:hover:text-gray-300 
-             font-bold text-lg transition"
-      onclick="this.parentElement.remove()"
-      aria-label="Close"
-    >
-      &times;
-    </button>
-  </div>
-</div>
-<% } %>
-
-<% if (info && info.length) { %>
-<div class="pointer-events-none fixed inset-0 z-[9999] flex items-start justify-center">
-  <div class="pointer-events-auto mt-20 !fixed !left-1/2 !-translate-x-1/2 !right-auto !transform
-              w-[90%] max-w-md p-4 rounded-lg
-              bg-blue-600 text-white shadow-xl border border-blue-700
-              dark:bg-blue-700 dark:border-blue-500 dark:text-white
-              animate-fadeIn flex items-center justify-between space-x-4"
-       role="alert">
-    <span class="flex-1 text-sm font-medium"><%= info %></span>
-    <button type="button"
-      class="text-white hover:text-gray-200 dark:hover:text-gray-300 font-bold text-lg transition"
-      onclick="this.parentElement.remove()"
-      aria-label="Close">&times;</button>
-  </div>
-</div>
-<% } %>
-
-<% if (warning && warning.length) { %>
-<div class="pointer-events-none fixed inset-0 z-[9999] flex items-start justify-center">
-  <div class="pointer-events-auto mt-20 !fixed !left-1/2 !-translate-x-1/2 !right-auto !transform
-              w-[90%] max-w-md p-4 rounded-lg
-              bg-yellow-500 text-white shadow-xl border border-yellow-600
-              dark:bg-yellow-600 dark:border-yellow-500 dark:text-white
-              animate-fadeIn flex items-center justify-between space-x-4"
-       role="alert">
-    <span class="flex-1 text-sm font-medium"><%= warning %></span>
-    <button type="button"
-      class="text-white hover:text-gray-200 dark:hover:text-gray-300 font-bold text-lg transition"
-      onclick="this.parentElement.remove()"
-      aria-label="Close">&times;</button>
-  </div>
-</div>
-<% } %>
-
-<% if (primary && primary.length) { %>
-<div class="pointer-events-none fixed inset-0 z-[9999] flex items-start justify-center">
-  <div class="pointer-events-auto mt-20 !fixed !left-1/2 !-translate-x-1/2 !right-auto !transform
-              w-[90%] max-w-md p-4 rounded-lg
-              bg-cyan-600 text-white shadow-xl border border-cyan-700
-              dark:bg-cyan-700 dark:border-cyan-500 dark:text-white
-              animate-fadeIn flex items-center justify-between space-x-4"
-       role="alert">
-    <span class="flex-1 text-sm font-medium"><%= primary %></span>
-    <button type="button"
-      class="text-white hover:text-gray-200 dark:hover:text-gray-300 font-bold text-lg transition"
-      onclick="this.parentElement.remove()"
-      aria-label="Close">&times;</button>
-  </div>
-</div>
-<% } %>
-
-
-
-<style>
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(-10px) scale(0.95); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.35s ease-out forwards;
-}
-</style>

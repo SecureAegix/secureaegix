@@ -151,18 +151,23 @@
                     <p>What started as a small community of security enthusiasts is now growing into a platform trusted by students nationwide. Our mission remains unchanged — provide practical, hands-on training for real-world challenges.</p>
                     <p>We believe in learning by doing. Every course includes extensive lab exercises, real-world scenarios, and continuous assessment so you're truly ready for certification exams and professional roles.</p>
                 </div>
-                <div class="flex items-center gap-4 pt-2">
-                    <div class="flex -space-x-2">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">AK</div>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">RK</div>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">JS</div>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-gray-900">+</div>
+                <% if (aboutTeamMembers && aboutTeamMembers.length > 0) { %>
+                    <div class="flex items-center gap-4 pt-2">
+                        <div class="flex -space-x-2" aria-label="SecureAegix teachers and administrators">
+                            <% aboutTeamMembers.forEach((member, index) => { %>
+                                <% const memberName = member.name || member.username || "Team member"; %>
+                                <% const memberInitials = memberName.trim().split(/\s+/).slice(0, 2).map((part) => part.charAt(0).toUpperCase()).join(""); %>
+                                <div title="<%= memberName %> · <%= member.role %>" class="relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r <%= ["from-pink-500 to-rose-500", "from-blue-600 to-cyan-500", "from-emerald-500 to-teal-500", "from-purple-500 to-pink-500", "from-amber-500 to-orange-500"][index] %> text-xs font-bold text-white dark:border-gray-900">
+                                    <span aria-hidden="true"><%= memberInitials || "U" %></span>
+                                </div>
+                            <% }) %>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-900 dark:text-white text-sm">Building a Community</div>
+                            <div class="text-xs text-gray-500">Join us on this journey</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="font-semibold text-gray-900 dark:text-white text-sm">Building a Community</div>
-                        <div class="text-xs text-gray-500">Join us on this journey</div>
-                    </div>
-                </div>
+                <% } %>
             </div>
             <div class="relative reveal reveal-delay-2">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-3xl blur-2xl opacity-20 scale-95"></div>

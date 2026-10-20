@@ -114,7 +114,7 @@
                         <p class="text-white/80 text-sm mt-1">Fill all required fields (*) to apply</p>
                     </div>
                     
-                    <form id="enrollmentForm" class="p-6 space-y-5">
+                    <form id="enrollmentForm" class="p-6 space-y-5" data-captcha-action="diploma_enrollment">
                         <!-- Personal Information Section -->
                         <div>
                             <h4 class="font-semibold text-gray-900 dark:text-white mb-3 pb-2 border-b border-gray-200 dark:border-gray-700 flex items-center gap-2">
@@ -456,7 +456,9 @@ form.addEventListener('submit', async (e) => {
         qualification: document.getElementById('qualification').value,
         mode: mode,
         batch: batch,
-        message: document.getElementById('message').value.trim()
+        message: document.getElementById('message').value.trim(),
+        captchaToken: form.querySelector('[name="captchaToken"]')?.value,
+        _csrf: document.querySelector('meta[name="csrf-token"]')?.content
     };
     
     // Disable submit button and show loading

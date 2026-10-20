@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const homeController = require("../controllers/home.js");
 const { isLoggedIn, isAdmin, saveRedirectUrl } = require("../middleware");
+const csrfProtection = require("../middleware/csrf.js");
+const { courseEnrollmentLimiter } = require("../middleware/rateLimits.js");
 const multer = require("multer");
 const { storage } = require("../Cloudconfig.js");
 const upload = multer({ storage });
@@ -19,9 +21,10 @@ router
   .route("/courses")
   .get(homeController.allCourses)
   .post(
-    upload.single("image"),
     isLoggedIn,
     isAdmin,
+    upload.single("image"),
+    csrfProtection,
     homeController.createNewCourse,
   );
 router.get(
@@ -42,7 +45,13 @@ router.get(
 router
   .route("/courses/:id")
   .get(homeController.viewCourse)
-  .put(upload.single("image"), isLoggedIn, isAdmin, homeController.updateCourse)
+  .put(
+    isLoggedIn,
+    isAdmin,
+    upload.single("image"),
+    csrfProtection,
+    homeController.updateCourse,
+  )
   .delete(isLoggedIn, isAdmin, homeController.deleteCourse)
   .patch(isLoggedIn, isAdmin, homeController.toggleActive);
 
@@ -69,11 +78,16 @@ router.patch(
 router
   .route("/enroll")
   .get(homeController.enrollCourseForm)
-  .post(isLoggedIn, saveRedirectUrl, homeController.enrollCourse);
+  .post(
+    courseEnrollmentLimiter,
+    isLoggedIn,
+    saveRedirectUrl,
+    homeController.enrollCourse,
+  );
 
 router
   .route("/enroll/:courseId")
   // .get(homeController.enrollNowCourseForm)
-  .post(isLoggedIn, homeController.enrollInNewCource);
+  .post(courseEnrollmentLimiter, isLoggedIn, homeController.enrollInNewCource);
 
 module.exports = router;

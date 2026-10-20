@@ -164,8 +164,12 @@
                             <!-- Author & Date -->
                             <div class="flex items-center justify-between mb-3 text-sm text-gray-500 dark:text-gray-400">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
-                                        <%= blog.author?.name?.charAt(0).toUpperCase() || 'A' %>
+                                    <div class="w-6 h-6 overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
+                                        <% if (blog.author?.profileImage) { %>
+                                            <img src="<%= blog.author.profileImage %>" alt="<%= blog.author.name || 'Author' %>" referrerpolicy="no-referrer" class="h-full w-full object-cover">
+                                        <% } else { %>
+                                            <%= (blog.author?.name || blog.author?.username || 'A').trim().charAt(0).toUpperCase() %>
+                                        <% } %>
                                     </div>
                                     <span><%= blog.author?.name || 'Anonymous' %></span>
                                 </div>

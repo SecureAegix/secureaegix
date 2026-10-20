@@ -6,6 +6,8 @@ const Subscriber = require("../models/subscriber");
 const cources = require("../models/cources");
 const Diploma = require("../models/diploma");
 const Certificate = require("../models/certification.js");
+const SiteSetting = require("../models/siteSetting.js");
+const { DEFAULT_RECIPIENT, SETTING_KEY } = require("../utils/contactNotificationEmail");
 
 module.exports.adminDashboard = async (req, res) => {
   try {
@@ -44,7 +46,7 @@ module.exports.adminDashboard = async (req, res) => {
     const recentUsers = await User.find()
       .sort({ createdAt: -1 })
       .limit(10)
-      .select("name email role isVerified isBlocked createdAt");
+      .select("name username email profileImage role isVerified isBlocked createdAt");
 
     // Get recent activities (you might want to create an Activity model)
     const recentActivities = [
@@ -147,18 +149,42 @@ module.exports.contactSubmissions = async (req, res) => {
       query.isSeen = true;
     }
 
-    const contacts = await Contact.find(query)
-      .populate("user")
-      .sort({ msgDate: -1 }); // Newest first
+    const [contacts, setting] = await Promise.all([
+      Contact.find(query).populate("user").sort({ msgDate: -1 }),
+      SiteSetting.findOne({ key: SETTING_KEY }).lean(),
+    ]);
 
     res.render("admin/contact.ejs", {
       contacts,
       filter: filter || "all",
+      contactNotificationEmail: setting?.value || process.env.CONTACT_NOTIFICATION_EMAIL || DEFAULT_RECIPIENT,
     });
   } catch (err) {
     console.log(err);
     req.flash("error", "Failed to load contact submissions");
     res.redirect("/admin");
+  }
+};
+
+module.exports.updateContactNotificationEmail = async (req, res) => {
+  const email = typeof req.body.email === "string" ? req.body.email.trim().toLowerCase() : "";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+    req.flash("error", "Enter a valid notification email address.");
+    return res.redirect("/admin/contacts");
+  }
+
+  try {
+    await SiteSetting.findOneAndUpdate(
+      { key: SETTING_KEY },
+      { $set: { value: email } },
+      { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
+    );
+    req.flash("success", "Contact notification email updated.");
+    res.redirect("/admin/contacts");
+  } catch (error) {
+    console.error("Failed to update contact notification email:", error);
+    req.flash("error", "Could not update the notification email.");
+    res.redirect("/admin/contacts");
   }
 };
 

@@ -29,6 +29,21 @@
               <p class="text-2xl font-semibold text-gray-900 dark:text-white"><%= contacts.length %></p>
             </div>
           </div>
+
+          <form action="/admin/contacts/notification-email" method="POST" class="mt-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="mb-4">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Contact notification email</h2>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Brevo sends new contact form submissions to this sales inbox.</p>
+            </div>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <label for="contactNotificationEmail" class="sr-only">Sales notification email</label>
+              <input id="contactNotificationEmail" name="email" type="email" autocomplete="email" maxlength="254" value="<%= contactNotificationEmail %>" required class="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400">
+              <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-cyan-500 dark:text-gray-950 dark:hover:bg-cyan-400">
+                <i class="fas fa-save" aria-hidden="true"></i>
+                Save email
+              </button>
+            </div>
+          </form>
         </div>
         
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 transition-colors duration-200">

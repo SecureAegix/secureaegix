@@ -12,6 +12,10 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
+    profileImage: {
+      type: String,
+      trim: true,
+    },
 
     mobile: {
       type: String,

@@ -17,6 +17,12 @@ router.get(
   isAdmin,
   adminController.contactSubmissions,
 );
+router.post(
+  "/contacts/notification-email",
+  isLoggedIn,
+  isAdmin,
+  adminController.updateContactNotificationEmail,
+);
 router.get(
   "/contacts/:id/details",
   isLoggedIn,

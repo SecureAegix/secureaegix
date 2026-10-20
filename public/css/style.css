@@ -13,3 +13,119 @@
 * {
   -ms-overflow-style: none;
 }
+
+.contact-assistant-actions {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  pointer-events: none;
+}
+
+.contact-assistant-action {
+  position: absolute;
+  right: 0.375rem;
+  bottom: 0.375rem;
+  display: flex;
+  width: 2.875rem;
+  height: 2.875rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgb(255 255 255 / 90%);
+  border-radius: 9999px;
+  color: white;
+  visibility: hidden;
+  box-shadow: 0 8px 20px rgb(15 23 42 / 25%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(0, 0) scale(0.35);
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms ease,
+    visibility 0s linear 420ms,
+    box-shadow 180ms ease;
+}
+
+.contact-assistant-actions.is-open {
+  pointer-events: auto;
+}
+
+.contact-assistant-actions.is-open .contact-assistant-action {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms ease,
+    visibility 0s,
+    box-shadow 180ms ease;
+}
+
+.contact-assistant-action:hover {
+  box-shadow: 0 10px 24px rgb(15 23 42 / 35%);
+  scale: 1.08;
+}
+
+.contact-assistant-action--whatsapp {
+  background: #16a34a;
+  transition-delay: 60ms;
+}
+
+.contact-assistant-actions.is-open .contact-assistant-action--whatsapp {
+  transform: translate(-72px, -12px) scale(1);
+}
+
+.contact-assistant-action--call {
+  background: #0891b2;
+  transition-delay: 120ms;
+}
+
+.contact-assistant-actions.is-open .contact-assistant-action--call {
+  transform: translate(-52px, -60px) scale(1);
+}
+
+.contact-assistant-action--chat {
+  background: #2563eb;
+  transition-delay: 180ms;
+}
+
+.contact-assistant-actions.is-open .contact-assistant-action--chat {
+  transform: translate(-8px, -82px) scale(1);
+}
+
+.contact-chat-typing-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: contact-chat-typing 1s ease-in-out infinite;
+}
+
+.contact-chat-typing-dot:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.contact-chat-typing-dot:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes contact-chat-typing {
+  0%, 60%, 100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-assistant-action,
+  .contact-chat-typing-dot {
+    transition: none;
+    animation: none;
+  }
+}

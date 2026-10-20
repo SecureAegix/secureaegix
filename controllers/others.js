@@ -1,12 +1,14 @@
 const User = require("../models/user");
 const Contact = require("../models/contact");
 const Subscriber = require("../models/subscriber");
+const { sendContactNotificationEmail } = require("../utils/contactNotificationEmail");
 
 module.exports.contact = async (req, res) => {
   try {
-    const { name, email, mobile, subject, message } = req.body;
+    const { name, email, subject, message } = req.body;
+    const mobile = req.body.mobile || req.body.phone;
 
-    await Contact.create({
+    const contact = await Contact.create({
       user: req.user?._id,
       name,
       email,
@@ -15,12 +17,40 @@ module.exports.contact = async (req, res) => {
       message,
     });
 
-    req.flash("success", "Message sent successfully");
+    let notificationSent = true;
+    try {
+      await sendContactNotificationEmail(contact);
+    } catch (emailError) {
+      notificationSent = false;
+      console.error("Contact saved, but the Brevo notification email failed:", emailError);
+    }
+
+    if (req.accepts("json")) {
+      return res.status(201).json({
+        success: true,
+        message: notificationSent
+          ? "Thanks for reaching out. Our team will contact you soon."
+          : "Your message was received, but our email notification could not be sent. Our team can still view it in the admin panel.",
+      });
+    }
+
+    req.flash(
+      notificationSent ? "success" : "warning",
+      notificationSent
+        ? "Message sent successfully"
+        : "Your message was saved, but the notification email could not be sent.",
+    );
     res.redirect("/contact");
   } catch (error) {
-    console.log(error);
+    console.error("Contact form submission failed:", error);
+    if (req.accepts("json")) {
+      return res.status(500).json({
+        success: false,
+        message: "We couldn't send your details. Please try again.",
+      });
+    }
     req.flash("error", "Something went wrong!");
-    res.redirect("/login");
+    res.redirect("/contact");
   }
 };
 

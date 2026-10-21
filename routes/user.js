@@ -19,13 +19,15 @@ const {
   loginLimiter,
   verificationLimiter,
 } = require("../middleware/rateLimits.js");
+const LOGIN_CAPTCHA_THRESHOLD = 4;
+const LOGIN_CAPTCHA_WINDOW_MS = 15 * 60 * 1000;
 
 // signup GET
 //Signup POST
 router
   .route("/signup")
   .get(userController.renderSignupForm)
-  .post(signupLimiter, verifyCaptcha("signup"), wrapAsync(userController.signup));
+  .post(signupLimiter, wrapAsync(userController.signup));
 
 //Login GET
 //Login POST
@@ -34,7 +36,13 @@ router
   .get(userController.renderLoginForm)
   .post(
     loginLimiter,
-    verifyCaptcha("login"),
+    (req, res, next) => {
+      if ((req.rateLimit?.used || 0) < LOGIN_CAPTCHA_THRESHOLD) return next();
+
+      req.session.loginCaptchaRequiredUntil =
+        Date.now() + LOGIN_CAPTCHA_WINDOW_MS;
+      return verifyCaptcha("login")(req, res, next);
+    },
     isVerified,
     saveRedirectUrl,
     passport.authenticate("local", {
@@ -49,14 +57,12 @@ router.post("/logout", isLoggedIn, userController.logout);
 router.post(
   "/verify/:id/resend",
   verificationLimiter,
-  verifyCaptcha("resend_verification"),
   userController.resendOtp,
 );
 router.get("/verify-email", userController.renderVerifyEmailForm);
 router.post(
   "/verify/:id",
   verificationLimiter,
-  verifyCaptcha("verify_email"),
   userController.verifyEmail,
 );
 

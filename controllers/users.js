@@ -618,7 +618,10 @@ module.exports.renderLoginForm = (req, res) => {
       req.flash("info", "You are already logged in.");
       return res.redirect("/");
     }
-    res.render("users/login.ejs");
+    res.render("users/login.ejs", {
+      loginCaptchaRequired:
+        req.session.loginCaptchaRequiredUntil > Date.now(),
+    });
   } catch (err) {
     console.error("❌ Error loading login form:", err);
     req.flash("error", "Unable to load login page. Please try again.");
@@ -627,6 +630,7 @@ module.exports.renderLoginForm = (req, res) => {
 };
 
 module.exports.login = async (req, res) => {
+  delete req.session.loginCaptchaRequiredUntil;
   req.flash("success", "Welcome back to SecureAegix!");
   const redirectUrl = res.locals.redirectUrl || "/";
   res.redirect(redirectUrl);

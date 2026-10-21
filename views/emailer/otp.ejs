@@ -42,7 +42,7 @@
       </div>
 
       <!-- OTP Form -->
-      <form action="/verify/<%= user._id %>" method="POST" class="space-y-5" data-captcha-action="verify_email">
+      <form action="/verify/<%= user._id %>" method="POST" class="space-y-5">
         <input type="hidden" name="email" value="<%= user.email %>">
 
         <div>
@@ -94,7 +94,6 @@
           action="/verify/<%= user._id %>/resend"
           method="POST"
           class="inline-block"
-          data-captcha-action="resend_verification"
         >
           <input type="hidden" name="email" value="<%= user.email %>">
           <button

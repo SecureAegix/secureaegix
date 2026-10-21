@@ -34,7 +34,9 @@ A comprehensive cybersecurity training and certification platform offering indus
 
 - Configure `CAPTCHA_SITE_KEY` and `CAPTCHA_SECRET_KEY` with the public and
   secret keys from the same Cloudflare Turnstile site. CAPTCHA is verified on
-  the server for public account, contact, newsletter, and diploma submissions.
+  the server for contact, newsletter, and diploma submissions. Login uses
+  CAPTCHA only after four attempts from the same IP within 15 minutes; signup,
+  OTP, and password-reset forms use their server-side rate limits.
 - The Turnstile widget's hostname allowlist is separate from the Cloudflare DNS
   zone. Add the exact public app hostname (`secureaegix.com`) to the widget's
   allowlist; add any other hostname that directly serves the app as well.

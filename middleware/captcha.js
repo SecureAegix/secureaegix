@@ -68,12 +68,31 @@ module.exports = function verifyTurnstile(action) {
       const verification = await verifyResponse.json();
       const verifiedHostname = verification.hostname?.toLowerCase();
       const requestHostname = req.hostname?.toLowerCase();
+      const allowedHostnames = (process.env.CAPTCHA_ALLOWED_HOSTNAMES || "")
+        .split(",")
+        .map((hostname) => hostname.trim().toLowerCase())
+        .filter(Boolean);
+      const hostnamesMatch =
+        verifiedHostname &&
+        requestHostname &&
+        (allowedHostnames.length
+          ? allowedHostnames.includes(verifiedHostname) &&
+            allowedHostnames.includes(requestHostname)
+          : verifiedHostname === requestHostname);
+
       if (
         !verification.success ||
         verification.action !== action ||
-        !verifiedHostname ||
-        verifiedHostname !== requestHostname
+        !hostnamesMatch
       ) {
+        console.error("Turnstile verification rejected:", {
+          errorCodes: verification["error-codes"] || [],
+          expectedAction: action,
+          verifiedAction: verification.action || null,
+          verifiedHostname: verifiedHostname || null,
+          requestHostname: requestHostname || null,
+          allowedHostnames: allowedHostnames.length ? allowedHostnames : null,
+        });
         return sendFailure(
           req,
           res,

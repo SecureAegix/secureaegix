@@ -1505,14 +1505,26 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 const response = await fetch('/subscribe', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         email: email,
                         captchaToken: newsletterForm.querySelector('[name="captchaToken"]')?.value,
                         _csrf: document.querySelector('meta[name="csrf-token"]')?.content
                     })
                 });
-                const data = await response.json();
+                let data;
+                try {
+                    data = await response.json();
+                } catch {
+                    throw new Error(
+                        response.ok
+                            ? 'The server returned an unexpected response. Please try again.'
+                            : `Subscription failed (HTTP ${response.status}). Please try again.`
+                    );
+                }
                 if (response.ok && data.success) {
                     showMessage(data.message || 'Successfully subscribed to newsletter!', 'success');
                     emailInput.value = '';
@@ -1524,7 +1536,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     showMessage(data.message || 'Subscription failed. Please try again.', 'error');
                 }
             } catch (error) {
-                showMessage('Network error. Please check your connection and try again.', 'error');
+                showMessage(
+                    error.message || 'Network error. Please check your connection and try again.',
+                    'error'
+                );
             } finally {
                 subscribeBtn.disabled = false;
                 subscribeBtn.innerHTML = originalText;
@@ -1536,11 +1551,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function showMessage(message, type) {
         messageContainer.classList.remove('hidden');
-        messageContainer.innerHTML = `
-            <div class="subscription-alert subscription-${type} animate-slide-in">
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
-                ${message}
-            </div>`;
+        const alert = document.createElement('div');
+        alert.className = `subscription-alert subscription-${type} animate-slide-in`;
+        const icon = document.createElement('i');
+        icon.className = `fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2`;
+        icon.setAttribute('aria-hidden', 'true');
+        const text = document.createElement('span');
+        text.textContent = message;
+        alert.replaceChildren(icon, text);
+        messageContainer.replaceChildren(alert);
         if (type === 'error') {
             setTimeout(() => {
                 const msgDiv = document.getElementById('subscriptionMessage');

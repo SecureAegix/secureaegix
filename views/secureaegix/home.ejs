@@ -1503,6 +1503,9 @@ document.addEventListener('DOMContentLoaded', function() {
             subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Subscribing...';
             
             try {
+                const csrfToken = window.refreshSecureCsrfToken
+                    ? await window.refreshSecureCsrfToken()
+                    : document.querySelector('meta[name="csrf-token"]')?.content;
                 const response = await fetch('/subscribe', {
                     method: 'POST',
                     headers: {
@@ -1512,7 +1515,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     body: JSON.stringify({
                         email: email,
                         captchaToken: newsletterForm.querySelector('[name="captchaToken"]')?.value,
-                        _csrf: document.querySelector('meta[name="csrf-token"]')?.content
+                        _csrf: csrfToken
                     })
                 });
                 let data;

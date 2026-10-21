@@ -67,6 +67,22 @@
     if (csrfMeta) csrfMeta.content = token;
   };
 
+  window.refreshSecureCsrfToken = async () => {
+    const response = await nativeFetch("/api/csrf-token", {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+    const result = await response.json();
+    if (!response.ok || !result.csrfToken) {
+      throw new Error("Unable to refresh the security token. Please reload the page and try again.");
+    }
+
+    window.updateCsrfToken(result.csrfToken);
+    document.querySelectorAll("form").forEach(addCsrfToken);
+    return result.csrfToken;
+  };
+
   window.showSecureFlash = (message, kind = "success") => {
     let root = document.getElementById("secureaegix-client-flash");
     if (!root) {
@@ -295,4 +311,8 @@
     }
     return nativeFetch(input, init);
   };
+
+  window.refreshSecureCsrfToken().catch((error) => {
+    console.error("Unable to refresh the page security token:", error);
+  });
 })();

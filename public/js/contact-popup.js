@@ -81,8 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
       window.setSecureButtonLoading?.(submitButton, true);
 
       try {
-        const csrfToken =
-          document.querySelector('meta[name="csrf-token"]')?.content || "";
+        const csrfToken = window.refreshSecureCsrfToken
+          ? await window.refreshSecureCsrfToken()
+          : document.querySelector('meta[name="csrf-token"]')?.content || "";
         const body = new URLSearchParams(new FormData(form));
         if (csrfToken && !body.has("_csrf")) {
           body.set("_csrf", csrfToken);

@@ -13,6 +13,7 @@ router.post(
   verifyCaptcha("contact"),
   othersController.contact,
 );
+router.post("/contact-popup", contactLimiter, othersController.contact);
 router.post(
   "/subscribe",
   subscribeLimiter,

@@ -1503,31 +1503,52 @@ document.addEventListener('DOMContentLoaded', function() {
             subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Subscribing...';
             
             try {
-                const csrfToken = window.refreshSecureCsrfToken
-                    ? await window.refreshSecureCsrfToken()
-                    : document.querySelector('meta[name="csrf-token"]')?.content;
-                const response = await fetch('/subscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        captchaToken: newsletterForm.querySelector('[name="captchaToken"]')?.value,
-                        _csrf: csrfToken
-                    })
-                });
-                let data;
-                try {
-                    data = await response.json();
-                } catch {
-                    throw new Error(
-                        response.ok
-                            ? 'The server returned an unexpected response. Please try again.'
-                            : `Subscription failed (HTTP ${response.status}). Please try again.`
-                    );
+                const captchaToken = newsletterForm.querySelector('[name="captchaToken"]')?.value;
+                if (!captchaToken) {
+                    throw new Error('Security verification is incomplete. Please submit the form again.');
                 }
+
+                let response;
+                let data;
+                for (let attempt = 0; attempt < 2; attempt += 1) {
+                    const csrfToken = window.refreshSecureCsrfToken && attempt === 0
+                        ? await window.refreshSecureCsrfToken()
+                        : document.querySelector('meta[name="csrf-token"]')?.content;
+                    response = await fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            captchaToken,
+                            _csrf: csrfToken
+                        })
+                    });
+
+                    try {
+                        data = await response.json();
+                    } catch {
+                        throw new Error(
+                            response.ok
+                                ? 'The server returned an unexpected response. Please try again.'
+                                : `Subscription failed (HTTP ${response.status}). Please try again.`
+                        );
+                    }
+
+                    if (
+                        response.status === 403 &&
+                        data.code === 'CSRF_TOKEN_INVALID' &&
+                        attempt === 0 &&
+                        window.refreshSecureCsrfToken
+                    ) {
+                        await window.refreshSecureCsrfToken();
+                        continue;
+                    }
+                    break;
+                }
+
                 if (response.ok && data.success) {
                     showMessage(data.message || 'Successfully subscribed to newsletter!', 'success');
                     emailInput.value = '';

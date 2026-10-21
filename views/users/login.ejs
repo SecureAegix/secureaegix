@@ -221,32 +221,25 @@
     const loadingSpinner = document.getElementById('loadingSpinner');
     
     loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value.trim();
         
         // Basic validation
         if (!email || !password) {
+            e.preventDefault();
             showError('Please fill in all fields');
             return;
         }
         
         if (!isValidEmail(email)) {
+            e.preventDefault();
             showError('Please enter a valid email address');
             return;
         }
         
-        // Show loading state
+        // Let the browser submit the validated form with its CAPTCHA and CSRF fields.
         buttonText.classList.add('hidden');
         loadingSpinner.classList.remove('hidden');
-        loginButton.disabled = true;
-        
-        // Simulate API call (replace with actual fetch)
-        setTimeout(() => {
-            // Submit the form if validation passes
-            loginForm.submit();
-        }, 1500);
     });
     
     function isValidEmail(email) {

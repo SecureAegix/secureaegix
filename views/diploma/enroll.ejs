@@ -448,6 +448,14 @@ form.addEventListener('submit', async (e) => {
     }
     
     // Prepare form data
+    const captchaToken = form.querySelector('[name="captchaToken"]')?.value;
+    if (!captchaToken) {
+        messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
+        messageDiv.textContent = 'Security verification is incomplete. Please submit the form again.';
+        messageDiv.classList.remove('hidden');
+        return;
+    }
+
     const formData = {
         fullName: document.getElementById('fullName').value.trim(),
         email: document.getElementById('email').value.trim(),
@@ -457,7 +465,7 @@ form.addEventListener('submit', async (e) => {
         mode: mode,
         batch: batch,
         message: document.getElementById('message').value.trim(),
-        captchaToken: form.querySelector('[name="captchaToken"]')?.value,
+        captchaToken,
         _csrf: document.querySelector('meta[name="csrf-token"]')?.content
     };
     
@@ -466,13 +474,43 @@ form.addEventListener('submit', async (e) => {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
     
     try {
-        const response = await fetch('/api/diploma/enroll', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-        
-        const result = await response.json();
+        let response;
+        let result;
+        for (let attempt = 0; attempt < 2; attempt += 1) {
+            if (window.refreshSecureCsrfToken && attempt === 0) {
+                formData._csrf = await window.refreshSecureCsrfToken();
+            }
+
+            response = await fetch('/api/diploma/enroll', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            try {
+                result = await response.json();
+            } catch {
+                throw new Error(
+                    response.ok
+                        ? 'The server returned an unexpected response. Please try again.'
+                        : `Submission failed (HTTP ${response.status}). Please try again.`
+                );
+            }
+
+            if (
+                response.status === 403 &&
+                result.code === 'CSRF_TOKEN_INVALID' &&
+                attempt === 0 &&
+                window.refreshSecureCsrfToken
+            ) {
+                formData._csrf = await window.refreshSecureCsrfToken();
+                continue;
+            }
+            break;
+        }
         
         if (response.ok && result.success) {
             messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-green-100 dark:bg-green-900/30 text-green-700';
@@ -495,7 +533,12 @@ form.addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Submission error:', error);
         messageDiv.className = 'mt-4 p-3 rounded-lg text-center bg-red-100 dark:bg-red-900/30 text-red-700';
-        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> ' + error.message;
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-exclamation-circle mr-2';
+        icon.setAttribute('aria-hidden', 'true');
+        const errorText = document.createElement('span');
+        errorText.textContent = error.message || 'Submission failed. Please try again.';
+        messageDiv.replaceChildren(icon, errorText);
         messageDiv.classList.remove('hidden');
     } finally {
         submitBtn.disabled = false;

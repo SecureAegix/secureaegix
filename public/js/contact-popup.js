@@ -2,15 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("contactPopup");
   const form = document.getElementById("contactPopupForm");
   const closeButton = document.getElementById("contactPopupClose");
-  const status = document.getElementById("contactPopupStatus");
-  const submitButton = document.getElementById("contactPopupSubmit");
   const nameInput = document.getElementById("contactPopupName");
   const popupDelay = 10 * 60 * 1000;
   const submissionDelay = 24 * 60 * 60 * 1000;
   const nextShowKey = "secureaegix.contactPopup.nextShow";
   const submittedKey = "secureaegix.contactPopup.submitted";
 
-  if (popup && form && closeButton && status && submitButton && nameInput) {
+  if (popup && form && closeButton && nameInput) {
     let nextShow = Date.now() + popupDelay;
     try {
       const wasSubmitted = localStorage.getItem(submittedKey) === "true";
@@ -73,65 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && popup.getAttribute("aria-hidden") === "false") closePopup();
     });
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      status.className = "hidden rounded-lg px-3 py-2 text-sm";
-      submitButton.disabled = true;
-      window.setSecureButtonLoading?.(submitButton, true);
-
+    form.addEventListener("submit", () => {
       try {
-        const csrfToken = window.refreshSecureCsrfToken
-          ? await window.refreshSecureCsrfToken()
-          : document.querySelector('meta[name="csrf-token"]')?.content || "";
-        const body = new URLSearchParams(new FormData(form));
-        if (csrfToken && !body.has("_csrf")) {
-          body.set("_csrf", csrfToken);
-        }
-
-        const response = await fetch(form.action, {
-          method: "POST",
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
-            ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {})
-          },
-          body
-        });
-        let result;
-        try {
-          result = await response.json();
-        } catch {
-          throw new Error(
-            response.ok
-              ? "The server returned an unexpected response. Please try again."
-              : `We couldn't send your details (HTTP ${response.status}). Please try again.`,
-          );
-        }
-        if (!response.ok || !result.success) {
-          throw new Error(result.message || "We couldn't send your details. Please try again.");
-        }
-
-        status.textContent = result.message;
-        status.className = "rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200";
-        window.showSecureFlash?.(result.message, "success");
-        try {
-          nextShow = Date.now() + submissionDelay;
-          localStorage.setItem(nextShowKey, String(nextShow));
-          localStorage.removeItem(submittedKey);
-        } catch (error) {
-          console.error("Unable to save the contact popup submission state:", error);
-        }
-        window.clearTimeout(popupTimer);
-        window.setTimeout(() => closePopup(false), 1800);
+        localStorage.setItem(submittedKey, "true");
       } catch (error) {
-        console.error("Contact popup submission failed:", error);
-        status.textContent = error.message || "We couldn't send your details. Please try again.";
-        status.className = "rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800 dark:bg-red-900/30 dark:text-red-200";
-        window.showSecureFlash?.(status.textContent, "error");
-      } finally {
-        submitButton.disabled = false;
-        window.setSecureButtonLoading?.(submitButton, false);
+        console.error("Unable to save the contact popup submission state:", error);
       }
     });
   }

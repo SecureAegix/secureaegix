@@ -212,56 +212,84 @@
 
       loadTurnstile()
         .then((turnstile) => {
-          const container = document.createElement("div");
-          container.style.position = "fixed";
-          container.style.right = "16px";
-          container.style.bottom = "16px";
-          container.style.zIndex = "9999";
-          document.body.appendChild(container);
-
           let widgetId;
+          let container;
+          let visibleFallbackShown = false;
+
           const clearWidget = () => {
             if (widgetId !== undefined) turnstile.remove(widgetId);
-            container.remove();
-          };
-          const showFailure = () => {
-            clearWidget();
-            fail("Security verification failed. Please submit the form again.");
+            container?.remove();
+            widgetId = undefined;
+            container = undefined;
           };
 
-          try {
-            widgetId = turnstile.render(container, {
-              sitekey: siteKey,
-              action,
-              size: "invisible",
-              execution: "execute",
-              appearance: "interaction-only",
-              callback: (token) => {
-                clearWidget();
-                let tokenInput = form.querySelector(
-                  'input[name="captchaToken"]',
+          const submitWithToken = (token) => {
+            clearWidget();
+            let tokenInput = form.querySelector(
+              'input[name="captchaToken"]',
+            );
+            if (!tokenInput) {
+              tokenInput = document.createElement("input");
+              tokenInput.type = "hidden";
+              tokenInput.name = "captchaToken";
+              form.appendChild(tokenInput);
+            }
+            tokenInput.value = token;
+            delete form.dataset.captchaBusy;
+            delete form.dataset.secureCaptchaPending;
+            form.dataset.captchaReady = "true";
+            form.requestSubmit(submitter || undefined);
+          };
+
+          const renderChallenge = (visible) => {
+            container = document.createElement("div");
+            container.className = "my-4 flex justify-center";
+            if (submitter?.parentElement) {
+              submitter.parentElement.insertBefore(container, submitter);
+            } else {
+              form.appendChild(container);
+            }
+
+            const showFailure = (errorCode) => {
+              if (!visible && !visibleFallbackShown) {
+                visibleFallbackShown = true;
+                console.warn(
+                  "Invisible Turnstile challenge failed; showing an interactive challenge.",
+                  errorCode,
                 );
-                if (!tokenInput) {
-                  tokenInput = document.createElement("input");
-                  tokenInput.type = "hidden";
-                  tokenInput.name = "captchaToken";
-                  form.appendChild(tokenInput);
-                }
-                tokenInput.value = token;
-                delete form.dataset.captchaBusy;
-                delete form.dataset.secureCaptchaPending;
-                form.dataset.captchaReady = "true";
-                form.requestSubmit(submitter || undefined);
-              },
-              "error-callback": showFailure,
-              "expired-callback": showFailure,
-              "timeout-callback": showFailure,
-            });
-            turnstile.execute(widgetId);
-          } catch (error) {
-            console.error("Turnstile initialization failed:", error);
-            showFailure();
-          }
+                clearWidget();
+                setButtonLoading(submitter, false);
+                renderChallenge(true);
+                return;
+              }
+
+              console.error("Turnstile challenge failed:", errorCode);
+              clearWidget();
+              fail(
+                "Security verification could not be completed. Please try submitting the form again.",
+              );
+            };
+
+            try {
+              widgetId = turnstile.render(container, {
+                sitekey: siteKey,
+                action,
+                size: visible ? "normal" : "invisible",
+                execution: visible ? "render" : "execute",
+                appearance: visible ? "always" : "interaction-only",
+                callback: submitWithToken,
+                "error-callback": showFailure,
+                "expired-callback": () => showFailure("expired"),
+                "timeout-callback": () => showFailure("timeout"),
+              });
+              if (!visible) turnstile.execute(widgetId);
+            } catch (error) {
+              console.error("Turnstile initialization failed:", error);
+              showFailure(error.message);
+            }
+          };
+
+          renderChallenge(false);
         })
         .catch((error) => {
           console.error("Turnstile load failed:", error);

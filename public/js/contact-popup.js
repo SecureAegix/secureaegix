@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const status = document.getElementById("contactPopupStatus");
   const submitButton = document.getElementById("contactPopupSubmit");
   const nameInput = document.getElementById("contactPopupName");
-  const popupDelay = 10 * 60 * 1000;
+  const popupDelay = 1 * 60 * 1000;
   const submissionDelay = 24 * 60 * 60 * 1000;
   const nextShowKey = "secureaegix.contactPopup.nextShow";
   const submittedKey = "secureaegix.contactPopup.submitted";
@@ -81,35 +81,47 @@ document.addEventListener("DOMContentLoaded", () => {
       window.setSecureButtonLoading?.(submitButton, true);
 
       try {
-        const csrfToken = window.refreshSecureCsrfToken
-          ? await window.refreshSecureCsrfToken()
-          : document.querySelector('meta[name="csrf-token"]')?.content || "";
-        const body = new URLSearchParams(new FormData(form));
-        if (csrfToken && !body.has("_csrf")) {
-          body.set("_csrf", csrfToken);
-        }
-
-        const response = await fetch(form.action, {
-          method: "POST",
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
-            ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {})
-          },
-          body
-        });
         let result;
-        try {
-          result = await response.json();
-        } catch {
-          throw new Error(
-            response.ok
-              ? "The server returned an unexpected response. Please try again."
-              : `We couldn't send your details (HTTP ${response.status}). Please try again.`,
-          );
-        }
-        if (!response.ok || !result.success) {
-          throw new Error(result.message || "We couldn't send your details. Please try again.");
+        for (let attempt = 0; attempt < 2; attempt += 1) {
+          const csrfToken =
+            document.querySelector('meta[name="csrf-token"]')?.content || "";
+          const body = new URLSearchParams(new FormData(form));
+          if (csrfToken) body.set("_csrf", csrfToken);
+
+          const response = await fetch(form.action, {
+            method: "POST",
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded",
+              ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {}),
+            },
+            body,
+          });
+
+          try {
+            result = await response.json();
+          } catch {
+            throw new Error(
+              response.ok
+                ? "The server returned an unexpected response. Please try again."
+                : `We couldn't send your details (HTTP ${response.status}). Please try again.`,
+            );
+          }
+
+          if (
+            response.status === 403 &&
+            result.code === "CSRF_TOKEN_INVALID" &&
+            attempt === 0 &&
+            window.refreshSecureCsrfToken
+          ) {
+            await window.refreshSecureCsrfToken();
+            continue;
+          }
+
+          if (!response.ok || !result.success) {
+            throw new Error(result.message || "We couldn't send your details. Please try again.");
+          }
+          break;
         }
 
         status.textContent = result.message;

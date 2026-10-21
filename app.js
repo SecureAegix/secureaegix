@@ -324,7 +324,8 @@ app.use((err, req, res, next) => {
     if (
       req.path.startsWith("/api/") ||
       req.is("application/json") ||
-      req.xhr
+      req.xhr ||
+      req.get("accept")?.includes("application/json")
     ) {
       return res.status(403).json({
         success: false,

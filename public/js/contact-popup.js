@@ -81,15 +81,32 @@ document.addEventListener("DOMContentLoaded", () => {
       window.setSecureButtonLoading?.(submitButton, true);
 
       try {
+        const csrfToken =
+          document.querySelector('meta[name="csrf-token"]')?.content || "";
+        const body = new URLSearchParams(new FormData(form));
+        if (csrfToken && !body.has("_csrf")) {
+          body.set("_csrf", csrfToken);
+        }
+
         const response = await fetch(form.action, {
           method: "POST",
           headers: {
             "Accept": "application/json",
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/x-www-form-urlencoded",
+            ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {})
           },
-          body: new URLSearchParams(new FormData(form))
+          body
         });
-        const result = await response.json();
+        let result;
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error(
+            response.ok
+              ? "The server returned an unexpected response. Please try again."
+              : `We couldn't send your details (HTTP ${response.status}). Please try again.`,
+          );
+        }
         if (!response.ok || !result.success) {
           throw new Error(result.message || "We couldn't send your details. Please try again.");
         }

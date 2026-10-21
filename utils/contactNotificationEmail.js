@@ -20,7 +20,7 @@ function escapeHtml(value = "") {
 
 async function getContactNotificationEmail() {
   const setting = await SiteSetting.findOne({ key: SETTING_KEY }).lean();
-  return setting?.value || process.env.CONTACT_NOTIFICATION_EMAIL || DEFAULT_RECIPIENT;
+  return setting?.value || DEFAULT_RECIPIENT;
 }
 
 async function sendContactNotificationEmail(contact) {

@@ -225,12 +225,12 @@
     }
   }
 
-  /* ============ LIVE ACTIVITY TOAST (Social Proof) ============ */
+  /* ============ RECENT LEARNER ACTIVITY TOAST ============ */
   .activity-toast {
     position: fixed;
     left: 1.5rem;
     bottom: 1.5rem;
-    z-index: 60;
+    z-index: 80;
     width: 340px;
     max-width: calc(100vw - 2rem);
     opacity: 0;
@@ -291,25 +291,29 @@
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 lg:py-16">
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
       
+      <!-- ──────────────────────────────────────────────────────── -->
+      <!-- LEFT COLUMN — Heading + description updated              -->
+      <!-- ──────────────────────────────────────────────────────── -->
       <div>
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-5 fade-up">
           <span class="badge-dot"></span>
           <span class="text-xs font-mono text-cyan-400">Aegix Cyber Range · Learn by doing</span>
         </div>
         
+        <!-- 3-line heading: middle line blue gradient -->
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-5 fade-up delay-1">
-          Your security<br>
-          <span class="text-gradient">career starts</span><br>
-          in the real world.
+          Master the offense.<br>
+          <span class="text-gradient">Protect the enterprise.</span><br>
+          Defend what matters.
         </h1>
         
         <p class="text-base sm:text-lg text-gray-300 max-w-lg mb-6 fade-up delay-2">
-          Move beyond theory. Build practical offensive and defensive skills with expert-led learning paths and hands-on cyber range training.
+          Whether you're advancing your career or securing your organization — SecureAegix delivers practitioner-led training and enterprise-grade security services from the same expert team.
         </p>
 
         <div class="mb-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-300 fade-up delay-2">
-          <span><i class="fas fa-check-circle mr-2 text-cyan-400"></i>Practice in a safe lab</span>
-          <span><i class="fas fa-check-circle mr-2 text-cyan-400"></i>Learn from practitioners</span>
+          <span><i class="fas fa-check-circle mr-2 text-cyan-400"></i>Train in real labs</span>
+          <span><i class="fas fa-check-circle mr-2 text-cyan-400"></i>Defend real enterprises</span>
         </div>
         
         <div class="flex flex-wrap gap-3 mb-8 fade-up delay-3">
@@ -330,22 +334,13 @@
           </a>
         </div>
         
-        <div class="grid grid-cols-3 gap-6 fade-up delay-4 max-w-md">
-          <div>
-            <div class="text-2xl sm:text-3xl font-bold text-white counter" data-target="<%= 255 + totalUsers %>">0</div>
-            <div class="text-[0.7rem] text-gray-400 whitespace-nowrap">Students Trained</div>
-          </div>
-          <div>
-            <div class="text-2xl sm:text-3xl font-bold text-white counter" data-target="<%= totalInstructors*2 %>">0</div>
-            <div class="text-[0.7rem] text-gray-400 whitespace-nowrap">Expert Instructors</div>
-          </div>
-          <div>
-            <div class="text-2xl sm:text-3xl font-bold text-white counter" data-target="<%= totalCources %>">0</div>
-            <div class="text-[0.7rem] text-gray-400 whitespace-nowrap">Certifications</div>
-          </div>
-        </div>
+
       </div>
       
+      <!-- ──────────────────────────────────────────────────────── -->
+      <!-- RIGHT COLUMN — Terminal card + enrollment footer         -->
+      <!-- (enrollment footer wapas add kiya = vertical balance)    -->
+      <!-- ──────────────────────────────────────────────────────── -->
       <div class="slide-right">
         <div class="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
           <div class="flex items-center justify-between gap-2 px-4 py-2.5 bg-white/[0.04] border-b border-white/10">
@@ -399,39 +394,28 @@
                 <% }) %>
               </div>
               <div class="text-[10px] text-gray-400 font-sans">
-                <span class="text-cyan-400 font-semibold"><%= (255 + totalUsers).toLocaleString("en-IN") %>+</span> learners in our community
+                <span class="text-cyan-400 font-semibold"><%= (500 + totalUsers).toLocaleString("en-IN") %>+</span> learners in our community
               </div>
             </div>
           </div>
 
-          <div class="px-4 py-3.5 border-t border-white/10 bg-gradient-to-r from-blue-600/10 to-cyan-600/10">
-            <% if (popularCourse) { %>
-              <% const discountPercent = Math.round(((popularCourse.price - popularCourse.actualPrice) / popularCourse.price) * 100); %>
-              <div class="flex items-center justify-between gap-3 mb-2">
-                <div class="inline-block px-2 py-0.5 bg-red-500 text-white text-[10px] rounded font-mono">
-                  <%= discountPercent %>% OFF
-                </div>
-                <span class="text-[10px] text-gray-400 font-mono">
-                  <%= popularCourse.students?.length ? 10 - popularCourse.students.length : 30 %> seats left
-                </span>
-              </div>
-              <div class="font-bold text-white text-sm mb-2"><%= popularCourse.title %> Track</div>
-              <div class="progress-bar mb-3">
-                <div class="progress-fill" style="width: <%= popularCourse.students?.length ? (popularCourse.students.length / 10) * 100 : 85 %>%"></div>
-              </div>
-              <a href="/enroll" class="block text-center px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white text-xs font-semibold hover:shadow-lg transition-all">
-                Reserve Seat → <span class="opacity-80">₹<%= popularCourse.actualPrice || popularCourse.price %></span>
-              </a>
-            <% } else { %>
-              <div class="inline-block px-2 py-0.5 bg-cyan-400/10 text-cyan-400 text-[10px] rounded mb-2 font-mono">UPCOMING COHORT</div>
-              <div class="font-bold text-white text-sm mb-2">OSCP Certification Track</div>
-              <div class="progress-bar mb-3"><div class="progress-fill" style="width: 85%"></div></div>
-              <a href="/enroll" class="block text-center px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white text-xs font-semibold hover:shadow-lg transition-all">
-                Reserve Seat →
-              </a>
-            <% } %>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 mt-5 fade-up delay-4 max-w-md">
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-white counter" data-target="<%= 500 + totalUsers %>">0</div>
+            <div class="text-[0.7rem] text-gray-400 whitespace-nowrap">Students Trained</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-white counter" data-target="<%= totalInstructors*2 %>">0</div>
+            <div class="text-[0.7rem] text-gray-400 whitespace-nowrap">Expert Instructors</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-white counter" data-target="<%= totalCources %>">0</div>
+            <div class="text-[0.7rem] text-gray-400 whitespace-nowrap">Certifications</div>
           </div>
         </div>
+
       </div>
       
     </div>
@@ -1430,10 +1414,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ============================================================ -->
-<!-- LIVE ACTIVITY TOAST (Social Proof) — NEW                     -->
+<!-- RECENT LEARNER ACTIVITY TOAST                                -->
 <!-- ============================================================ -->
-<aside id="activity-toast" class="activity-toast" aria-live="polite" aria-label="Live learner activity">
-  <div class="relative overflow-hidden rounded-2xl border border-gray-200/80 dark:border-white/10 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-2xl shadow-black/10 dark:shadow-black/50">
+<aside id="activity-toast" class="activity-toast" aria-live="polite" aria-label="Recent learner activity">
+  <div class="relative overflow-hidden rounded-2xl border border-gray-200/80 dark:border-white/10 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl shadow-black/10 dark:shadow-black/50">
     <!-- Top gradient shimmer bar -->
     <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 animate-shimmer"></div>
 
@@ -1444,7 +1428,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
-        <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400 font-semibold">Live activity</span>
+        <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400 font-semibold">Learner activity</span>
       </div>
       <button type="button" id="activity-toast-close"
               class="text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors p-1 -m-1 rounded"
@@ -1456,10 +1440,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Body -->
     <div class="flex items-start gap-3 px-4 pb-4">
       <div class="relative shrink-0">
-        <img id="activity-avatar"
-             src="https://i.pravatar.cc/64?img=12"
-             alt=""
-             class="w-11 h-11 rounded-full object-cover ring-2 ring-blue-500/30">
+        <div id="activity-avatar"
+             aria-hidden="true"
+             class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-lg font-bold text-white ring-2 ring-blue-500/30">L</div>
         <span id="activity-badge"
               class="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-md">
           <i id="activity-icon" class="fas fa-user-plus text-[9px]"></i>
@@ -1472,9 +1455,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </p>
         <div class="mt-1 flex items-center gap-1.5 text-[10px] text-gray-500 dark:text-gray-400">
           <i class="far fa-clock"></i>
-          <span>Just now</span>
+          <span id="activity-time">Recent</span>
           <span class="text-gray-300 dark:text-gray-600">·</span>
-          <span class="text-cyan-600 dark:text-cyan-400 font-medium">Verified</span>
+          <span class="text-cyan-600 dark:text-cyan-400 font-medium">From learner activity</span>
         </div>
       </div>
     </div>
@@ -1717,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- ============================================================ -->
-<!-- LIVE ACTIVITY FEED (Social Proof) — NEW                      -->
+<!-- RECENT LEARNER ACTIVITY FEED                                 -->
 <!-- ============================================================ -->
 <script>
 (function() {
@@ -1727,68 +1710,83 @@ document.addEventListener('DOMContentLoaded', function() {
     const avatarEl = document.getElementById('activity-avatar');
     const badgeEl  = document.getElementById('activity-badge');
     const iconEl   = document.getElementById('activity-icon');
+    const timeEl   = document.getElementById('activity-time');
     const closeBtn = document.getElementById('activity-toast-close');
 
     if (!toast || !textEl) return;
 
-    // Don't show if user dismissed in this session
-    if (sessionStorage.getItem('activityToastDismissed') === '1') {
-      toast.classList.add('is-dismissed');
-      return;
-    }
-
-    // ========================================================
-    // DUMMY DATA — swap this array out for a fetch() call
-    // when the backend endpoint is ready.
-    // ========================================================
-    const activities = [
-      { name: 'Aarav Sharma',   action: 'just enrolled in',    target: 'OSCP Certification',           avatar: 12, type: 'enrollment' },
-      { name: 'Priya Verma',    action: 'earned the',           target: 'CRTO Red Team Expert',          avatar: 45, type: 'certificate' },
-      { name: 'Rohan Mehta',    action: 'completed',            target: 'eJPT Junior Pentester',         avatar: 33, type: 'completion' },
-      { name: 'Ananya Rao',     action: 'just enrolled in',    target: '1-Year Diploma Program',        avatar: 47, type: 'enrollment' },
-      { name: 'Kabir Malhotra', action: 'earned the',           target: 'OSWE Web Expert',               avatar: 15, type: 'certificate' },
-      { name: 'Ishita Kapoor',  action: 'started',              target: 'SOC Analyst Track',             avatar: 20, type: 'enrollment' },
-      { name: 'Arjun Reddy',    action: 'completed',            target: 'Cloud Security Essentials',     avatar: 51, type: 'completion' },
-      { name: 'Sneha Pillai',   action: 'just enrolled in',    target: 'Penetration Testing Track',     avatar: 26, type: 'enrollment' },
-      { name: 'Vikram Singh',   action: 'earned the',           target: 'OSED Exploit Developer',        avatar: 60, type: 'certificate' },
-      { name: 'Neha Joshi',     action: 'completed',            target: 'Vulnerability Assessment',      avatar: 5,  type: 'completion' }
-    ];
+    const activities = <%- JSON.stringify(learnerActivities || []).replace(/</g, "\\u003c") %>;
 
     const iconMap = {
-      enrollment:  'fa-user-plus',
-      certificate: 'fa-award',
-      completion:  'fa-circle-check'
+      signup:  'fa-user-plus',
+      review: 'fa-star',
+      welcome: 'fa-shield-halved'
     };
     const colorMap = {
-      enrollment:  'from-blue-500 to-cyan-500',
-      certificate: 'from-amber-500 to-orange-500',
-      completion:  'from-emerald-500 to-teal-500'
+      signup:  'from-blue-500 to-cyan-500',
+      review: 'from-amber-500 to-orange-500',
+      welcome: 'from-emerald-500 to-teal-500'
     };
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let currentIndex = 0;
     let timer = null;
     let isDismissed = false;
+    let lastMessage = '';
+    const historyKey = 'secureaegix.activityToast.history.v2';
+    const historyWindowMs = 20 * 60 * 1000;
+    let shownActivities = [];
+
+    try {
+      const savedHistory = JSON.parse(sessionStorage.getItem(historyKey) || '[]');
+      if (Array.isArray(savedHistory)) {
+        shownActivities = savedHistory.filter(entry =>
+          entry &&
+          typeof entry.id === 'string' &&
+          Number.isFinite(entry.shownAt) &&
+          Date.now() - entry.shownAt < historyWindowMs
+        );
+      }
+    } catch (error) {
+      console.error('Unable to read learner activity history:', error);
+    }
+
+    function saveHistory() {
+      try {
+        sessionStorage.setItem(historyKey, JSON.stringify(shownActivities));
+      } catch (error) {
+        console.error('Unable to save learner activity history:', error);
+      }
+    }
+
+    function activityId(activity) {
+      return activity.id;
+    }
 
     function renderMessage(text) {
-      textEl.innerHTML =
-        '<span>' + text + '</span>' +
-        '<span class="t-blink text-cyan-600 dark:text-cyan-400 ml-0.5">_</span>';
+      const cursor = document.createElement('span');
+      cursor.className = 't-blink text-cyan-600 dark:text-cyan-400 ml-0.5';
+      cursor.textContent = '_';
+      textEl.replaceChildren(document.createTextNode(text), cursor);
     }
 
     function setActivity(activity) {
-      avatarEl.src = 'https://i.pravatar.cc/64?img=' + activity.avatar;
+      avatarEl.textContent = (activity.name || 'L').trim().charAt(0).toUpperCase();
       iconEl.className = 'fas ' + iconMap[activity.type] + ' text-[9px]';
       badgeEl.className = 'absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br ' +
         colorMap[activity.type] + ' text-white shadow-md';
+      const ageMs = Math.max(0, Date.now() - new Date(activity.timestamp).getTime());
+      const ageMinutes = Math.floor(ageMs / 60000);
+      timeEl.textContent = ageMinutes < 1 ? 'Just now'
+        : ageMinutes < 60 ? ageMinutes + 'm ago'
+        : ageMinutes < 1440 ? Math.floor(ageMinutes / 60) + 'h ago'
+        : Math.floor(ageMinutes / 1440) + 'd ago';
+      if (activity.type === 'welcome') timeEl.textContent = 'Community message';
     }
 
-    // Typewriter — writes the message character by character with
-    // natural rhythm (slight pause after spaces, longer after punctuation).
     function typeMessage(fullText, onDone) {
       if (reduceMotion) {
         renderMessage(fullText);
-        timer = setTimeout(onDone, 3000);
+        timer = setTimeout(onDone, 10000);
         return;
       }
       let i = 0;
@@ -1798,19 +1796,17 @@ document.addEventListener('DOMContentLoaded', function() {
         renderMessage(fullText.slice(0, i));
         if (i < fullText.length) {
           const ch = fullText[i - 1];
-          const delay = (ch === ' ') ? 60
-                      : (ch === ',' || ch === '.') ? 130
-                      : 35;
+          const delay = (ch === ' ') ? 145
+                      : (ch === ',' || ch === '.' || ch === '!' || ch === '?') ? 260
+                      : 85;
           timer = setTimeout(step, delay);
         } else {
-          // Hold the fully-typed message for a moment
-          timer = setTimeout(onDone, 2600);
+          timer = setTimeout(onDone, 10000);
         }
       }
       step();
     }
 
-    // Deletion — faster than typing so it doesn't feel slow.
     function deleteMessage(fullText, onDone) {
       if (reduceMotion) { onDone(); return; }
       let i = fullText.length;
@@ -1819,9 +1815,9 @@ document.addEventListener('DOMContentLoaded', function() {
         i--;
         renderMessage(fullText.slice(0, i));
         if (i > 0) {
-          timer = setTimeout(step, 18);
+          timer = setTimeout(step, 45);
         } else {
-          timer = setTimeout(onDone, 500);
+          timer = setTimeout(onDone, 800);
         }
       }
       step();
@@ -1829,36 +1825,60 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function cycle() {
       if (isDismissed) return;
-      const activity = activities[currentIndex];
+      const now = Date.now();
+      shownActivities = shownActivities.filter(entry => now - entry.shownAt < historyWindowMs);
+      const activity = activities.find(candidate =>
+        !shownActivities.some(entry => entry.id === activityId(candidate))
+      );
+
+      if (!activity) {
+        const nextAvailableAt = Math.min(...shownActivities
+          .filter(entry => activities.some(candidate => activityId(candidate) === entry.id))
+          .map(entry => entry.shownAt + historyWindowMs));
+        if (!lastMessage) {
+          setActivity({
+            name: 'SecureAegix',
+            type: 'welcome',
+            timestamp: now
+          });
+          lastMessage = 'Community update: Explore hands-on cybersecurity learning paths with SecureAegix.';
+        }
+        renderMessage(lastMessage);
+        timer = setTimeout(function() {
+          deleteMessage(lastMessage, cycle);
+        }, Math.max(1000, nextAvailableAt - now));
+        return;
+      }
+
+      shownActivities.push({ id: activityId(activity), shownAt: now });
+      saveHistory();
       const fullText = activity.name + ' ' + activity.action + ' ' + activity.target;
+      lastMessage = fullText;
 
       setActivity(activity);
       typeMessage(fullText, function() {
         deleteMessage(fullText, function() {
           if (isDismissed) return;
-          currentIndex = (currentIndex + 1) % activities.length;
           cycle();
         });
       });
     }
 
-    // Reveal toast after a short delay (so it doesn't compete with hero)
-    setTimeout(function() {
+    let revealTimer;
+    revealTimer = setTimeout(function() {
       if (isDismissed) return;
       toast.classList.add('is-visible');
       cycle();
     }, 2500);
 
-    // Dismiss permanently for this session
     closeBtn.addEventListener('click', function() {
       isDismissed = true;
       clearTimeout(timer);
+      clearTimeout(revealTimer);
       toast.classList.remove('is-visible');
-      sessionStorage.setItem('activityToastDismissed', '1');
       setTimeout(function() { toast.classList.add('is-dismissed'); }, 500);
     });
 
-    // Cleanup on page unload
     window.addEventListener('pagehide', function() { clearTimeout(timer); }, { once: true });
   });
 })();

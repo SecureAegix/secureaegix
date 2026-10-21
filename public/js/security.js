@@ -243,12 +243,10 @@
 
           const renderChallenge = (visible) => {
             container = document.createElement("div");
-            container.className = "my-4 flex justify-center";
-            if (submitter?.parentElement) {
-              submitter.parentElement.insertBefore(container, submitter);
-            } else {
-              form.appendChild(container);
-            }
+            container.className =
+              "fixed bottom-4 right-4 z-[10000] flex justify-center rounded-xl bg-white p-3 shadow-2xl dark:bg-gray-900";
+            container.style.maxWidth = "calc(100vw - 2rem)";
+            document.body.appendChild(container);
 
             const showFailure = (errorCode) => {
               if (!visible && !visibleFallbackShown) {

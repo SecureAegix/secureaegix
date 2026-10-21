@@ -11,11 +11,6 @@ const { createCanvas } = require("canvas");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-// Load environment variables
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
 // Configure Brevo API
 const apiInstance = new brevo.TransactionalEmailsApi();
 apiInstance.setApiKey(

@@ -1,6 +1,3 @@
-if (process.env.NODE_ENV != "production") {
-  require("dotenv").config();
-}
 const brevo = require("@getbrevo/brevo");
 
 module.exports.welComeEmail = async ({ name, email }) => {

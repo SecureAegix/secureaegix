@@ -2,16 +2,36 @@ const User = require("../models/user");
 const Servise = require("../models/services");
 const Course = require("../models/cources");
 const Blog = require("../models/blog");
+const Rating = require("../models/rating");
 const cloudinary = require("../Cloudconfig.js"); 
 const { all } = require("axios");
 
 module.exports.homePage = async (req, res, next) => {
   try {
-    const [totalUsers, totalInstructors, totalCources, latestUsers] = await Promise.all([
+    const [
+      totalUsers,
+      totalInstructors,
+      totalCources,
+      latestUsers,
+      latestReviews,
+    ] = await Promise.all([
       User.countDocuments(),
       User.countDocuments({ role: "admin" }),
       Course.countDocuments(),
-      User.find().select("name profileImage").sort({ createdAt: -1 }).limit(5).lean(),
+      User.find({ role: "user", isVerified: true })
+        .select("name profileImage createdAt")
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .lean(),
+      Rating.find({
+        description: { $exists: true, $ne: "" },
+      })
+        .select("author course description createdAt")
+        .populate("author", "name")
+        .populate("course", "title")
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .lean(),
     ]);
 
     // Fetch courses for homepage (addInHomePage = true)
@@ -23,15 +43,46 @@ module.exports.homePage = async (req, res, next) => {
       .sort({ homepageOrder: 1, createdAt: -1 })
       .limit(6);
 
-    const popularCourse = await Course.findOne({
-      isPopular: true,
-      isActive: true,
-    }).populate("teacher", "name profileImage");
-
     const latestBlogs = await Blog.find()
       .populate("author")
       .sort({ createdAt: -1 })
       .limit(6);
+
+    const learnerActivities = [
+      ...latestUsers
+        .filter((learner) => learner.createdAt)
+        .map((learner) => ({
+          id: `signup-${learner._id}`,
+          name: learner.name || "Learner",
+          action: "joined",
+          target: "the SecureAegix learning community",
+          type: "signup",
+          timestamp: learner.createdAt,
+        })),
+      ...latestReviews
+        .filter((review) => review.description?.trim())
+        .map((review) => ({
+          id: `review-${review._id}`,
+          name: review.author?.name || "Learner",
+          action: "reviewed",
+          target: `${review.course?.title || "a course"}: “${review.description.trim().slice(0, 140)}${review.description.trim().length > 140 ? "…" : ""}”`,
+          type: "review",
+          timestamp: review.createdAt,
+        })),
+    ]
+      .sort((first, second) => new Date(second.timestamp) - new Date(first.timestamp))
+      .slice(0, 15);
+
+    if (learnerActivities.length === 0) {
+      learnerActivities.push({
+        id: "community-welcome",
+        name: "SecureAegix",
+        action: "welcomes you to",
+        target: "our hands-on cybersecurity learning community",
+        type: "welcome",
+        timestamp: new Date(),
+      });
+    }
 
     res.render("secureaegix/home.ejs", {
       totalUsers,
@@ -39,8 +90,8 @@ module.exports.homePage = async (req, res, next) => {
       totalCources,
       latestUsers,
       homepageCourses, // Pass to template
-      popularCourse,
       latestBlogs,
+      learnerActivities,
     });
   } catch (error) {
     console.log(error);
@@ -49,52 +100,6 @@ module.exports.homePage = async (req, res, next) => {
   }
 };
 
-// module.exports.index = async (req, res) => {
-//   try {
-//     const totalUsers = (await User.find()).length;
-//     const totalInstructors = (await User.find({ role: "admin" })).length;
-//     const totalCources = (await Course.find()).length;
-
-//     // Get courses for homepage with new filters
-//     const cources = await Course.find({
-//       addInHomePage: true,
-//       isActive: true
-//     })
-//       .populate("teacher")
-//       .sort({ homepageOrder: 1, createdAt: -1 })
-//       .limit(6);
-
-//     const popularCourse = await Course.findOne({
-//       isPopular: true,
-//       isActive: true
-//     }).populate("teacher");
-
-//     // Get courses for navbar
-//     const navbarCourses = await Course.find({
-//       showInNavbar: true,
-//       isActive: true
-//     }).select("title navbarButtonText navbarButtonLink navbarButtonColor navbarButtonIcon");
-
-//     const blogs = await Blog.find()
-//       .populate("author")
-//       .sort({ createdAt: -1 })
-//       .limit(6);
-
-//     res.render("secureaegix/home.ejs", {
-//       totalUsers,
-//       totalInstructors,
-//       totalCources,
-//       cources,
-//       popularCourse,
-//       blogs,
-//       navbarCourses, // Pass to navbar
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     req.flash("error", "Something went wrong!");
-//     res.redirect("/login");
-//   }
-// };
 module.exports.profile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

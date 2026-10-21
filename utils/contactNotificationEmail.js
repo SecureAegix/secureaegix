@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV != "production") {
-  require("dotenv").config();
-}
-
 const brevo = require("@getbrevo/brevo");
 const SiteSetting = require("../models/siteSetting");
 

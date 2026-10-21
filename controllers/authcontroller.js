@@ -1,11 +1,6 @@
 const crypto = require("crypto");
 const User = require("../models/user.js");
 
-// Load .env in development
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
 module.exports.restform = async (req, res) => {
   res.render("emailer/emailSent.ejs", {
     message: "Please enter your registered email address.",

@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 const mongoose = require("mongoose");
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 const uri =
   process.env.MONGO_URL ||
   process.env.MONGO_URI ||
-  "mongodb://127.0.0.1:27017/rootshield";
+  "mongodb://127.0.0.1:27017/secureaegix";
 
 (async () => {
   try {

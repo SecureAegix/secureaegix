@@ -21,7 +21,7 @@ module.exports.homePage = async (req, res, next) => {
       User.find({ role: "user", isVerified: true })
         .select("name profileImage createdAt")
         .sort({ createdAt: -1 })
-        .limit(10)
+        .limit(5)
         .lean(),
       Rating.find({
         description: { $exists: true, $ne: "" },

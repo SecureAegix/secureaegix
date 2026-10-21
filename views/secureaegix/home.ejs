@@ -1455,8 +1455,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </p>
         <div class="mt-1 flex items-center gap-1.5 text-[10px] text-gray-500 dark:text-gray-400">
           <i class="far fa-clock"></i>
-          <!-- id is "activity-time" -->
-          <span id="">Recent</span>
+          <span id="activity-time">Recent</span>
           <span class="text-gray-300 dark:text-gray-600">·</span>
           <span class="text-cyan-600 dark:text-cyan-400 font-medium">From learner activity</span>
         </div>
@@ -1779,8 +1778,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const ageMinutes = Math.floor(ageMs / 60000);
       timeEl.textContent = ageMinutes < 1 ? 'Just now'
         : ageMinutes < 60 ? ageMinutes + 'm ago'
-        : ageMinutes < 1440 ? Math.floor(ageMinutes / 60) + 'h ago'
-        : Math.floor(ageMinutes / 1440) + 'd ago';
+        : 'Recent'
       if (activity.type === 'welcome') timeEl.textContent = 'Community message';
     }
 

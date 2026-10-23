@@ -1457,7 +1457,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <i class="far fa-clock"></i>
           <span id="activity-time">Recent</span>
           <span class="text-gray-300 dark:text-gray-600">·</span>
-          <span class="text-cyan-600 dark:text-cyan-400 font-medium">From learner activity</span>
+          <span class="text-cyan-600 dark:text-cyan-400 font-medium">From recent activity</span>
         </div>
       </div>
     </div>
@@ -1720,11 +1720,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const iconMap = {
       signup:  'fa-user-plus',
       review: 'fa-star',
+      contact: 'fa-headset',
       welcome: 'fa-shield-halved'
     };
     const colorMap = {
       signup:  'from-blue-500 to-cyan-500',
       review: 'from-amber-500 to-orange-500',
+      contact: 'from-violet-500 to-fuchsia-500',
       welcome: 'from-emerald-500 to-teal-500'
     };
 
@@ -1732,6 +1734,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let timer = null;
     let isDismissed = false;
     let lastMessage = '';
+    let lastActivityType = '';
     const historyKey = 'secureaegix.activityToast.history.v2';
     const historyWindowMs = 20 * 60 * 1000;
     let shownActivities = [];
@@ -1795,9 +1798,9 @@ document.addEventListener('DOMContentLoaded', function() {
         renderMessage(fullText.slice(0, i));
         if (i < fullText.length) {
           const ch = fullText[i - 1];
-          const delay = (ch === ' ') ? 145
-                      : (ch === ',' || ch === '.' || ch === '!' || ch === '?') ? 260
-                      : 85;
+          const delay = (ch === ' ') ? 160
+                      : (ch === ',' || ch === '.' || ch === '!' || ch === '?') ? 300
+                      : 100;
           timer = setTimeout(step, delay);
         } else {
           timer = setTimeout(onDone, 10000);
@@ -1826,11 +1829,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (isDismissed) return;
       const now = Date.now();
       shownActivities = shownActivities.filter(entry => now - entry.shownAt < historyWindowMs);
-      const activity = activities.find(candidate =>
+      const unseenActivities = activities.filter(candidate =>
         !shownActivities.some(entry => entry.id === activityId(candidate))
       );
 
-      if (!activity) {
+      if (!unseenActivities.length) {
         const nextAvailableAt = Math.min(...shownActivities
           .filter(entry => activities.some(candidate => activityId(candidate) === entry.id))
           .map(entry => entry.shownAt + historyWindowMs));
@@ -1842,6 +1845,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           lastMessage = 'Community update: Explore hands-on cybersecurity learning paths with SecureAegix.';
         }
+        lastActivityType = 'welcome';
         renderMessage(lastMessage);
         timer = setTimeout(function() {
           deleteMessage(lastMessage, cycle);
@@ -1849,10 +1853,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
+      const differentTypeActivities = unseenActivities.filter(
+        candidate => candidate.type !== lastActivityType
+      );
+      const eligibleActivities = differentTypeActivities.length
+        ? differentTypeActivities
+        : unseenActivities;
+      const activity = eligibleActivities[Math.floor(Math.random() * eligibleActivities.length)];
+
       shownActivities.push({ id: activityId(activity), shownAt: now });
       saveHistory();
       const fullText = activity.name + ' ' + activity.action + ' ' + activity.target;
       lastMessage = fullText;
+      lastActivityType = activity.type;
 
       setActivity(activity);
       typeMessage(fullText, function() {

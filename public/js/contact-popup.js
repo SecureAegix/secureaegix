@@ -5,23 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const status = document.getElementById("contactPopupStatus");
   const submitButton = document.getElementById("contactPopupSubmit");
   const nameInput = document.getElementById("contactPopupName");
-  const popupDelay = 5 * 60 * 1000;
-  const submissionDelay = 24 * 60 * 60 * 1000;
-  const nextShowKey = "secureaegix.contactPopup.nextShow";
-  const submittedKey = "secureaegix.contactPopup.submitted";
+  const initialPopupDelay = 50 * 1000;
+  const repeatPopupDelay = 2 * 60 * 1000;
+  const nextShowKey = "secureaegix.contactPopup.nextShow.v2";
+  const submittedKey = "secureaegix.contactPopup.submitted.v2";
 
   if (popup && form && closeButton && status && submitButton && nameInput) {
-    let nextShow = Date.now() + popupDelay;
+    let nextShow = Date.now() + initialPopupDelay;
+    let wasSubmitted = false;
     try {
-      const wasSubmitted = localStorage.getItem(submittedKey) === "true";
+      wasSubmitted = localStorage.getItem(submittedKey) === "true";
       const storedNextShow = Number(localStorage.getItem(nextShowKey));
-      if (wasSubmitted) {
-        nextShow = Date.now() + submissionDelay;
-        localStorage.setItem(nextShowKey, String(nextShow));
-        localStorage.removeItem(submittedKey);
-      } else if (storedNextShow) {
+      if (!wasSubmitted && Number.isFinite(storedNextShow) && storedNextShow > 0) {
         nextShow = storedNextShow;
-      } else {
+      } else if (!wasSubmitted) {
         localStorage.setItem(nextShowKey, String(nextShow));
       }
     } catch (error) {
@@ -41,13 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
       hidePopup();
       if (reschedule) {
         try {
-          nextShow = Date.now() + popupDelay;
+          nextShow = Date.now() + repeatPopupDelay;
           localStorage.setItem(nextShowKey, String(nextShow));
         } catch (error) {
           console.error("Unable to save the contact popup preference:", error);
-          nextShow = Date.now() + popupDelay;
+          nextShow = Date.now() + repeatPopupDelay;
         }
-        schedulePopup(popupDelay);
+        schedulePopup(repeatPopupDelay);
       }
     };
 
@@ -64,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       popupTimer = window.setTimeout(openPopup, Math.max(0, delay));
     };
 
-    schedulePopup(nextShow - Date.now());
+    if (!wasSubmitted) schedulePopup(nextShow - Date.now());
 
     closeButton.addEventListener("click", () => closePopup());
     popup.addEventListener("click", (event) => {
@@ -114,9 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
           "rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200";
         window.showSecureFlash?.(result.message, "success");
         try {
-          nextShow = Date.now() + submissionDelay;
-          localStorage.setItem(nextShowKey, String(nextShow));
-          localStorage.removeItem(submittedKey);
+          localStorage.setItem(submittedKey, "true");
+          localStorage.removeItem(nextShowKey);
         } catch (error) {
           console.error("Unable to save the contact popup submission state:", error);
         }

@@ -3,6 +3,7 @@ const Servise = require("../models/services");
 const Course = require("../models/cources");
 const Blog = require("../models/blog");
 const Rating = require("../models/rating");
+const Contact = require("../models/contact");
 const cloudinary = require("../Cloudconfig.js"); 
 const { all } = require("axios");
 
@@ -13,7 +14,9 @@ module.exports.homePage = async (req, res, next) => {
       totalInstructors,
       totalCources,
       latestUsers,
+      activityUsers,
       latestReviews,
+      latestContacts,
     ] = await Promise.all([
       User.countDocuments(),
       User.countDocuments({ role: "admin" }),
@@ -23,6 +26,11 @@ module.exports.homePage = async (req, res, next) => {
         .sort({ createdAt: -1 })
         .limit(5)
         .lean(),
+      User.find({ role: "user", isVerified: true })
+        .select("name createdAt")
+        .sort({ createdAt: -1 })
+        .limit(30)
+        .lean(),
       Rating.find({
         description: { $exists: true, $ne: "" },
       })
@@ -30,7 +38,12 @@ module.exports.homePage = async (req, res, next) => {
         .populate("author", "name")
         .populate("course", "title")
         .sort({ createdAt: -1 })
-        .limit(10)
+        .limit(25)
+        .lean(),
+      Contact.find()
+        .select("subject msgDate")
+        .sort({ msgDate: -1 })
+        .limit(20)
         .lean(),
     ]);
 
@@ -49,7 +62,7 @@ module.exports.homePage = async (req, res, next) => {
       .limit(6);
 
     const learnerActivities = [
-      ...latestUsers
+      ...activityUsers
         .filter((learner) => learner.createdAt)
         .map((learner) => ({
           id: `signup-${learner._id}`,
@@ -69,9 +82,29 @@ module.exports.homePage = async (req, res, next) => {
           type: "review",
           timestamp: review.createdAt,
         })),
+      ...latestContacts
+        .filter((contact) => contact.msgDate)
+        .map((contact) => ({
+          id: `contact-${contact._id}`,
+          name: "A visitor",
+          action: "requested",
+          target: ({
+            "General Inquiry": "help from the SecureAegix team",
+            "Course Information": "course information",
+            "Certification Support": "certification support",
+            "Security Services": "security services",
+            "Corporate Training": "corporate training",
+            "Technical Support": "technical support",
+            "Partnership Opportunities": "a partnership",
+            Service: "a service",
+            other: "assistance",
+          })[contact.subject] || "assistance",
+          type: "contact",
+          timestamp: contact.msgDate,
+        })),
     ]
       .sort((first, second) => new Date(second.timestamp) - new Date(first.timestamp))
-      .slice(0, 15);
+      .slice(0, 60);
 
     if (learnerActivities.length === 0) {
       learnerActivities.push({
